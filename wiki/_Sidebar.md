@@ -57,6 +57,8 @@
 - [Testing Strategy](Testing-Strategy)
 - [Documentation Standards](Documentation-Standards)
 - [Agent Skills Strategy](Agent-Skills-Strategy)
+- [Runaway Prevention & Cost Controls](Runaway-Prevention-and-Cost-Controls)
+- [Prompt Injection Defence & Secrets](Prompt-Injection-Defence-and-Secret-Protection)
 
 ---
 

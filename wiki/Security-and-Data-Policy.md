@@ -220,6 +220,8 @@ A dedicated [Incident Response Playbook](Incident-Response) page *(WIP)* operati
 | LLM09 Overreliance | Confidence calibration + human-in-the-loop for high-risk actions |
 | LLM10 Model theft | Model weights for self-hosted models live in VPC-isolated Bedrock |
 
+The detailed operational defences for LLM01 and LLM06 live in [Prompt Injection Defence and Secret Protection](Prompt-Injection-Defence-and-Secret-Protection). Operational defences against runaway-cost-as-DoS (LLM04) live in [Runaway Prevention and Cost Controls](Runaway-Prevention-and-Cost-Controls).
+
 ---
 
 ## When to revisit

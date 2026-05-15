@@ -194,5 +194,7 @@ CTO is the accountable owner.
 - [Confidence and Escalation Rules](Confidence-and-Escalation-Rules)
 - [Action Risk Classification](Action-Risk-Classification)
 - [Security and Data Policy](Security-and-Data-Policy)
+- [Runaway Prevention and Cost Controls](Runaway-Prevention-and-Cost-Controls)
+- [Prompt Injection Defence and Secret Protection](Prompt-Injection-Defence-and-Secret-Protection)
 - [Testing Strategy](Testing-Strategy)
 - [How Agents Use This Wiki](How-Agents-Use-This-Wiki)

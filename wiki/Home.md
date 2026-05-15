@@ -79,6 +79,8 @@ Decisions, rationale, alternatives considered, and revisit conditions. Every pag
 - [Testing Strategy](Testing-Strategy) — the test pyramid + AI eval suites
 - [Documentation Standards](Documentation-Standards) — where each kind of docs lives
 - [Agent Skills Strategy](Agent-Skills-Strategy) — adopt Anthropic's published skills (PPTX, DOCX, XLSX, PDF); build the moat (validation gates, Domain Playbooks); registry, governance, tier-access
+- [Runaway Prevention and Cost Controls](Runaway-Prevention-and-Cost-Controls) — hard limits on loops, token explosions, cascade workflows; per-task / per-agent / per-tenant / platform circuit breakers and kill switches
+- [Prompt Injection Defence and Secret Protection](Prompt-Injection-Defence-and-Secret-Protection) — seven-layer defence: untrusted-content boundary, system prompt isolation, tool schema enforcement, capability scopes, secret-isolation architecture, output filtering, detection
 
 ### Operations playbooks
 
