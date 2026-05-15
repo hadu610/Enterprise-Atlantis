@@ -121,45 +121,40 @@ The strategic plan (B1–B6 barriers, the six solutions) is the **why**. The pag
 
 ---
 
-## H · Operational Playbooks I propose adding
+## H · Operational Playbooks
 
-These are recommended additions to the blueprint that would close current gaps. None exists yet; each is a candidate page for the next quarter.
-
-| Topic | Why we need it | Suggested Owner |
+| Page | Status | Why we need it |
 |---|---|---|
-| **Incident Response Playbook** | [Security and Data Policy § 13](Security-and-Data-Policy#13-incident-response) references this; the standalone playbook should detail Sev1–Sev4 response in step-by-step form | Security + Engineering |
-| **Data Subject Rights Procedures** | GDPR / CCPA Article-17 workflows ([Security and Data Policy § 9](Security-and-Data-Policy#9-data-subject-rights-gdpr--ccpa)) | Legal + Security |
-| **Disaster Recovery Runbook** | Quarterly DR drill procedures, RTO/RPO test plan | Engineering |
-| **Customer Approval Defaults** | Default routing rules for [Approval Workflow Framework § 2](Approval-Workflow-Framework#2-routing-rules) | Engineering + Customer Success |
-| **Routing Policy** (LLM) | The data-driven routing rules referenced in [AI Model and Prompt Standards § 1](AI-Model-and-Prompt-Standards#1-model-selection-per-task-type) | Engineering |
-| **Vendor Risk Management** | Approved vendor list, security review process, ongoing attestation | Security + Legal |
-| **Customer Success Playbook** | How CSMs guide customers through autonomy phases | Customer Success |
-| **Onboarding Interview Script** | The structured interview at customer activation | Product + Customer Success |
-| **Data Readiness Assessment** | Detailed scoring rubric per source system | Engineering + Customer Success |
-| **Change Management Templates** | Customer-facing employee communication templates | Customer Success |
-| **Role-Evolution Guides** | How each role's daily work changes when agents arrive (per department) | Customer Success + Domain Councils |
-| **Adversarial Testing Catalogue** | Living list of known prompt-injection vectors and our responses | Security |
+| [Incident Response Playbook](Incident-Response-Playbook) | ✅ | Sev1–Sev4 response in step-by-step form; severity, roles, six-step process, communication templates, regulatory notification windows |
+| Data Subject Rights Procedures | 📋 Proposed | GDPR / CCPA Article-17 workflows |
+| Disaster Recovery Runbook | 📋 Proposed | Quarterly DR drill procedures, RTO/RPO test plan |
+| Customer Approval Defaults | 📋 Proposed | Default routing rules for Approval Workflow Framework |
+| Routing Policy (LLM) | 📋 Proposed | Data-driven routing rules for AI Model selection |
+| Vendor Risk Management | 📋 Proposed | Approved vendor list, security review, ongoing attestation |
+| Customer Success Playbook | 📋 Proposed | How CSMs guide customers through autonomy phases |
+| Onboarding Interview Script | 📋 Proposed | Structured interview at customer activation |
+| Data Readiness Assessment | 📋 Proposed | Detailed scoring rubric per source system |
+| Change Management Templates | 📋 Proposed | Customer-facing employee communication templates |
+| Role-Evolution Guides | 📋 Proposed | How each role's daily work changes per department |
+| Adversarial Testing Catalogue | 📋 Proposed | Living list of known prompt-injection vectors and responses |
 
 ---
 
-## I · Business and Operations I propose adding
+## I · Business and Operations Blueprint
 
-These are blueprint pages outside engineering that round out the platform plan.
-
-| Topic | Why we need it | Suggested Owner |
+| Page | Status | Why we need it |
 |---|---|---|
-| **Hiring Plan and Team Structure** | When to hire what, by phase; org chart trajectory; skills matrix | Founders + Engineering Lead |
-| **FinOps Strategy** | Cloud and LLM cost governance; per-tenant unit economics; cost-as-a-feature decisions | CFO (when hired) + Engineering |
-| **Pricing and Packaging** | Per-agent / per-seat / per-tenant pricing structure; usage-based components; enterprise contract terms | Founders + Sales lead |
-| **Go-to-Market Strategy** | ICP definition, channel mix, sales motion (PLG vs. enterprise), expansion playbook | Founders + Sales lead |
-| **Partnership Strategy** | Systems integrators, technology partners, marketplace listings | Founders + BD |
-| **Customer Success Operations** | Tiering, response SLAs, expansion motion, NPS programme | Customer Success Lead |
-| **People and Culture Playbook** | Hiring rubrics, performance framework, compensation philosophy, remote-work norms | People Lead |
-| **Equity and Compensation Framework** | Bands, refresh cycles, executive compensation | Founders + People Lead |
-| **Brand and Communications Strategy** | Voice, tone, channel mix, crisis comms, analyst relations | Marketing Lead |
-| **Investor Relations and Reporting** | Board meeting cadence, monthly investor update template, KPI dashboard | Founders + CFO |
-| **Legal Entity, IP, and Compliance Map** | Entity structure, IP assignment, contractor IP, regulatory map | Legal |
-| **Risk Register** | Top-15 platform risks, mitigations, owners, review cadence | Founders |
+| [Hiring Plan and Team Structure](Hiring-Plan-and-Team-Structure) | ✅ | Phase-by-phase headcount plan, role profiles, compensation philosophy, org chart trajectory |
+| [FinOps Strategy](FinOps-Strategy) | ✅ | Unit economics framework, LLM and cloud cost discipline, per-tenant attribution, anti-patterns |
+| [Pricing and Packaging](Pricing-and-Packaging) | ✅ | Tier model, included quotas, overages, add-ons, discount governance, pilot programmes |
+| Go-to-Market Strategy | 📋 Proposed | ICP definition, channel mix, sales motion, expansion playbook |
+| Partnership Strategy | 📋 Proposed | Systems integrators, technology partners, marketplace listings |
+| Customer Success Operations | 📋 Proposed | Tiering, response SLAs, expansion motion, NPS programme |
+| People and Culture Playbook | 📋 Proposed | Hiring rubrics, performance framework, remote-work norms |
+| Brand and Communications Strategy | 📋 Proposed | Voice, tone, channel mix, crisis comms, analyst relations |
+| Investor Relations and Reporting | 📋 Proposed | Board cadence, monthly investor update template, KPI dashboard |
+| Legal Entity, IP, and Compliance Map | 📋 Proposed | Entity structure, IP assignment, contractor IP, regulatory map |
+| Risk Register | 📋 Proposed | Top-15 platform risks, mitigations, owners, review cadence |
 
 ---
 

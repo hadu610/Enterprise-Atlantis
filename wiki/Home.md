@@ -76,6 +76,16 @@ Decisions, rationale, alternatives considered, and revisit conditions. Every pag
 - [Testing Strategy](Testing-Strategy) — the test pyramid + AI eval suites
 - [Documentation Standards](Documentation-Standards) — where each kind of docs lives
 
+### Operations playbooks
+
+- [Incident Response Playbook](Incident-Response-Playbook) — Sev1–Sev4 response with comms templates and regulatory notification windows
+
+### Business blueprint
+
+- [Hiring Plan and Team Structure](Hiring-Plan-and-Team-Structure) — phase-by-phase team growth, role profiles, compensation philosophy
+- [FinOps Strategy](FinOps-Strategy) — unit economics, LLM cost discipline, cloud cost governance
+- [Pricing and Packaging](Pricing-and-Packaging) — tiers, included quotas, overages, add-ons, discount governance
+
 ### Domain Knowledge — authored by Domain Expert Councils
 
 - [Domain Knowledge Index](Domain-Knowledge-Index) — entry point to jurisdiction-specific pages

@@ -58,6 +58,20 @@
 
 ---
 
+#### Operations playbooks
+
+- [Incident Response Playbook](Incident-Response-Playbook)
+
+---
+
+#### Business blueprint
+
+- [Hiring Plan & Team Structure](Hiring-Plan-and-Team-Structure)
+- [FinOps Strategy](FinOps-Strategy)
+- [Pricing and Packaging](Pricing-and-Packaging)
+
+---
+
 #### Domain knowledge
 
 - [Domain Knowledge Index](Domain-Knowledge-Index)
