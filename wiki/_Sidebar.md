@@ -1,6 +1,6 @@
 ### Atlantis Wiki
 
-**[Home](Home)** · **[Master Blueprint Index](Master-Blueprint-Index)**
+**[Home](Home)** · **[Master Blueprint Index](Master-Blueprint-Index)** · **[Business Workflows](Business-Workflows)**
 
 ---
 

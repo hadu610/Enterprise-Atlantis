@@ -12,6 +12,8 @@ Every agent reads this Wiki before acting. Every human contributing to the platf
 
 → **[Master Blueprint Index](Master-Blueprint-Index)** — the complete table of contents, including everything authored, in progress, and proposed.
 
+→ **[Business Workflows](Business-Workflows)** — every workflow Atlantis supports, across the customer journey (lead → renewal) and the employee journey (interview → offboarding). Also browseable interactively at [/workflows.html](https://hadu610.github.io/Enterprise-Atlantis/workflows.html).
+
 If you are new to the Wiki, read these four foundation pages **in order**:
 
 1. **[Wiki Conventions](Wiki-Conventions)** — page structure and metadata block

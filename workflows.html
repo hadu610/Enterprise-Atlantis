@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Atlantis Workflows — How it works in practice</title>
+<meta name="description" content="Interactive walk-throughs of every workflow Atlantis performs across the customer journey and the employee journey. See exactly when agents act, when humans act, and how the platform keeps both in sync." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="workflows.css" />
+</head>
+<body class="wf-body">
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">Atlantis</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html#problem">Problem</a>
+      <a href="index.html#solution">Solution</a>
+      <a href="index.html#platform">Platform</a>
+      <a href="workflows.html" class="active">Workflows</a>
+      <a href="wiki.html">Wiki</a>
+      <a href="index.html#roadmap">Roadmap</a>
+    </nav>
+    <a href="index.html#cta" class="btn btn-primary nav-cta">Talk to us</a>
+  </div>
+</header>
+
+<!-- ============ BANNER ============ -->
+<section class="wf-banner">
+  <div class="container wf-banner-inner">
+    <div class="wf-banner-eyebrow">
+      <span class="pulse-dot"></span>
+      Interactive walk-throughs
+    </div>
+    <h1 class="wf-banner-title">
+      How Atlantis works <span class="grad-text">in practice</span>.
+    </h1>
+    <p class="wf-banner-sub">
+      Two journeys, every workflow, every step. See exactly when agents act, when humans act, and
+      how the platform keeps both in sync. <strong>If you're a customer</strong>, the customer
+      journey shows what you'll experience.
+      <strong>If you're an employee</strong> at a customer company, the employee journey shows how
+      the platform supports your day-to-day.
+    </p>
+    <div class="wf-banner-legend">
+      <span class="legend-item"><span class="legend-icon" data-actor="agent">🤖</span> Agent acts</span>
+      <span class="legend-item"><span class="legend-icon" data-actor="human">👤</span> Human acts</span>
+      <span class="legend-item"><span class="legend-icon" data-actor="both">🤖+👤</span> Proposal + approval</span>
+      <span class="legend-item"><span class="legend-icon" data-actor="gate">🛡</span> Platform safety gate</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TAB TOGGLE ============ -->
+<section class="wf-tab-bar">
+  <div class="container">
+    <div class="wf-tabs" role="tablist">
+      <button class="wf-tab active" data-journey="customer" role="tab" aria-selected="true">
+        <span class="wf-tab-icon">🏢</span>
+        <span>
+          <span class="wf-tab-title">Customer Journey</span>
+          <span class="wf-tab-sub">From first lead to renewal</span>
+        </span>
+      </button>
+      <button class="wf-tab" data-journey="employee" role="tab" aria-selected="false">
+        <span class="wf-tab-icon">🧑‍💼</span>
+        <span>
+          <span class="wf-tab-title">Employee Journey</span>
+          <span class="wf-tab-sub">From interview to departure</span>
+        </span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STAGES TIMELINE ============ -->
+<section class="wf-timeline-section">
+  <div class="container">
+    <div class="wf-timeline-scroller">
+      <div class="wf-timeline" id="timeline" role="tablist">
+        <!-- stages rendered dynamically -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STAGE DETAIL ============ -->
+<section class="wf-stage-section">
+  <div class="container">
+    <div class="wf-stage-head" id="stage-head">
+      <!-- stage title + description rendered dynamically -->
+    </div>
+
+    <div class="wf-stage-body">
+      <aside class="wf-workflow-list" id="workflow-list" aria-label="Workflows in this stage">
+        <!-- list rendered dynamically -->
+      </aside>
+
+      <article class="wf-workflow-detail" id="workflow-detail" aria-live="polite">
+        <!-- detail rendered dynamically -->
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER NOTE ============ -->
+<section class="wf-footer-note">
+  <div class="container">
+    <div class="wf-footer-card">
+      <div class="wf-footer-icon">📖</div>
+      <div>
+        <h3>The canonical source</h3>
+        <p>This page is the visual layer over the <a href="wiki.html#Business-Workflows">Business Workflows wiki page</a>. Same content, same source of truth — the same one every agent in the platform reads from.</p>
+      </div>
+      <a href="wiki.html#Business-Workflows" class="btn btn-ghost">Open the wiki version →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>Atlantis · The Enterprise AI Operating System</span>
+    </div>
+    <div class="footer-meta">
+      Confidential · Strategic Plan v2.0 · 2026-05-15
+    </div>
+  </div>
+</footer>
+
+<script src="workflows.js" defer></script>
+</body>
+</html>

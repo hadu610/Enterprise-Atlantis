@@ -41,6 +41,16 @@ The strategic plan (B1–B6 barriers, the six solutions) is the **why**. The pag
 
 ---
 
+## A.1 · Business Workflows (the *what* in practice)
+
+| Page | Status |
+|---|---|
+| [Business Workflows](Business-Workflows) | ✅ |
+
+The canonical enumeration of every workflow across the customer journey (7 stages, lead → renewal) and the employee journey (5 stages, interview → offboarding). Rendered interactively at [/workflows.html](https://hadu610.github.io/Enterprise-Atlantis/workflows.html).
+
+---
+
 ## B · Wiki Foundation
 
 | Page | Status |
