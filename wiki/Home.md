@@ -4,29 +4,31 @@
 
 Every agent reads this Wiki before acting. Every human contributing to the platform follows the conventions here. This is not documentation about the platform — this is the platform's brain.
 
-> **Status:** Active · **Version:** Strategic Plan v2.0 + Operational Layer v1 · **Updated:** 2026-05-15
+> **Status:** Active · **Version:** Strategic Plan v2.0 + Operational Layer v1 + Engineering Blueprint v1 · **Updated:** 2026-05-15
 
 ---
 
-## Start here
+## 📋 Start here
 
-If you are new to the Wiki, read these four pages **in order**:
+→ **[Master Blueprint Index](Master-Blueprint-Index)** — the complete table of contents, including everything authored, in progress, and proposed.
 
-1. **[Wiki Conventions](Wiki-Conventions)** — how every page is structured and what the metadata block means
-2. **[How Agents Use This Wiki](How-Agents-Use-This-Wiki)** — the agent reading protocol (the meta-instruction for every agent)
-3. **[Wiki Governance](Wiki-Governance)** — who can edit, how changes are reviewed, version control
-4. **[Page Template](Page-Template)** — copy-paste skeleton for authoring new pages
+If you are new to the Wiki, read these four foundation pages **in order**:
+
+1. **[Wiki Conventions](Wiki-Conventions)** — page structure and metadata block
+2. **[How Agents Use This Wiki](How-Agents-Use-This-Wiki)** — the agent reading protocol
+3. **[Wiki Governance](Wiki-Governance)** — edit approval, version control
+4. **[Page Template](Page-Template)** — skeleton for authoring new pages
 
 ---
 
-## The two halves of the Wiki
+## The three halves of the Wiki
 
-### A · Strategic Plan v2.0 *(context for humans)*
+### A · Strategic Plan v2.0 — the *why*
 
-Why we are building this, what we are building, and how it differs from every competitor. These pages are read by humans — they are not consumed by agents during execution.
+Why we are building this, what we are building, and how it differs from every competitor.
 
 - [Executive Summary](Executive-Summary)
-- [The Six Barriers](The-Six-Barriers) — the strategic core
+- [The Six Barriers](The-Six-Barriers)
 - [Product Concept](Product-Concept)
 - [Competitor Analysis](Competitor-Analysis)
 - [Advantages and Risks](Advantages-and-Risks)
@@ -35,18 +37,13 @@ Why we are building this, what we are building, and how it differs from every co
 - [Strategic Considerations](Strategic-Considerations)
 - [Next Steps](Next-Steps)
 
-### B · Operational Layer *(rules every agent follows)*
-
-The authoritative rules, playbooks, and references agents consult on every task.
+### B · Operational Layer — the rules every agent follows
 
 #### Wiki Foundation
 
-- [Wiki Conventions](Wiki-Conventions)
-- [How Agents Use This Wiki](How-Agents-Use-This-Wiki)
-- [Wiki Governance](Wiki-Governance)
-- [Page Template](Page-Template)
+- [Wiki Conventions](Wiki-Conventions) · [How Agents Use This Wiki](How-Agents-Use-This-Wiki) · [Wiki Governance](Wiki-Governance) · [Page Template](Page-Template)
 
-#### Platform Rules — apply to every agent
+#### Platform Rules
 
 - [Phased Autonomy Reference](Phased-Autonomy-Reference)
 - [Action Risk Classification](Action-Risk-Classification)
@@ -57,24 +54,29 @@ The authoritative rules, playbooks, and references agents consult on every task.
 
 #### Shared Vocabulary
 
-- [Unified Entity Model](Unified-Entity-Model) — the schema every agent shares
+- [Unified Entity Model](Unified-Entity-Model)
 - [Glossary](Glossary)
 
-#### Agent Playbooks — one per department agent
+#### Agent Playbooks
 
-- [HR Agent Playbook](HR-Agent-Playbook)
-- [Finance Agent Playbook](Finance-Agent-Playbook)
-- [Marketing Agent Playbook](Marketing-Agent-Playbook)
-- [Sales Agent Playbook](Sales-Agent-Playbook)
-- [Legal Agent Playbook](Legal-Agent-Playbook)
-- [Operations Agent Playbook](Operations-Agent-Playbook)
-- [Dev Agent Playbook](Dev-Agent-Playbook)
+- [HR Agent](HR-Agent-Playbook) · [Finance Agent](Finance-Agent-Playbook) · [Marketing Agent](Marketing-Agent-Playbook) · [Sales Agent](Sales-Agent-Playbook) · [Legal Agent](Legal-Agent-Playbook) · [Operations Agent](Operations-Agent-Playbook) · [Dev Agent](Dev-Agent-Playbook)
 
-#### Engineering Standards — Dev Agent + humans
+### C · Engineering Blueprint — the *how* for code
 
-- [Coding Standards](Coding-Standards)
+Decisions, rationale, alternatives considered, and revisit conditions. Every page in this section follows the same structure so the blueprint stays maintainable when strategy changes.
 
-#### Domain Knowledge — owned by Domain Expert Councils
+- [Coding Standards](Coding-Standards) — what we draw from (Google, Airbnb, PEP 8, Effective Go, OWASP), and our additions
+- [Technology Stack](Technology-Stack) — languages, frameworks, databases, infra, AI providers, with rationale and alternatives
+- [Architecture Principles](Architecture-Principles) — the 15 constitutional rules of the platform's architecture
+- [AI Model and Prompt Standards](AI-Model-and-Prompt-Standards) — model routing, prompt versioning, eval gates, safety
+- [Security and Data Policy](Security-and-Data-Policy) — classification, encryption, IAM, vuln management, compliance, IR
+- [Observability Standards](Observability-Standards) — golden signals, SLOs, logging, metrics, tracing, on-call
+- [API Design Standards](API-Design-Standards) — REST/gRPC, versioning, error model, idempotency, OpenAPI
+- [CI/CD and Release Engineering](CI-CD-and-Release-Engineering) — trunk-based, deploys, rollback, feature flags
+- [Testing Strategy](Testing-Strategy) — the test pyramid + AI eval suites
+- [Documentation Standards](Documentation-Standards) — where each kind of docs lives
+
+### Domain Knowledge — authored by Domain Expert Councils
 
 - [Domain Knowledge Index](Domain-Knowledge-Index) — entry point to jurisdiction-specific pages
 
@@ -82,16 +84,16 @@ The authoritative rules, playbooks, and references agents consult on every task.
 
 ## The six barriers (one-line reminders)
 
-This Wiki is the operational answer to the six structural barriers documented in [The Six Barriers](The-Six-Barriers):
+This Wiki is the operational answer to the [six structural barriers](The-Six-Barriers):
 
 | # | Barrier | Pages that solve it |
 |---|---|---|
-| **B1** | Compound failure | [Validation Gate Specifications](Validation-Gate-Specifications), [Rollback Procedures](Rollback-Procedures) |
-| **B2** | Domain expertise gap | [Domain Knowledge Index](Domain-Knowledge-Index), all [Agent Playbooks](HR-Agent-Playbook) |
-| **B3** | Enterprise data silos | [Unified Entity Model](Unified-Entity-Model) |
-| **B4** | Agent identity & security | [Action Risk Classification](Action-Risk-Classification) |
-| **B5** | Trust & change management | [Phased Autonomy Reference](Phased-Autonomy-Reference), [Approval Workflow Framework](Approval-Workflow-Framework) |
-| **B6** | Breadth complexity | [How Agents Use This Wiki](How-Agents-Use-This-Wiki), [Wiki Governance](Wiki-Governance) |
+| **B1** | Compound failure | [Validation Gate Specifications](Validation-Gate-Specifications) · [Rollback Procedures](Rollback-Procedures) · [Testing Strategy](Testing-Strategy) |
+| **B2** | Domain expertise gap | [Domain Knowledge Index](Domain-Knowledge-Index) · all [Agent Playbooks](HR-Agent-Playbook) |
+| **B3** | Enterprise data silos | [Unified Entity Model](Unified-Entity-Model) · [Technology Stack § Data layer](Technology-Stack#data-layer) |
+| **B4** | Agent identity & security | [Action Risk Classification](Action-Risk-Classification) · [Security and Data Policy](Security-and-Data-Policy) |
+| **B5** | Trust & change management | [Phased Autonomy Reference](Phased-Autonomy-Reference) · [Approval Workflow Framework](Approval-Workflow-Framework) |
+| **B6** | Breadth complexity | [Architecture Principles](Architecture-Principles) · [How Agents Use This Wiki](How-Agents-Use-This-Wiki) |
 
 ---
 
@@ -105,8 +107,10 @@ Humans author and maintain `Approved` pages. The Wiki's `git` history is the sou
 
 ---
 
-## Pitch site
+## Pitch site and in-site Wiki viewer
 
-The public pitch site for investors and customers lives at [hadu610.github.io/Enterprise-Atlantis](https://hadu610.github.io/Enterprise-Atlantis/) (once Pages is enabled). Repo at [github.com/hadu610/Enterprise-Atlantis](https://github.com/hadu610/Enterprise-Atlantis).
+- Public pitch site: [hadu610.github.io/Enterprise-Atlantis](https://hadu610.github.io/Enterprise-Atlantis/) (when GitHub Pages is enabled)
+- In-site Wiki viewer (same content, brand-styled): [hadu610.github.io/Enterprise-Atlantis/wiki.html](https://hadu610.github.io/Enterprise-Atlantis/wiki.html)
+- Source repo: [github.com/hadu610/Enterprise-Atlantis](https://github.com/hadu610/Enterprise-Atlantis)
 
-*Confidential — For internal use and authorised partner review only · Strategic Plan v2.0 + Operational Layer v1 · 2026-05-15*
+*Confidential — For internal use and authorised partner review only · Strategic Plan v2.0 + Operational Layer v1 + Engineering Blueprint v1 · 2026-05-15*

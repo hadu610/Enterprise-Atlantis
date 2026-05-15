@@ -1,6 +1,6 @@
 ### Atlantis Wiki
 
-**[Home](Home)**
+**[Home](Home)** · **[Master Blueprint Index](Master-Blueprint-Index)**
 
 ---
 
@@ -43,9 +43,18 @@
 
 ---
 
-#### Engineering
+#### Engineering blueprint
 
 - [Coding Standards](Coding-Standards)
+- [Technology Stack](Technology-Stack)
+- [Architecture Principles](Architecture-Principles)
+- [AI Model & Prompt Standards](AI-Model-and-Prompt-Standards)
+- [Security & Data Policy](Security-and-Data-Policy)
+- [Observability Standards](Observability-Standards)
+- [API Design Standards](API-Design-Standards)
+- [CI/CD & Release Engineering](CI-CD-and-Release-Engineering)
+- [Testing Strategy](Testing-Strategy)
+- [Documentation Standards](Documentation-Standards)
 
 ---
 
