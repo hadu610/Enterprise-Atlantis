@@ -260,6 +260,17 @@ This is mandatory — vendor lock-in to a single LLM provider is the single bigg
 - **Single-provider strategy.** Risk too high.
 - **Custom fine-tuning Day 1.** Prompt engineering + retrieval is sufficient at our scale; fine-tuning is a Phase-3 investment.
 
+### Agent skills — adopt the commoditised, build the moat
+
+We do not reinvent generic capabilities. The platform adopts Anthropic-published Agent Skills (PPTX, DOCX, XLSX, PDF, skill-creator) for document and file capabilities every business agent needs, **wrapped** with our PII redaction, audit, and validation gates.
+
+We build the differentiated skills ourselves:
+
+- Platform-internal skills (validation gate evaluator, Trust Score calculator, Universal Data Bridge query, agent identity issuance) — security-critical or architecture-specific.
+- **Domain Playbooks distributed as skills** (UK Employment Law, ASC 606 Revenue Recognition, GDPR compliance, etc.) — our moat. Same packaging format as Anthropic's; our content.
+
+Every skill — adopted or built — is registered, version-pinned, security-reviewed, and access-controlled per customer tier. The full strategy lives in [Agent Skills Strategy](Agent-Skills-Strategy).
+
 See [AI Model and Prompt Standards](AI-Model-and-Prompt-Standards) for governance.
 
 ### When to revisit AI stack

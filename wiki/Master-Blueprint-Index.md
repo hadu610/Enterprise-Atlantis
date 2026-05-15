@@ -102,6 +102,7 @@ The strategic plan (B1–B6 barriers, the six solutions) is the **why**. The pag
 | [CI/CD and Release Engineering](CI-CD-and-Release-Engineering) | ✅ |
 | [Testing Strategy](Testing-Strategy) | ✅ |
 | [Documentation Standards](Documentation-Standards) | ✅ |
+| [Agent Skills Strategy](Agent-Skills-Strategy) | ✅ |
 
 ---
 

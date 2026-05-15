@@ -75,6 +75,7 @@ Decisions, rationale, alternatives considered, and revisit conditions. Every pag
 - [CI/CD and Release Engineering](CI-CD-and-Release-Engineering) — trunk-based, deploys, rollback, feature flags
 - [Testing Strategy](Testing-Strategy) — the test pyramid + AI eval suites
 - [Documentation Standards](Documentation-Standards) — where each kind of docs lives
+- [Agent Skills Strategy](Agent-Skills-Strategy) — adopt Anthropic's published skills (PPTX, DOCX, XLSX, PDF); build the moat (validation gates, Domain Playbooks); registry, governance, tier-access
 
 ### Operations playbooks
 

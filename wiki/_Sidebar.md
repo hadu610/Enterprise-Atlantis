@@ -55,6 +55,7 @@
 - [CI/CD & Release Engineering](CI-CD-and-Release-Engineering)
 - [Testing Strategy](Testing-Strategy)
 - [Documentation Standards](Documentation-Standards)
+- [Agent Skills Strategy](Agent-Skills-Strategy)
 
 ---
 
