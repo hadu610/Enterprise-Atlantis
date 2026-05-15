@@ -95,6 +95,7 @@ The strategic plan (B1–B6 barriers, the six solutions) is the **why**. The pag
 | [Coding Standards](Coding-Standards) | ✅ |
 | [Technology Stack](Technology-Stack) | ✅ |
 | [Architecture Principles](Architecture-Principles) | ✅ |
+| [Cross-Agent Coordination](Cross-Agent-Coordination) | ✅ |
 | [AI Model and Prompt Standards](AI-Model-and-Prompt-Standards) | ✅ |
 | [Security and Data Policy](Security-and-Data-Policy) | ✅ |
 | [Observability Standards](Observability-Standards) | ✅ |

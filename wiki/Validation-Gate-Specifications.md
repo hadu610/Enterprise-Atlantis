@@ -77,11 +77,15 @@ Per-task gate definitions live in each agent's playbook.
 After all gates pass, the action is executed by a **deterministic executor**, not the LLM. The executor:
 
 - Takes the validated output as a structured payload
-- Executes the literal action (API call, database write, message send)
-- Captures the result
+- Enqueues the action in the entity-keyed action queue
+- Dequeues in FIFO order per entity, with optimistic concurrency control (OCC)
+- Executes the literal action inside a transaction (API call, database write, message send)
+- Captures the result + emits a state-change event
 - Returns the result to the orchestration engine for the next step
 
 The LLM never directly calls a write API, financial API, or destructive API. This is enforced by the API gateway — agent identities have no scope to call writeable APIs directly; only the executor's identity does.
+
+This is also the **serialization point** when multiple agents touch the same entity — see [Cross-Agent Coordination](Cross-Agent-Coordination) for the full mechanism (entity-keyed FIFO, OCC, leases, saga compensation, conflict arbitration).
 
 ## 5. Rollback snapshot
 

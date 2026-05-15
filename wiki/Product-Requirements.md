@@ -18,7 +18,8 @@ This page enumerates the twelve core platform components. Each component is mapp
 - Central broker for all cross-department agent coordination — agents do not call each other directly
 - **Shared Context Object:** structured data packet passed through every workflow step, preventing agent contradictions
 - **Conflict resolution:** detects when two agents produce contradictory outputs and routes to human arbitration
-- **Workflow state machine:** each multi-step workflow has a formal state (pending, in-progress, awaiting-approval, complete, rolled-back)
+- **Workflow state machine:** each multi-step workflow has a formal state (pending, in-progress, awaiting-approval, complete, rolled-back, compensating)
+- **Action Executor + entity-keyed queue:** serialises mutations to the same entity across all agents; OCC + saga compensation + lease-based exclusion — see [Cross-Agent Coordination](Cross-Agent-Coordination) for the full architecture
 - **Complexity Budget monitor:** tracks integration points, data dependencies, and cross-agent communication paths
 
 ## C. Validation Gate Architecture *(solves B1)*

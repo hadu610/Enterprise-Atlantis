@@ -48,6 +48,7 @@
 - [Coding Standards](Coding-Standards)
 - [Technology Stack](Technology-Stack)
 - [Architecture Principles](Architecture-Principles)
+- [Cross-Agent Coordination](Cross-Agent-Coordination)
 - [AI Model & Prompt Standards](AI-Model-and-Prompt-Standards)
 - [Security & Data Policy](Security-and-Data-Policy)
 - [Observability Standards](Observability-Standards)

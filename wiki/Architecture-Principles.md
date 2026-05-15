@@ -123,7 +123,15 @@ Every public API and event schema is versioned. Breaking changes ship as a new v
 
 **Implication.** API surfaces use `/v1/`, `/v2/`. Events carry `schema_version`. Database migrations are forward-only (see [Coding Standards § 11](Coding-Standards#11-migrations)).
 
-## 15. Architecture decisions are documented or they didn't happen
+## 15. Cross-agent coordination goes through the Action Executor
+
+When multiple agents touch the same entity, mutations are serialised through an entity-keyed action queue processed by the Action Executor. Agents never write to entity tables directly — the OAuth gateway forbids it. Optimistic concurrency control (OCC) catches stale reads; saga workflows coordinate cross-entity changes with compensating actions; conflicts route to human arbitration.
+
+**Why.** Without an explicit coordination layer, multi-agent platforms produce lost updates, contradictory state, and silent corruption. The architecture below trades a small latency cost (≤200ms per mutation) for the guarantee that no two agents can corrupt the same record.
+
+**Implication.** New agents inherit coordination for free; the same machinery serves all departments. See [Cross-Agent Coordination](Cross-Agent-Coordination) for the full pattern, schema, and walked-through scenarios.
+
+## 16. Architecture decisions are documented or they didn't happen
 
 Every non-trivial architectural choice is recorded as an ADR ([Coding Standards § 12](Coding-Standards#12-architecture-decision-records-adrs)). "We talked about this in a meeting" is not a decision; it's a memory that will not survive a team change.
 

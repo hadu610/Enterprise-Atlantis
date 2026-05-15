@@ -67,7 +67,8 @@ Decisions, rationale, alternatives considered, and revisit conditions. Every pag
 
 - [Coding Standards](Coding-Standards) — what we draw from (Google, Airbnb, PEP 8, Effective Go, OWASP), and our additions
 - [Technology Stack](Technology-Stack) — languages, frameworks, databases, infra, AI providers, with rationale and alternatives
-- [Architecture Principles](Architecture-Principles) — the 15 constitutional rules of the platform's architecture
+- [Architecture Principles](Architecture-Principles) — the 16 constitutional rules of the platform's architecture
+- [Cross-Agent Coordination](Cross-Agent-Coordination) — how agents work on the same entity without conflict: entity-keyed action queue, Action Executor, OCC, sagas, leases, conflict arbitration
 - [AI Model and Prompt Standards](AI-Model-and-Prompt-Standards) — model routing, prompt versioning, eval gates, safety
 - [Security and Data Policy](Security-and-Data-Policy) — classification, encryption, IAM, vuln management, compliance, IR
 - [Observability Standards](Observability-Standards) — golden signals, SLOs, logging, metrics, tracing, on-call
