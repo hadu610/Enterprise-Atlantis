@@ -787,5 +787,68 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.04em;
 }
 
+/* ===== Shared Source (Wiki on landing) ===== */
+.shared-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 36px;
+}
+.shared-card {
+  padding: 30px 26px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
+  border-radius: var(--radius);
+  transition: border-color .2s ease, transform .2s ease;
+}
+.shared-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+.shared-card-feature {
+  border-color: rgba(91,140,255,0.35);
+  background:
+    radial-gradient(80% 200% at 100% 0%, rgba(124,92,255,0.16), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.012));
+}
+.shared-icon {
+  font-size: 24px;
+  margin-bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(91,140,255,0.18), rgba(124,92,255,0.18));
+  border: 1px solid rgba(91,140,255,0.3);
+}
+.shared-card h3 { font-size: 18px; margin: 0 0 10px; letter-spacing: -0.012em; }
+.shared-card p { color: var(--text-dim); font-size: 14.5px; margin: 0 0 14px; line-height: 1.6; }
+.shared-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.shared-list li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 13.5px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin: 6px 0;
+}
+.shared-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 9px;
+  width: 8px; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 2px;
+}
+.shared-cta {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+@media (max-width: 900px) { .shared-grid { grid-template-columns: 1fr; } }
+
 /* ===== Selection ===== */
 ::selection { background: rgba(91,140,255,0.35); color: #fff; }

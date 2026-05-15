@@ -8,30 +8,36 @@ Pitch site and strategic planning repo for **Atlantis**, the AI operating system
 
 ## What's in this repo
 
-| File | Purpose |
+| File / folder | Purpose |
 |---|---|
 | `index.html` | Single-page pitch site for investors and enterprise buyers |
-| `styles.css` | Design system (dark, enterprise-grade) |
-| `script.js` | Sticky nav, scroll reveals, active-section highlighting |
+| `wiki.html` | In-site Wiki viewer (same content humans + AI agents read) |
+| `wiki.js` / `wiki.css` | Markdown renderer and viewer styles |
+| `styles.css` / `script.js` | Shared design system and landing-page interactions |
+| `wiki/` | Source markdown — 33 pages, the single source of truth for agents and humans |
 
 ## Viewing the site
 
-Open `index.html` directly in any modern browser — no build step required.
-
-```bash
-open index.html
-```
-
-Or serve it locally:
+**Recommended** — run a small local server so the Wiki viewer's `fetch()` calls work:
 
 ```bash
 python3 -m http.server 8080
 # then open http://localhost:8080
 ```
 
-## Strategic plan
+The pitch site is at `/index.html`; the Wiki viewer is at `/wiki.html`.
 
-The full Strategic Plan v2.0 — vision, market analysis, the six barriers, our architectural decisions, competitive positioning, product requirements, and roadmap — lives in the [project Wiki](../../wiki).
+> Opening `index.html` directly with `file://` works for the landing page but the Wiki viewer cannot
+> load markdown files from a `file://` origin (browser CORS). Use the local server above, or deploy
+> to GitHub Pages (Settings → Pages → Deploy from branch → `main` / root).
+
+## The Wiki — single source for humans and AI
+
+The [`wiki/`](wiki) folder is the operational knowledge base every AI agent in Atlantis reads
+before acting. Humans (developers, managers, HR, finance, legal, ops) read the same files via the
+in-site viewer at `/wiki.html`. There is no parallel "for AI" vs "for humans" documentation.
+
+The Wiki is also mirrored to the [GitHub Wiki](../../wiki) for browsing on github.com.
 
 ## Status
 

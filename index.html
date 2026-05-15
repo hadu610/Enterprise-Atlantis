@@ -20,12 +20,12 @@
       <span class="brand-name">Atlantis</span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="#problem">The Problem</a>
-      <a href="#solution">Our Solution</a>
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
       <a href="#platform">Platform</a>
-      <a href="#autonomy">Phased Autonomy</a>
-      <a href="#competition">Competitive</a>
+      <a href="#autonomy">Autonomy</a>
       <a href="#roadmap">Roadmap</a>
+      <a href="wiki.html">Wiki</a>
     </nav>
     <a href="#cta" class="btn btn-primary nav-cta">Talk to us</a>
   </div>
@@ -340,6 +340,65 @@
           <p>All domain playbooks, compliance rules, coding standards, and company context — version-controlled. Every agent reads before it acts.</p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SHARED SOURCE OF TRUTH (WIKI) ============ -->
+<section class="section" id="shared-source">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">One Source · Humans + AI</div>
+      <h2 class="section-title">The Wiki is the platform's brain.</h2>
+      <p class="section-sub">
+        Every AI agent reads the Wiki before acting. Every developer, manager, and operator
+        contributing to Atlantis follows the same pages. There is no parallel "for AI" and "for humans"
+        documentation — the same file is rendered for both audiences. If code disagrees with the Wiki,
+        the code is wrong.
+      </p>
+    </div>
+
+    <div class="shared-grid">
+      <div class="shared-card">
+        <div class="shared-icon">🤖</div>
+        <h3>For AI agents</h3>
+        <p>Every page carries a parseable metadata block (Type, Owner, Status, Applies to, Jurisdiction). Agents load the rule layer, the playbook, the domain knowledge, and the glossary before executing — and ignore pages that don't apply.</p>
+        <ul class="shared-list">
+          <li>Deterministic page metadata</li>
+          <li>Jurisdiction-aware loading</li>
+          <li>Confidence and escalation rules built in</li>
+          <li>Auto-update via reviewed drafts</li>
+        </ul>
+      </div>
+
+      <div class="shared-card shared-card-feature">
+        <div class="shared-icon">📘</div>
+        <h3>For humans</h3>
+        <p>Developers, managers, HR, finance, legal, ops — everyone reads the same Wiki, rendered with full design polish on this site. No engineering team writes one spec for code and a different one for AI.</p>
+        <ul class="shared-list">
+          <li>Browseable in-product reference</li>
+          <li>Version-controlled with edit approval</li>
+          <li>Sidebar nav + per-page TOC</li>
+          <li>Print-friendly for offline review</li>
+        </ul>
+      </div>
+
+      <div class="shared-card">
+        <div class="shared-icon">⬢</div>
+        <h3>What's on it today</h3>
+        <p>33 pages across two halves — the strategic plan (executive context) and the operational layer (rules every agent follows).</p>
+        <ul class="shared-list">
+          <li>4 Wiki foundation pages</li>
+          <li>6 platform rule sets</li>
+          <li>7 agent playbooks (HR, Finance, Marketing, Sales, Legal, Ops, Dev)</li>
+          <li>Engineering standards · Domain knowledge index · Glossary</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="shared-cta">
+      <a href="wiki.html" class="btn btn-primary btn-lg">Open the Wiki →</a>
+      <a href="https://github.com/hadu610/Enterprise-Atlantis/wiki" target="_blank" rel="noopener" class="btn btn-ghost btn-lg">View on GitHub</a>
     </div>
   </div>
 </section>

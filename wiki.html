@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Atlantis Wiki — Single source of truth for humans and AI</title>
+<meta name="description" content="The operational knowledge base every agent and every human in the Atlantis platform reads from. Same content, same source — code defers to it." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="wiki.css" />
+</head>
+<body class="wiki-body">
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">Atlantis</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html#problem">Problem</a>
+      <a href="index.html#solution">Solution</a>
+      <a href="index.html#platform">Platform</a>
+      <a href="wiki.html" class="active">Wiki</a>
+      <a href="index.html#roadmap">Roadmap</a>
+    </nav>
+    <div class="nav-right">
+      <a href="https://github.com/hadu610/Enterprise-Atlantis" target="_blank" rel="noopener" class="btn btn-ghost nav-cta">GitHub →</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ BANNER ============ -->
+<section class="wiki-banner">
+  <div class="container wiki-banner-inner">
+    <div class="wiki-banner-text">
+      <div class="wiki-banner-eyebrow">
+        <span class="pulse-dot"></span>
+        One source · Humans + AI
+      </div>
+      <h1 class="wiki-banner-title">
+        The operational <span class="grad-text">source of truth</span> for the entire platform.
+      </h1>
+      <p class="wiki-banner-sub">
+        Every AI agent reads this Wiki before acting. Every developer, manager, and operator
+        contributing to Atlantis follows the same rules. If code disagrees with the Wiki,
+        the code is wrong. This page is what both audiences see.
+      </p>
+      <div class="wiki-banner-row">
+        <div class="wb-pill"><span>📘</span> Rules · Playbooks · References</div>
+        <div class="wb-pill"><span>🛡</span> Versioned · Reviewed · Audited</div>
+        <div class="wb-pill"><span>🤖</span> Agent-parseable metadata</div>
+      </div>
+    </div>
+    <div class="wiki-banner-stats">
+      <div class="wb-stat">
+        <div class="wb-stat-value" id="stat-pages">33</div>
+        <div class="wb-stat-label">pages</div>
+      </div>
+      <div class="wb-stat">
+        <div class="wb-stat-value">7</div>
+        <div class="wb-stat-label">agent playbooks</div>
+      </div>
+      <div class="wb-stat">
+        <div class="wb-stat-value">6</div>
+        <div class="wb-stat-label">platform rule sets</div>
+      </div>
+      <div class="wb-stat">
+        <div class="wb-stat-value">v2.0</div>
+        <div class="wb-stat-label">strategic plan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WIKI LAYOUT ============ -->
+<div class="wiki-layout">
+  <div class="container wiki-grid">
+
+    <!-- Mobile sidebar toggle -->
+    <button class="wiki-mobile-toggle" id="mobile-toggle" aria-label="Open sidebar">
+      ☰ Navigation
+    </button>
+
+    <!-- Left sidebar -->
+    <aside class="wiki-sidebar" id="sidebar" aria-label="Wiki navigation">
+      <div class="wiki-sidebar-inner" id="sidebar-content">
+        <div class="loading">Loading navigation…</div>
+      </div>
+    </aside>
+
+    <!-- Center content -->
+    <article class="wiki-content" id="content">
+      <div class="loading">Loading page…</div>
+    </article>
+
+    <!-- Right rail TOC -->
+    <aside class="wiki-toc" id="toc-rail" aria-label="On this page">
+      <div class="wiki-toc-label">On this page</div>
+      <nav id="toc" class="wiki-toc-nav"></nav>
+    </aside>
+
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>Atlantis · The Enterprise AI Operating System</span>
+    </div>
+    <div class="footer-meta">
+      Confidential · Strategic Plan v2.0 + Operational Layer v1 · 2026-05-15
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+<script src="wiki.js" defer></script>
+</body>
+</html>
