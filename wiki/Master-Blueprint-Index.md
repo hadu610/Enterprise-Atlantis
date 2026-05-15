@@ -116,6 +116,7 @@ The canonical enumeration of every workflow across the customer journey (7 stage
 | [Agent Skills Strategy](Agent-Skills-Strategy) | ✅ |
 | [Runaway Prevention and Cost Controls](Runaway-Prevention-and-Cost-Controls) | ✅ |
 | [Prompt Injection Defence and Secret Protection](Prompt-Injection-Defence-and-Secret-Protection) | ✅ |
+| [Coding Agent Skills](Coding-Agent-Skills) | ✅ |
 
 ---
 

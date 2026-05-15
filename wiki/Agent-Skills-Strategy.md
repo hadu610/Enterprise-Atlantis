@@ -209,6 +209,12 @@ The Marketplace ([Product Requirements § G](Product-Requirements#g-centralized-
 - Customer admins install with one click; the platform runs governance Steps 1–4 above before activation.
 - Marketplace revenue split for partner-authored playbooks (Phase 4): TBD; tracked in proposed [Partnership Strategy](Master-Blueprint-Index) page.
 
+## 11.5 The coding skills day-1 list
+
+This page covers the general strategy. The specific day-1 adoption list for coding (frontend + backend), with rationale per tool and explicit "we adopt this, we don't build" calls, lives at **[Coding Agent Skills](Coding-Agent-Skills)**.
+
+The headline: from the first commit, the Dev Agent uses Anthropic's published `review`, `security-review`, `simplify`, `init`, and `skill-creator` skills, plus an opinionated tooling stack (ESLint, Prettier, TypeScript strict, Vitest, Playwright, Ruff, mypy, Semgrep, Snyk, Dependabot, Trivy, OpenAPI 3.1, Spectral). We do not invent parallel versions.
+
 ## 12. The Dev Agent and skills
 
 The Dev Agent uses skills more than any other agent:

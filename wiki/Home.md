@@ -81,6 +81,7 @@ Decisions, rationale, alternatives considered, and revisit conditions. Every pag
 - [Agent Skills Strategy](Agent-Skills-Strategy) — adopt Anthropic's published skills (PPTX, DOCX, XLSX, PDF); build the moat (validation gates, Domain Playbooks); registry, governance, tier-access
 - [Runaway Prevention and Cost Controls](Runaway-Prevention-and-Cost-Controls) — hard limits on loops, token explosions, cascade workflows; per-task / per-agent / per-tenant / platform circuit breakers and kill switches
 - [Prompt Injection Defence and Secret Protection](Prompt-Injection-Defence-and-Secret-Protection) — seven-layer defence: untrusted-content boundary, system prompt isolation, tool schema enforcement, capability scopes, secret-isolation architecture, output filtering, detection
+- [Coding Agent Skills](Coding-Agent-Skills) — day-1 adoption list for frontend + backend coding skills; Anthropic-published `review` / `security-review` / `simplify` / `init` / `skill-creator` mandatory from commit #1; Tailwind / Vitest / Playwright / Semgrep / Snyk / Trivy / OpenAPI 3.1 are the standard tooling stack
 
 ### Operations playbooks
 

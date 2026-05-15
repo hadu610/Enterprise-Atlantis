@@ -199,6 +199,8 @@ We follow the [Michael Nygard ADR format](https://cognitect.com/blog/2011/11/15/
 
 Tool versions are pinned per repo; upgrades are PRs like any other change.
 
+For the full day-1 adoption list — including Anthropic-published coding skills (`review`, `security-review`, `simplify`, `init`, `skill-creator`), frontend stack tooling (Playwright, axe-core, shadcn/ui CLI), and the rationale per choice — see [Coding Agent Skills](Coding-Agent-Skills).
+
 ---
 
 ## When to revisit these standards

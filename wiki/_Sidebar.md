@@ -59,6 +59,7 @@
 - [Agent Skills Strategy](Agent-Skills-Strategy)
 - [Runaway Prevention & Cost Controls](Runaway-Prevention-and-Cost-Controls)
 - [Prompt Injection Defence & Secrets](Prompt-Injection-Defence-and-Secret-Protection)
+- [Coding Agent Skills](Coding-Agent-Skills)
 
 ---
 
