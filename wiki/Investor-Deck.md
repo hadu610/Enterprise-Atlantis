@@ -2,7 +2,9 @@
 
 > **Type:** Investor-facing pitch artifact · **Owner:** Founders · **Status:** Draft · **Audience:** Seed / Series A investors · **Confidentiality:** Confidential — share under NDA · **Last reviewed:** 2026-05-16
 
-A 12-slide deck distilled from the full [Strategic Plan v2.0](Executive-Summary). Each slide here gives the **key message**, the **supporting evidence**, and **speaker notes** for live delivery. When delivering, lean on the wiki pages linked at the end of each slide for depth in Q&A.
+> 🎤 **Present live:** open the [Investor Deck presentation](../investor-deck.html) — full-screen slides, keyboard navigation (← / → / Space), `N` toggles speaker notes, `F` for fullscreen, deep-linkable to any slide.
+
+A 12-slide deck distilled from the full [Strategic Plan v2.0](Executive-Summary). This page is the **source document** — each slide gives the **key message**, the **supporting evidence**, and **speaker notes** for live delivery. When delivering live, run the [presentation version](../investor-deck.html); use this page for Q&A depth and as the wiki source that the live slides are built from.
 
 ---
 

@@ -2,6 +2,8 @@
 
 > **Type:** Customer-facing guide · **Owner:** Product / Marketing · **Status:** Draft · **Audience:** Founders, COOs, CHROs, CFOs, CTOs evaluating Atlantis · **Last reviewed:** 2026-05-16
 
+> 🎤 **Present live:** open the [Customer Briefing Deck](../customer-deck.html) — 10-slide ready-to-present deck for live customer meetings. Keyboard navigation, fullscreen, speaker notes.
+
 Whether you are a five-person startup or a fifty-thousand-person enterprise, you start the same way on Atlantis: **describe your business, get a working AI company in minutes**. What differs is which departments you turn on first, how fast you ramp autonomy, and how deeply we integrate with your existing tools and cloud.
 
 This page shows three paths — **Startup**, **Medium**, and **Enterprise** — so you can see exactly what your first day, first month, and first year look like.

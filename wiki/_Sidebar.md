@@ -7,9 +7,14 @@
 
 ---
 
+#### Live presentations
+
+- 🎤 **[Investor Deck →](../investor-deck.html)**
+- 🎤 **[Customer Briefing Deck →](../customer-deck.html)**
+
 #### Investor materials
 
-- **[Investor Deck](Investor-Deck)**
+- [Investor Deck source](Investor-Deck)
 - [Executive Summary](Executive-Summary)
 - [The Six Barriers](The-Six-Barriers)
 - [Competitor Analysis](Competitor-Analysis)

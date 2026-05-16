@@ -60,7 +60,13 @@
       if (href.startsWith('mailto:') || href.startsWith('tel:')) return;
       if (href.startsWith('#')) return; // already in-page
 
-      // Internal wiki link, possibly with fragment
+      // Real file paths (relative or absolute) — leave alone.
+      // These are typed like "../investor-deck.html" or "/some/file.pdf".
+      if (href.includes('/') || /\.(html?|pdf|png|jpe?g|svg|gif|webp|css|js|json|txt|csv)(\?|#|$)/i.test(href)) {
+        return;
+      }
+
+      // Otherwise it's an internal wiki page link, possibly with fragment.
       const [page, section] = href.split('#');
       const target = (page || HOME_PAGE).replace(/^\/+/, '');
       a.setAttribute('href', `#${target}${section ? '#' + section : ''}`);
