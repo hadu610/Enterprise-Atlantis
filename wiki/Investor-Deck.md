@@ -216,31 +216,82 @@ Backed by [Build Roadmap](Build-Roadmap).
 
 ## Slide 12 · Team & The Ask
 
-> **Key message.** [To be filled by founders before the meeting.]
+> **Key message.** A founder who has lived inside the six-root-cause problem, a founding team profile recruited against the exact gaps Phase 1 needs to fill, and a capital plan calibrated to ship Phase 1 + half of Phase 2 before raising again.
 
 ### Founder
-*Insert founder bio: prior experience, why this problem, why this team to solve it. One paragraph.*
 
-### Founding hires (next 90 days)
-- Platform Architect (orchestration specialist)
-- Security Engineer (agent identity)
-- Data Engineer (Universal Data Bridge)
-- AI / ML Engineers ×2
-- Product Designer
+**[Founder Name]** — Founder & CEO
 
-### Domain Expert Council seats
-- Employment law specialist
-- CPA / accounting expert
-- Compliance attorney (named board advisor)
+[Founder Name] spent **[8+ years]** building **[enterprise infrastructure and multi-tenant AI platforms]** at **[a tier-1 cloud company / a category-leading enterprise SaaS unicorn]**, where they **[led the platform team behind the orchestration layer / shipped the first production agentic AI product / built the multi-tenant data plane]** that **[served ~N Fortune 500 customers / processed $XB+ in transactions per month]**.
+
+Over **[18 months]** advising **[N+]** enterprise customers on AI agent deployments, [Founder Name] watched the same pattern play out again and again — confident demos, six-month pilots, production deployments that quietly died inside the year. Every failure traced back to one of six root causes: failures of reliability, expertise, data unity, agent identity, trust, or cross-department breadth. **The same six. Every time.**
+
+The conviction is product-led: build the platform that has solved all six before any agent ships. The hiring plan, the wiki-first knowledge architecture, the Phased Autonomy Model, the Universal Data Bridge — every architectural decision in Atlantis traces back to a specific failure pattern [Founder Name] watched destroy a customer engagement.
+
+[Founder Name] holds **[a degree / patents in distributed systems / publications in agent governance — fill in]**, lives in **[city]**, and is **[Atlantis's full-time founder-CEO from day one — no other commitments]**.
+
+> **Variant arcs for the founder bio** — pick the one that matches your actual background, then edit accordingly:
+>
+> - **Arc A · The infra builder.** "I spent 10 years building large-scale distributed systems at [tier-1 platform]. Every AI agent platform I evaluated had zero orchestration discipline. I left to build the missing infrastructure layer."
+> - **Arc B · The operator.** "I was COO at [scaling company]. We tried to deploy enterprise AI three times; each time it failed for a different reason — and every reason mapped to one of the six. Atlantis is the platform I needed back then."
+> - **Arc C · The domain expert who pivoted.** "I was an [employment lawyer / CPA / compliance officer] watching generic AI agents misadvise on jurisdiction-specific questions. I partnered with engineers to build the Domain Expert Councils as Atlantis's foundational primitive."
+>
+> The Arc A profile is most credible to infrastructure-thesis investors (a16z, Index, Founders Fund, Sequoia infra teams). Arc B plays better with operator-investor angels and applications-focused funds. Arc C is the strongest narrative for vertical/regulatory funds (Bain, Insight verticals).
+
+### Founding team (recruited in the first 90 days post-close)
+
+The Phase 1 build is gated on six hires. Each role is profiled against a specific Phase 1 deliverable, not a generic "senior engineer" slot.
+
+| Role | Maps to | Hiring bar |
+|---|---|---|
+| **Platform Architect** | Orchestration Engine, Action Executor | 10+ yrs distributed systems; orchestration specialist; ex-AWS / GCP / Stripe / Databricks platform team profile |
+| **Security Engineer** | Zero-Trust Agent Identity, Validation Gates | Agent identity / IAM / zero-trust specialist; ex-Vault / Okta / Auth0 / Cloudflare profile; familiar with SOC 2 audit |
+| **Data Engineer** | Universal Data Bridge, semantic normalisation | Multi-source enterprise data integration; ex-Snowflake / Databricks / Fivetran / Hightouch profile |
+| **AI / ML Engineer × 2** | Agent orchestration, eval discipline, prompt safety | Production agent systems; eval-driven development; ex-Anthropic / OpenAI / Adept / Cohere profile; one focused on agent reasoning, one on safety + evals |
+| **Product Designer** | Console, AI Business Consultant onboarding, Trust Score Dashboard | Enterprise SaaS, complex workflows, B2B onboarding; ex-Linear / Notion / Figma / Retool profile |
+
+Full hiring plan with comp bands, equity ranges, and sequencing: [Hiring Plan and Team Structure](Hiring-Plan-and-Team-Structure).
+
+### Domain Expert Council (founding seats)
+
+The Councils are the moat against [Barrier B2 (Expertise)](The-Six-Barriers#b2--domain-expertise-gap). Each seat owns a department playbook and reviews every wiki change in its domain.
+
+| Council seat | Profile | First playbook |
+|---|---|---|
+| **Employment Law Specialist** | Multi-jurisdiction labour expertise (US + UK + EU minimum); ex-DLA Piper / Baker McKenzie / in-house at a global enterprise | HR Agent jurisdiction-aware policy |
+| **CPA / Public Accounting Partner** | GAAP + IFRS; SOX experience; revenue recognition; ex-Big Four partner or scale-stage CFO | Finance Agent close-cycle |
+| **Compliance & Privacy Attorney** | SOC 2 + GDPR + HIPAA; named board advisor | Cross-platform compliance playbook + Trust Center |
+| **Senior Security Engineer (advisory)** | CISO-track; prior breach response; agent-identity threat model | Agent identity + prompt injection defence |
 
 ### The ask
-- **Raising:** *[$X seed / Series A]*
-- **Use of funds:** 50% engineering hires · 25% Domain Expert Councils + GTM · 15% SOC 2 + compliance · 10% operating runway
-- **Milestone for next round:** Phase 2 complete · 3 paying commercial customers · Trust Score evidence at 90%+
 
-Backed by [Hiring Plan and Team Structure](Hiring-Plan-and-Team-Structure), [FinOps Strategy](FinOps-Strategy).
+> **Raising: $5M seed round.**
 
-**Speaker notes.** *Close with: what we need to make Phase 1 happen, what evidence the next round will see, and what the win looks like — fifty enterprise customers and the empty upper-right quadrant filled before the incumbents wake up.*
+- **Lead:** $3M (board seat, pro-rata)
+- **Strategic angels:** $1.5M (ex-founders of enterprise platforms; former CHROs / CFOs of Fortune 500s)
+- **Domain expert SAFEs:** $0.5M (Council members convert to equity; aligns incentives)
+
+**Use of funds (24 months runway):**
+
+| Category | % | $ | Outcome |
+|---|---|---|---|
+| Founding engineering team | 50% | $2.5M | 6 hires (Architect, Security, Data, 2× AI/ML, Designer) for 18-24 months |
+| Domain Expert Council compensation + advisory | 15% | $0.75M | 4 named Council members; full first-version playbook output |
+| SOC 2 Type II audit + compliance infrastructure | 10% | $0.5M | Audit firm; tooling; legal review; first audit window |
+| Design partner co-development + GTM | 10% | $0.5M | 3–5 design partners onboarded; co-dev sprints; CSM contract or hire |
+| Legal, IP, operating runway, tooling | 15% | $0.75M | Entity setup; trademark; equipment; LLM provider commitments |
+
+**Milestone for Series A (24 months out):**
+
+1. **Phase 1 complete.** Orchestration Engine, Validation Gates, Zero-Trust Agent Identity, Universal Data Bridge (4 priority connectors), Knowledge Wiki, Ticketing — all in production.
+2. **SOC 2 Type II audit in flight or certified.**
+3. **3 paying commercial customers** running HR + Finance agents in Draft → Read mode, with 90%+ Trust Score Dashboard accuracy across deployed workflows.
+4. **2 named Domain Expert Councils** (HR Law, Finance/Accounting) with full first-version playbooks shipped to the wiki.
+5. **$1M+ in committed ARR** from converted design partners + first commercial customers.
+
+Backed by [Hiring Plan and Team Structure](Hiring-Plan-and-Team-Structure), [FinOps Strategy](FinOps-Strategy), [Build Roadmap](Build-Roadmap).
+
+**Speaker notes.** *Close with: what we need to make Phase 1 happen, what evidence the next round will see, and what the win looks like — fifty enterprise customers and the empty upper-right quadrant filled before the incumbents wake up. The team profile is recruited against specific Phase 1 deliverables, not generic "senior engineer" slots — that is how you fund this thesis with conviction.*
 
 ---
 
