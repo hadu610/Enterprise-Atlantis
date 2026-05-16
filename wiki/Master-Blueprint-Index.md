@@ -1,6 +1,6 @@
 # Master Blueprint Index
 
-> **Type:** Reference · **Owner:** Founders · **Status:** Approved · **Applies to:** Humans only · **Jurisdiction:** Global · **Last reviewed:** 2026-05-15
+> **Type:** Reference · **Owner:** Founders · **Status:** Approved · **Applies to:** Humans only · **Jurisdiction:** Global · **Last reviewed:** 2026-05-16
 
 ## Summary
 
@@ -32,7 +32,9 @@ The strategic plan (B1–B6 barriers, the six solutions) is the **why**. The pag
 | [Executive Summary](Executive-Summary) | ✅ |
 | [The Six Barriers](The-Six-Barriers) | ✅ |
 | [Product Concept](Product-Concept) | ✅ |
+| &nbsp;&nbsp;↳ [AI Business Consultant Onboarding](AI-Business-Consultant-Onboarding) | ✅ |
 | [Competitor Analysis](Competitor-Analysis) | ✅ |
+| &nbsp;&nbsp;↳ [Deep Dive · Durable.ai](Competitor-Deep-Dive-Durable) | ✅ |
 | [Advantages and Risks](Advantages-and-Risks) | ✅ |
 | [Product Requirements](Product-Requirements) | ✅ |
 | [Build Roadmap](Build-Roadmap) | ✅ |
@@ -41,13 +43,24 @@ The strategic plan (B1–B6 barriers, the six solutions) is the **why**. The pag
 
 ---
 
-## A.1 · Business Workflows (the *what* in practice)
+## A.1 · Customer-Facing Artifacts (the *what* in practice)
 
 | Page | Status |
 |---|---|
 | [Business Workflows](Business-Workflows) | ✅ |
+| [Customer Journeys](Customer-Journeys) | ✅ |
+| [Investor Deck](Investor-Deck) — 12-slide source | ✅ |
 
-The canonical enumeration of every workflow across the customer journey (7 stages, lead → renewal) and the employee journey (5 stages, interview → offboarding). Rendered interactively at [/workflows.html](https://hadu610.github.io/Enterprise-Atlantis/workflows.html).
+**Business Workflows** is the canonical enumeration of every workflow across the customer journey (7 stages, lead → renewal) and the employee journey (5 stages, interview → offboarding). Rendered interactively at [/workflows.html](https://hadu610.github.io/Enterprise-Atlantis/workflows.html).
+
+**Customer Journeys** is the three-path narrative — Startup (1–49), Medium (50–249), Enterprise (250+) — showing what day 1, month 1, and year 1 look like for each segment.
+
+**Live presentation decks** (HTML, ready to present):
+
+| Deck | Audience | Slides |
+|---|---|---|
+| [Investor Deck →](https://hadu610.github.io/Enterprise-Atlantis/investor-deck.html) | Seed investors | 12 |
+| [Customer Briefing Deck →](https://hadu610.github.io/Enterprise-Atlantis/customer-deck.html) | Customer prospects | 10 |
 
 ---
 
@@ -198,7 +211,7 @@ These are the unchanging strategic anchors of the platform. When evaluating any 
 4. **Modular-first architecture.** Department isolation prevents the breadth-complexity trap.
 5. **Reliability over features.** The production gap is the competitive battlefield ([Strategic Considerations § 5](Strategic-Considerations#5-the-production-gap-is-the-competitive-battlefield)).
 6. **Multi-provider AI strategy.** No single LLM provider exceeds 80% of traffic.
-7. **The Dev Agent is the moat.** No competitor offers an autonomous software engineer inside the same governance fabric.
+7. **The Dev Agent is the foundation underneath the other six.** Every customer-specific extension — connectors, workflow tweaks, console features — is shipped by the Dev Agent inside the same governance fabric. This is the closed loop business-OS competitors (Workday, Salesforce, ServiceNow) and coding-agent competitors (Devin, Cognition) cannot replicate.
 8. **Domain Expert Councils are not optional.** Domain depth is one of the three legs of agent reliability.
 9. **The Wiki updates itself, bounded.** Agent-authored drafts route to human Owners; no agent ever promotes its own page.
 10. **Cost is a feature, not a footnote.** Every technology added has a documented 10×/100×/1000× cost trajectory.

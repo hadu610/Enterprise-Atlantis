@@ -18,9 +18,15 @@ The Trust Score Dashboard is not just a product feature — **it is the primary 
 
 A Chief People Officer who sees that the HR Agent has a 97% accuracy rate, 4% human override rate, and zero validation gate failures over 90 days will approve the Finance Agent without hesitation. Build this dashboard to be **boardroom-ready**. It should be the first thing a customer's CIO sees when they log in.
 
-## The Dev Agent is still the moat
+## The Dev Agent is the foundation — and therefore the moat
 
-The autonomous software development agent remains the feature no competitor offers in a full-company platform context.
+The Dev Agent is **not a peer department**. It is the foundation that sits between Core Infrastructure and the six department agents, and **every customer-specific extension** — a new connector for a system we don't yet support, a workflow tuned to the customer's industry, a feature request from the customer's console — **is shipped by the Dev Agent**. See [Product Concept § Platform architecture](Product-Concept#platform-architecture-overview).
+
+This is the loop no competitor has closed:
+
+- **Business-OS competitors** (Workday, Microsoft, Salesforce, ServiceNow) sell department agents and expect the customer to grow a platform team for everything bespoke.
+- **Coding-agent competitors** (Devin, Cognition) ship code but have no business operations to plug into.
+- **Only Atlantis** closes the loop — the Dev Agent extends the same governance fabric (validation gates, agent identity, wiki rules, rollback) that the department agents already operate under.
 
 The combination of:
 
@@ -29,7 +35,7 @@ The combination of:
 - (c) Wiki-enforced coding standards
 - (d) Rollback capability for every deployment
 
-creates a Dev Agent that is **safer and more auditable than many human dev contractors**. This is the story that wins enterprise CTO buy-in.
+creates a Dev Agent that is **safer and more auditable than many human dev contractors**, and one that compounds: every customer engagement teaches it. This is the story that wins enterprise CTO buy-in.
 
 ## The production gap is the competitive battlefield
 
