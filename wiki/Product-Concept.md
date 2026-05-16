@@ -2,14 +2,15 @@
 
 ## Platform architecture overview
 
-The platform is built in three horizontal layers. This architecture directly addresses **B6 (breadth complexity)** while enabling **B4 (agent identity)** and **B3 (data silos)** to be solved once at the Core level rather than rebuilt for each department.
+The platform is built in five horizontal layers. The two **foundation** layers (L0 and L1) carry every other component — every agent reads from and proposes writes to the same substrates. This architecture directly addresses **B6 (breadth complexity)** while enabling **B4 (agent identity)**, **B3 (data silos)**, and **B1 (compound failure)** to be solved once at the foundation level rather than rebuilt per department.
 
 | Layer | Components & barrier addressed |
 |---|---|
-| **Layer 1: Core Infrastructure** | Orchestration Engine, Zero-Trust Agent Identity (B4), Universal Data Bridge (B3), Knowledge Wiki, Ticketing System, Audit Engine — built once, shared by every agent above |
-| **Layer 2: Dev Agent Foundation** | The Dev Agent sits directly on top of Core Infrastructure and **below** the department agents. Every customer-specific connector, playbook extension, and feature is shipped by the Dev Agent. Validation Gates at every step (B1). This is the loop no business-OS competitor has closed. |
-| **Layer 3: Department Agents** | HR, Finance, Marketing, Sales, Legal, Operations — each a modular plugin to the Core; Domain Expert Councils own each playbook (B2); Validation Gates at every handoff (B1); customisations to each are shipped by the Dev Agent (Layer 2) |
-| **Layer 4: Customer Interface** | Console, AI Business Consultant onboarding, Trust Dashboard (B5), Change Management Module (B5), Activity Tracking, Integration Marketplace |
+| **Layer 0: Platform Foundations** | The two load-bearing substrates every other layer depends on. **[Unified CRM](Unified-CRM-Blueprint)** — one entity store covering customers, employees, vendors, partners, leads, deals, contracts, transactions, projects, audit events (B3). **[Unified Ticketing System](Unified-Ticketing-Blueprint)** — one ticket lifecycle, one approval framework, one audit trail for every department's day-to-day work (B5, B6). No SaaS company has built this because none of them owns the agent runtime across every department; Atlantis does, so the substrate must be unified. |
+| **Layer 1: Core Services** | Orchestration Engine, Action Executor + entity-keyed action queue ([Cross-Agent Coordination](Cross-Agent-Coordination)), Zero-Trust Agent Identity (B4), Universal Data Bridge (B3), Validation Gate Architecture (B1), Knowledge Wiki, Rollback Engine. The rules and tools that govern how anything reads or writes the foundations. |
+| **Layer 2: Dev Agent Foundation** | The Dev Agent sits directly on top of Core Services and **below** the department agents. Every customer-specific connector, playbook extension, and feature is shipped by the Dev Agent. Validation Gates at every step (B1). This is the loop no business-OS competitor has closed. |
+| **Layer 3: Department Agents** | HR, Finance, Marketing, Sales, Legal, Operations — each a modular plugin to the Core; Domain Expert Councils own each playbook (B2); Validation Gates at every handoff (B1); customisations to each are shipped by the Dev Agent (Layer 2). Each agent reads from and proposes writes to the Layer 0 foundations through Layer 1 services. |
+| **Layer 4: Customer Interface** | Console, AI Business Consultant onboarding, Trust Dashboard (B5), Change Management Module (B5), Activity Tracking, Integration Marketplace. Every surface here is a view onto Layer 0 substrates. |
 
 ## Four core pillars
 

@@ -64,6 +64,19 @@ The strategic plan (B1–B6 barriers, the six solutions) is the **why**. The pag
 
 ---
 
+## A.2 · Platform Foundations — the two load-bearing substrates
+
+Two substrates carry every other component of the platform. **Every department agent and the Dev Agent reads from, proposes writes to, and is audited through these two.** They are foundational in the strongest sense: nothing else in the platform works correctly without them.
+
+| Page | Status |
+|---|---|
+| [Unified CRM Blueprint](Unified-CRM-Blueprint) — the entity substrate (one store for every entity in the business) | ✅ |
+| [Unified Ticketing Blueprint](Unified-Ticketing-Blueprint) — the work substrate (one ticket lifecycle for every department) | ✅ |
+
+The strategic claim: every existing enterprise runs fragmented CRMs (Salesforce + BambooHR + QuickBooks + …) and fragmented ticketing systems (Jira + Zendesk + ServiceNow + …) because no vendor owns the agent runtime across departments. Atlantis does — which means these substrates can be unified, and *must* be, because the cross-department agent contract fails without them. See each blueprint's § 2 for the "one of a kind" argument.
+
+---
+
 ## B · Wiki Foundation
 
 | Page | Status |
@@ -212,9 +225,10 @@ These are the unchanging strategic anchors of the platform. When evaluating any 
 5. **Reliability over features.** The production gap is the competitive battlefield ([Strategic Considerations § 5](Strategic-Considerations#5-the-production-gap-is-the-competitive-battlefield)).
 6. **Multi-provider AI strategy.** No single LLM provider exceeds 80% of traffic.
 7. **The Dev Agent is the foundation underneath the other six.** Every customer-specific extension — connectors, workflow tweaks, console features — is shipped by the Dev Agent inside the same governance fabric. This is the closed loop business-OS competitors (Workday, Salesforce, ServiceNow) and coding-agent competitors (Devin, Cognition) cannot replicate.
-8. **Domain Expert Councils are not optional.** Domain depth is one of the three legs of agent reliability.
-9. **The Wiki updates itself, bounded.** Agent-authored drafts route to human Owners; no agent ever promotes its own page.
-10. **Cost is a feature, not a footnote.** Every technology added has a documented 10×/100×/1000× cost trajectory.
+8. **The Unified CRM and the Unified Ticketing System are the two load-bearing substrates.** Every department agent reads from and proposes writes to the same entity store ([Unified CRM Blueprint](Unified-CRM-Blueprint)); every department's day-to-day work flows through the same ticket lifecycle ([Unified Ticketing Blueprint](Unified-Ticketing-Blueprint)). One schema, one approval framework, one audit trail across all departments. No other platform has this because no other platform owns the cross-department agent runtime.
+9. **Domain Expert Councils are not optional.** Domain depth is one of the three legs of agent reliability.
+10. **The Wiki updates itself, bounded.** Agent-authored drafts route to human Owners; no agent ever promotes its own page.
+11. **Cost is a feature, not a footnote.** Every technology added has a documented 10×/100×/1000× cost trajectory.
 
 If a decision contradicts a touchstone, the decision needs explicit explanation and an updated touchstone — not silent drift.
 

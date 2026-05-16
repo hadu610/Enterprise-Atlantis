@@ -4,7 +4,7 @@
 
 ## Summary
 
-The seventeen principles below are the constitutional rules of the platform's architecture. Individual ADRs may refine them; nothing overrides them without an explicit "supersedes" entry on this page and a CTO-signed ADR.
+The eighteen principles below are the constitutional rules of the platform's architecture. Individual ADRs may refine them; nothing overrides them without an explicit "supersedes" entry on this page and a CTO-signed ADR.
 
 These principles exist because Atlantis's central technical bet — solving [Barrier B6 (Breadth Multiplies Complexity)](The-Six-Barriers#b6--breadth-multiplies-complexity) — is won or lost at the architecture level, not the code level.
 
@@ -152,6 +152,21 @@ Three commitments follow:
 Every non-trivial architectural choice is recorded as an ADR ([Coding Standards § 12](Coding-Standards#12-architecture-decision-records-adrs)). "We talked about this in a meeting" is not a decision; it's a memory that will not survive a team change.
 
 **Why.** Memory is unreliable. Future-you needs to know not just what we chose but what we chose against and why.
+
+## 18. The Unified CRM and the Unified Ticketing System are the two foundational substrates
+
+Two substrates carry every other component of the platform. **Every department agent and the Dev Agent reads from, proposes writes to, and is audited through these two.**
+
+- The **[Unified CRM](Unified-CRM-Blueprint)** is the single store for every entity in the customer's business — customers, employees, vendors, partners, leads, deals, contracts, transactions, projects, audit events.
+- The **[Unified Ticketing System](Unified-Ticketing-Blueprint)** is the single work substrate — every meaningful action across every department flows through one ticket lifecycle, one approval framework, and one audit trail.
+
+**Why.** Every existing enterprise runs three-to-ten fragmented CRMs (Salesforce + BambooHR + QuickBooks + …) and three-to-seven fragmented ticketing systems (Jira + Zendesk + ServiceNow + …). The fragmentation is **the consequence of every vendor solving a single workflow** — no vendor owns the agent runtime across departments, so no vendor can collapse the substrates. Atlantis does own the agent runtime across departments — which means we *can* unify these substrates, and we *must*, because the cross-department agent contract (one workflow, one audit story, one approval framework) fails without it.
+
+**Implication.** Two department agents cannot share a database with each other (Principle 1) but they **do** share the Layer 0 foundations through the Read API and the Action Executor. New department agents inherit both substrates for free — no new database, no new ticket schema, no new approval routing infrastructure. Forbidden combinations and access classes are enforced at the foundation layer ([Unified CRM Blueprint § 4](Unified-CRM-Blueprint#4-departmental-ownership-matrix), [Action Risk Classification](Action-Risk-Classification)), not duplicated in each agent.
+
+**Connection to other principles.** Principle 2 (single source of truth) is operationalised by the Unified CRM. Principle 15 (Cross-Agent Coordination) is the write-path mechanism *into* the Unified CRM. Principle 14 (versioning) governs how the CRM schema and Ticketing taxonomy evolve. Principle 9 (multi-tenancy) is enforced at the foundation, not per agent.
+
+**Phasing.** Both substrates are Phase 1 deliverables ([Build Roadmap](Build-Roadmap#phase-1--core-infrastructure-months-16)) — nothing else can ship in production until they exist.
 
 ---
 

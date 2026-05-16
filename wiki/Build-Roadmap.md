@@ -10,13 +10,20 @@ The reason: building department agents on top of an unsolved orchestration, iden
 
 **Priority:** Build the foundation that solves B1, B3, B4, B6 before any agent goes live. **Skipping this phase to ship faster is the #1 reason enterprise AI projects fail in production.**
 
+The two **load-bearing substrates** ship in this phase. Nothing else can ship in production until they exist:
+
+- **Build the [Unified CRM](Unified-CRM-Blueprint)** — one entity store covering Person, Employee, Organisation, Customer, Lead, Project, Transaction, Contract, Ticket, Audit Event; scope-checked read API; field-level access classes; per-tenant isolation; encryption-at-rest for restricted/regulated fields.
+- **Build the [Unified Ticketing System](Unified-Ticketing-Blueprint)** — one ticket lifecycle (state machine, taxonomy, SLAs), one approval framework, one audit trail across every department; saga support for cross-department workflows; two-way mirroring to Jira / GitHub Issues for engineering use cases at Phase 1 customers.
+
+The remaining Phase 1 work supports the two substrates above:
+
 - Complete technical architecture for all core components — Orchestration Engine, Validation Gate Architecture, Zero-Trust Agent Identity, Universal Data Bridge
 - Build Orchestration Engine and Shared Context Object infrastructure
+- Build Action Executor + entity-keyed action queue ([Cross-Agent Coordination](Cross-Agent-Coordination)) — the only identity that writes to the CRM
 - Build Validation Gate Architecture with deterministic execution wrapper and rollback engine
 - Build Zero-Trust Agent Identity system with OAuth scoping and action risk classification
-- Build Universal Data Bridge with **Salesforce, HubSpot, QuickBooks, and GitHub** connectors (Phase 1 priority integrations)
+- Build Universal Data Bridge with **Salesforce, HubSpot, QuickBooks, and GitHub** connectors (Phase 1 priority integrations) — syncing into the Unified CRM
 - Build Knowledge Wiki with versioning and approval workflow
-- Build Ticketing System with risk-tier classification and Phased Autonomy Model framework
 - Build onboarding interview engine with Data Readiness Assessment and jurisdiction detection
 - **SOC 2 Type II readiness audit begins** — must be certified before first commercial customer
 - Recruit Domain Expert Councils: HR law specialist, CPA/accounting expert, employment compliance expert

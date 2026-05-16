@@ -27,6 +27,17 @@ If you are new to the Wiki, read these four foundation pages **in order**:
 
 ---
 
+## The two foundations
+
+The Atlantis platform rests on **two load-bearing substrates** that every other component depends on. Every department agent and the Dev Agent reads from, proposes writes to, and is audited through these two:
+
+- **[Unified CRM Blueprint](Unified-CRM-Blueprint)** — the single store for every entity in the customer's business (customers, employees, vendors, partners, leads, contracts, transactions, projects). Collapses what is fragmented across Salesforce + BambooHR + QuickBooks + Zendesk + Jira + … today.
+- **[Unified Ticketing Blueprint](Unified-Ticketing-Blueprint)** — the single work substrate (one ticket lifecycle, one approval framework, one audit trail) for every department's day-to-day operation. Collapses what is fragmented across Jira + Zendesk + ServiceNow + Asana + Greenhouse + … today.
+
+Every existing enterprise runs these substrates fragmented because no SaaS vendor owns the agent runtime across departments. Atlantis does — so the substrates can and must be unified.
+
+---
+
 ## The three halves of the Wiki
 
 ### A · Strategic Plan v2.0 — the *why*

@@ -7,6 +7,13 @@
 
 ---
 
+#### Platform foundations
+
+- **[Unified CRM Blueprint](Unified-CRM-Blueprint)**
+- **[Unified Ticketing Blueprint](Unified-Ticketing-Blueprint)**
+
+---
+
 #### Live presentations
 
 - 🎤 **[Investor Deck →](../investor-deck.html)**
