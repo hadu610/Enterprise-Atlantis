@@ -87,7 +87,7 @@ body.deck-body {
   letter-spacing: 0.04em;
   padding: 14px 20px;
   border: 1px solid var(--border);
-  background: rgba(255,255,255,0.02);
+  background: rgba(15, 23, 42,0.02);
   border-radius: 12px;
 }
 .slide-cover .meta strong { color: var(--text); font-weight: 500; }
@@ -138,7 +138,7 @@ body.deck-body {
   text-transform: uppercase;
   color: var(--text-mute);
   padding: 14px 18px;
-  background: rgba(255,255,255,0.03);
+  background: rgba(15, 23, 42,0.03);
   border-bottom: 1px solid var(--border);
 }
 .slide-table td {
@@ -163,7 +163,7 @@ body.deck-body {
   margin-top: 12px;
 }
 .stat-bar-cell {
-  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
+  background: linear-gradient(180deg, rgba(15, 23, 42,0.025), rgba(15, 23, 42,0.01));
   padding: 28px 24px;
 }
 .stat-bar-value {
@@ -171,7 +171,7 @@ body.deck-body {
   font-weight: 700;
   letter-spacing: -0.02em;
   margin-bottom: 6px;
-  background: linear-gradient(180deg, #fff, #b9c4dc);
+  background: linear-gradient(180deg, #0b1220, #475569);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -197,13 +197,13 @@ body.deck-body {
   padding: 22px 22px 20px;
   border: 1px solid var(--border);
   border-radius: 14px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
+  background: linear-gradient(180deg, rgba(15, 23, 42,0.025), rgba(15, 23, 42,0.01));
 }
 .slide-card-feature {
   border-color: rgba(91,140,255,0.4);
   background:
     radial-gradient(80% 200% at 100% 0%, rgba(124,92,255,0.18), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.012));
+    linear-gradient(180deg, rgba(15, 23, 42,0.04), rgba(15, 23, 42,0.012));
   box-shadow: var(--shadow-glow);
 }
 .slide-card-tag {
@@ -244,7 +244,7 @@ body.deck-body {
   background:
     radial-gradient(80% 200% at 0% 0%, rgba(91,140,255,0.16), transparent 60%),
     radial-gradient(80% 200% at 100% 100%, rgba(124,92,255,0.18), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.012));
+    linear-gradient(180deg, rgba(15, 23, 42,0.04), rgba(15, 23, 42,0.012));
   box-shadow: var(--shadow-glow);
   position: relative;
 }
@@ -314,7 +314,7 @@ body.deck-body {
   padding: 22px 20px;
   border: 1px solid var(--border);
   border-radius: 14px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
+  background: linear-gradient(180deg, rgba(15, 23, 42,0.025), rgba(15, 23, 42,0.01));
 }
 .phase-pill .pm {
   display: inline-flex;
@@ -345,7 +345,7 @@ body.deck-body {
   padding: 22px;
   border: 1px solid var(--border);
   border-radius: 14px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
+  background: linear-gradient(180deg, rgba(15, 23, 42,0.025), rgba(15, 23, 42,0.01));
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -354,7 +354,7 @@ body.deck-body {
   border-color: rgba(91,140,255,0.5);
   background:
     radial-gradient(80% 200% at 100% 0%, rgba(124,92,255,0.2), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.012));
+    linear-gradient(180deg, rgba(15, 23, 42,0.04), rgba(15, 23, 42,0.012));
   box-shadow: var(--shadow-glow);
 }
 .q-c-label {
@@ -371,14 +371,14 @@ body.deck-body {
   padding: 6px 10px;
   border: 1px solid var(--border-strong);
   border-radius: 8px;
-  background: rgba(255,255,255,0.03);
+  background: rgba(15, 23, 42,0.03);
   width: fit-content;
   max-width: 100%;
 }
 .q-c-name.us-name {
-  background: linear-gradient(90deg, rgba(91,140,255,0.22), rgba(124,92,255,0.22));
+  background: linear-gradient(90deg, rgba(91,140,255,0.18), rgba(124,92,255,0.18));
   border-color: rgba(91,140,255,0.55);
-  color: #fff;
+  color: var(--accent-2);
   font-weight: 600;
 }
 .q-c-note {
@@ -440,7 +440,7 @@ body.deck-body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(180deg, rgba(6,8,15,0.65), transparent);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), transparent);
   pointer-events: none;
 }
 .deck-top a, .deck-top button { pointer-events: auto; }
@@ -456,7 +456,7 @@ body.deck-body {
   gap: 6px;
   padding: 8px 12px;
   font-size: 12.5px;
-  background: rgba(255,255,255,0.04);
+  background: rgba(15, 23, 42,0.04);
   border: 1px solid var(--border-strong);
   border-radius: 8px;
   color: var(--text-dim);
@@ -466,8 +466,8 @@ body.deck-body {
   text-decoration: none;
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
-.deck-btn:hover { background: rgba(255,255,255,0.08); color: var(--text); border-color: rgba(255,255,255,0.2); }
-.deck-btn.active { background: rgba(91,140,255,0.18); color: #fff; border-color: rgba(91,140,255,0.5); }
+.deck-btn:hover { background: rgba(15, 23, 42,0.08); color: var(--text); border-color: rgba(15, 23, 42,0.2); }
+.deck-btn.active { background: rgba(91,140,255,0.14); color: var(--accent-2); border-color: rgba(91,140,255,0.5); }
 
 .deck-bottom {
   position: fixed;
@@ -477,14 +477,14 @@ body.deck-body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(0deg, rgba(6,8,15,0.65), transparent);
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.85), transparent);
   pointer-events: none;
 }
 .deck-bottom > * { pointer-events: auto; }
 .deck-progress {
   flex-grow: 1;
   height: 3px;
-  background: rgba(255,255,255,0.06);
+  background: rgba(15, 23, 42,0.06);
   border-radius: 999px;
   margin: 0 22px;
   overflow: hidden;
@@ -515,7 +515,7 @@ body.deck-body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255,255,255,0.04);
+  background: rgba(15, 23, 42,0.04);
   border: 1px solid var(--border-strong);
   border-radius: 8px;
   color: var(--text-dim);
@@ -523,7 +523,7 @@ body.deck-body {
   font-size: 14px;
   transition: background .15s ease, color .15s ease;
 }
-.deck-arrow:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+.deck-arrow:hover { background: rgba(15, 23, 42,0.08); color: var(--text); }
 .deck-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
 
 /* ===== Responsive padding ===== */

@@ -62,7 +62,7 @@
   justify-content: center;
   width: 28px; height: 28px;
   border-radius: 8px;
-  background: rgba(255,255,255,0.04);
+  background: rgba(15, 23, 42,0.04);
   border: 1px solid var(--border-strong);
   font-size: 14px;
 }
@@ -89,7 +89,7 @@
   gap: 16px;
   padding: 16px 22px;
   border: 1px solid var(--border);
-  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008));
+  background: linear-gradient(180deg, rgba(15, 23, 42,0.025), rgba(15, 23, 42,0.008));
   border-radius: var(--radius);
   color: var(--text-dim);
   font-family: inherit;
@@ -102,7 +102,7 @@
   border-color: rgba(91,140,255,0.5);
   background:
     radial-gradient(80% 200% at 100% 0%, rgba(124,92,255,0.18), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.012));
+    linear-gradient(180deg, rgba(15, 23, 42,0.04), rgba(15, 23, 42,0.012));
   color: var(--text);
   box-shadow: 0 8px 30px -12px rgba(91,140,255,0.45);
 }
@@ -145,7 +145,7 @@
   padding: 4px 28px 14px;
 }
 .wf-timeline-scroller::-webkit-scrollbar { height: 6px; }
-.wf-timeline-scroller::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+.wf-timeline-scroller::-webkit-scrollbar-thumb { background: rgba(15, 23, 42,0.1); border-radius: 3px; }
 .wf-timeline {
   display: flex;
   align-items: stretch;
@@ -166,7 +166,7 @@
   width: 200px;
   min-height: 132px;
   border: 1px solid var(--border);
-  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008));
+  background: linear-gradient(180deg, rgba(15, 23, 42,0.025), rgba(15, 23, 42,0.008));
   border-radius: var(--radius);
   color: var(--text-dim);
   text-align: left;
@@ -179,7 +179,7 @@
   border-color: rgba(91,140,255,0.5);
   background:
     radial-gradient(120% 120% at 0% 0%, rgba(91,140,255,0.18), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.012));
+    linear-gradient(180deg, rgba(15, 23, 42,0.04), rgba(15, 23, 42,0.012));
   color: var(--text);
   box-shadow: 0 8px 30px -12px rgba(91,140,255,0.5);
 }
@@ -267,7 +267,7 @@
   padding-right: 6px;
 }
 .wf-workflow-list::-webkit-scrollbar { width: 5px; }
-.wf-workflow-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+.wf-workflow-list::-webkit-scrollbar-thumb { background: rgba(15, 23, 42,0.1); border-radius: 3px; }
 @media (max-width: 900px) {
   .wf-workflow-list { position: static; max-height: none; }
 }
@@ -279,7 +279,7 @@
   padding: 14px 16px;
   margin-bottom: 8px;
   border: 1px solid var(--border);
-  background: rgba(255,255,255,0.018);
+  background: rgba(15, 23, 42,0.018);
   border-radius: 10px;
   color: var(--text-dim);
   cursor: pointer;
@@ -290,7 +290,7 @@
 }
 .wf-wf-item:hover {
   border-color: var(--border-strong);
-  background: rgba(255,255,255,0.03);
+  background: rgba(15, 23, 42,0.03);
   color: var(--text);
 }
 .wf-wf-item.active {
@@ -444,7 +444,7 @@
   margin-top: 24px;
   padding: 14px 18px;
   border: 1px dashed var(--border-strong);
-  background: rgba(255,255,255,0.018);
+  background: rgba(15, 23, 42,0.018);
   border-radius: 10px;
   font-size: 13.5px;
   color: var(--text-dim);
