@@ -1,0 +1,519 @@
+/* =========================================================
+   Atlantis — Presentation deck styles
+   Loaded after styles.css for shared variables
+   ========================================================= */
+
+html, body { height: 100%; overflow: hidden; }
+body.deck-body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Strip the normal nav off deck pages (deck has its own chrome) */
+.deck-body .nav { display: none; }
+
+/* ===== Deck viewport ===== */
+.deck {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 100% at 0% 0%, rgba(91,140,255,0.10), transparent 60%),
+    radial-gradient(60% 100% at 100% 100%, rgba(124,92,255,0.08), transparent 60%),
+    var(--bg);
+}
+
+/* ===== Slide ===== */
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 96px 110px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .5s ease, transform .5s ease;
+  pointer-events: none;
+  overflow-y: auto;
+}
+.slide.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.slide.leaving {
+  opacity: 0;
+  transform: translateY(-16px);
+}
+
+.slide-inner {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ===== Slide type: cover ===== */
+.slide-cover {
+  text-align: left;
+}
+.slide-cover .eyebrow {
+  margin-bottom: 32px;
+}
+.slide-cover h1 {
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  margin: 0 0 28px;
+  max-width: 1100px;
+}
+.slide-cover .sub {
+  font-size: clamp(20px, 2vw, 28px);
+  color: var(--text-dim);
+  max-width: 880px;
+  line-height: 1.5;
+  margin: 0 0 40px;
+}
+.slide-cover .meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--text-mute);
+  letter-spacing: 0.04em;
+  padding: 14px 20px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+}
+.slide-cover .meta strong { color: var(--text); font-weight: 500; }
+
+/* ===== Slide type: title + content ===== */
+.slide-content .slide-eyebrow {
+  display: inline-block;
+  padding: 6px 14px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(91,140,255,0.3);
+  background: rgba(91,140,255,0.06);
+  border-radius: 999px;
+  margin-bottom: 22px;
+}
+.slide-content h2 {
+  font-size: clamp(36px, 4.5vw, 60px);
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  line-height: 1.08;
+  margin: 0 0 18px;
+}
+.slide-content .lead {
+  font-size: clamp(17px, 1.6vw, 22px);
+  color: var(--text-dim);
+  margin: 0 0 36px;
+  line-height: 1.5;
+  max-width: 980px;
+}
+
+/* ===== Deck table (used inside slides) ===== */
+.slide-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: clamp(14px, 1.2vw, 17px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.slide-table th {
+  text-align: left;
+  font-weight: 600;
+  font-size: clamp(11px, 0.95vw, 13px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+}
+.slide-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-dim);
+  vertical-align: top;
+}
+.slide-table tr:last-child td { border-bottom: 0; }
+.slide-table td:first-child { color: var(--text); font-weight: 500; }
+.slide-table td strong { color: var(--text); }
+
+/* ===== Stat bar inside slides ===== */
+.stat-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+.stat-bar-cell {
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
+  padding: 28px 24px;
+}
+.stat-bar-value {
+  font-size: clamp(28px, 3.2vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  background: linear-gradient(180deg, #fff, #b9c4dc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.stat-bar-label {
+  font-size: clamp(12px, 0.95vw, 14px);
+  color: var(--text-mute);
+  line-height: 1.5;
+}
+@media (max-width: 980px) {
+  .stat-bar { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ===== Card grid inside slides ===== */
+.slide-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.slide-cards.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.slide-cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.slide-card {
+  padding: 22px 22px 20px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
+}
+.slide-card-feature {
+  border-color: rgba(91,140,255,0.4);
+  background:
+    radial-gradient(80% 200% at 100% 0%, rgba(124,92,255,0.18), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.012));
+  box-shadow: var(--shadow-glow);
+}
+.slide-card-tag {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.slide-card h3 {
+  font-size: clamp(16px, 1.4vw, 20px);
+  margin: 0 0 8px;
+  letter-spacing: -0.012em;
+}
+.slide-card p {
+  font-size: clamp(13px, 1.05vw, 15px);
+  color: var(--text-dim);
+  margin: 0;
+  line-height: 1.55;
+}
+@media (max-width: 900px) {
+  .slide-cards,
+  .slide-cards.cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 540px) {
+  .slide-cards,
+  .slide-cards.cols-2,
+  .slide-cards.cols-4 { grid-template-columns: 1fr; }
+}
+
+/* ===== Quote pull ===== */
+.slide-quote {
+  font-size: clamp(28px, 3.4vw, 48px);
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  color: var(--text);
+  max-width: 1100px;
+  border-left: 4px solid var(--accent);
+  padding-left: 32px;
+  margin: 0 0 20px;
+}
+.slide-quote-attr {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--text-mute);
+  padding-left: 36px;
+  letter-spacing: 0.04em;
+}
+
+/* ===== Phase pills (used on autonomy slide) ===== */
+.phase-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+.phase-pill {
+  padding: 22px 20px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
+}
+.phase-pill .pm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  margin-bottom: 12px;
+}
+.phase-pill h4 { font-size: 18px; margin: 0 0 4px; }
+.phase-pill p { color: var(--text-dim); font-size: 13.5px; margin: 0; line-height: 1.5; }
+@media (max-width: 900px) { .phase-row { grid-template-columns: repeat(2, 1fr); } }
+
+/* ===== Quadrant on competition slide ===== */
+.slide-quadrant {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+  min-height: 380px;
+}
+.q-c {
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.q-c.us {
+  border-color: rgba(91,140,255,0.5);
+  background:
+    radial-gradient(80% 200% at 100% 0%, rgba(124,92,255,0.2), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.012));
+  box-shadow: var(--shadow-glow);
+}
+.q-c-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.q-c-name {
+  font-size: 14.5px;
+  color: var(--text-dim);
+  padding: 6px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.03);
+  width: fit-content;
+  max-width: 100%;
+}
+.q-c-name.us-name {
+  background: linear-gradient(90deg, rgba(91,140,255,0.22), rgba(124,92,255,0.22));
+  border-color: rgba(91,140,255,0.55);
+  color: #fff;
+  font-weight: 600;
+}
+.q-c-note {
+  margin-top: auto;
+  font-size: 13px;
+  color: var(--text-mute);
+  font-style: italic;
+}
+@media (max-width: 760px) {
+  .slide-quadrant { grid-template-columns: 1fr; min-height: 0; }
+}
+
+/* ===== Two-column layout ===== */
+.slide-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.slide-two-col h3 {
+  font-size: clamp(20px, 1.8vw, 26px);
+  margin: 0 0 16px;
+  letter-spacing: -0.012em;
+}
+.slide-two-col p,
+.slide-two-col li {
+  font-size: clamp(14px, 1.05vw, 16px);
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.slide-two-col ul { padding-left: 22px; margin: 0; }
+.slide-two-col li { margin: 6px 0; }
+@media (max-width: 900px) {
+  .slide-two-col { grid-template-columns: 1fr; gap: 28px; }
+}
+
+/* ===== Speaker notes (visible when ?notes=1) ===== */
+.slide-notes {
+  display: none;
+  margin-top: 28px;
+  padding: 18px 22px;
+  border: 1px dashed rgba(91,140,255,0.4);
+  background: rgba(91,140,255,0.04);
+  border-radius: 12px;
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.55;
+  font-style: italic;
+}
+.deck.show-notes .slide-notes { display: block; }
+.slide-notes strong { color: var(--text); font-style: normal; }
+
+/* ===== Chrome (top bar + bottom bar) ===== */
+.deck-top {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 30;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(180deg, rgba(6,8,15,0.65), transparent);
+  pointer-events: none;
+}
+.deck-top a, .deck-top button { pointer-events: auto; }
+.deck-top .brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-weight: 600; font-size: 15px; color: var(--text);
+}
+.deck-top .brand-mark { width: 20px; height: 20px; border-radius: 5px; }
+.deck-top-actions { display: flex; gap: 8px; }
+.deck-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.deck-btn:hover { background: rgba(255,255,255,0.08); color: var(--text); border-color: rgba(255,255,255,0.2); }
+.deck-btn.active { background: rgba(91,140,255,0.18); color: #fff; border-color: rgba(91,140,255,0.5); }
+
+.deck-bottom {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 30;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(0deg, rgba(6,8,15,0.65), transparent);
+  pointer-events: none;
+}
+.deck-bottom > * { pointer-events: auto; }
+.deck-progress {
+  flex-grow: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 999px;
+  margin: 0 22px;
+  overflow: hidden;
+  position: relative;
+}
+.deck-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  border-radius: 999px;
+  transition: width .35s ease;
+}
+.deck-counter {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--text-mute);
+  letter-spacing: 0.04em;
+  min-width: 80px;
+  text-align: right;
+}
+.deck-counter strong { color: var(--text); font-weight: 500; }
+
+.deck-nav {
+  display: inline-flex;
+  gap: 6px;
+}
+.deck-arrow {
+  width: 36px; height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 14px;
+  transition: background .15s ease, color .15s ease;
+}
+.deck-arrow:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+.deck-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ===== Responsive padding ===== */
+@media (max-width: 760px) {
+  .slide { padding: 64px 20px 92px; }
+  .slide-cover h1 { font-size: clamp(36px, 9vw, 56px); }
+  .deck-top { padding: 10px 12px; gap: 8px; }
+  .deck-bottom { padding: 12px 12px; }
+  .deck-progress { margin: 0 10px; }
+  .deck-top .brand { font-size: 13px; flex-shrink: 0; }
+  /* On mobile, abbreviate the brand to just "Atlantis" — hide the deck-name suffix */
+  .deck-top .brand-suffix { display: none; }
+  .deck-top-actions { gap: 4px; }
+  .deck-btn { padding: 6px 8px; font-size: 11.5px; }
+  /* Drop the Wiki source / Customer Journeys button on tiny screens */
+  .deck-btn.deck-btn-secondary { display: none; }
+  .deck-counter { min-width: 56px; font-size: 12px; }
+  .deck-arrow { width: 32px; height: 32px; font-size: 13px; }
+}
+
+/* ===== Print stylesheet (export to PDF) ===== */
+@media print {
+  html, body { overflow: visible; height: auto; }
+  body { background: #fff !important; color: #111 !important; }
+  .deck-top, .deck-bottom { display: none !important; }
+  .deck { position: static; height: auto; background: #fff; }
+  .slide {
+    position: static;
+    page-break-after: always;
+    page-break-inside: avoid;
+    min-height: 100vh;
+    opacity: 1 !important;
+    transform: none !important;
+    color: #111;
+    background: #fff;
+    padding: 60px 60px;
+  }
+  .slide-content h2, .slide-cover h1 { color: #111; }
+  .slide-content .lead, .slide p, .slide-card p, .slide-table td { color: #333; }
+  .slide-notes { display: block; }
+}

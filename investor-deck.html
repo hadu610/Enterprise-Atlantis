@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Atlantis · Investor Deck</title>
+<meta name="description" content="Atlantis — investor pitch deck. The first AI operating system designed to solve the six root causes of enterprise AI failure." />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="deck.css" />
+</head>
+<body class="deck-body">
+
+<!-- Top chrome -->
+<header class="deck-top">
+  <a href="index.html" class="brand">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <span>Atlantis<span class="brand-suffix"> · Investor Deck</span></span>
+  </a>
+  <div class="deck-top-actions">
+    <button class="deck-btn" id="deck-notes" title="Toggle speaker notes (N)">Notes</button>
+    <button class="deck-btn" id="deck-full" title="Fullscreen (F)">⛶ Full</button>
+    <a class="deck-btn deck-btn-secondary" href="wiki.html#Investor-Deck" title="Open the wiki source">📖 Wiki source</a>
+  </div>
+</header>
+
+<div class="deck" id="deck">
+
+  <!-- ============ SLIDE 1 · COVER ============ -->
+  <section class="slide slide-cover">
+    <div class="slide-inner">
+      <div class="eyebrow"><span class="dot"></span> Confidential — Strategic Plan v2.0</div>
+      <h1>The operating system <span class="grad-text">of the AI-native enterprise.</span></h1>
+      <p class="sub">A coordinated team of specialised AI agents — HR, Finance, Sales, Marketing, Legal, Operations, and Software Development — inside one governance, identity, and data layer.</p>
+      <div class="meta">
+        <strong>Atlantis</strong> · Seed Round · 2026 · Confidential under NDA
+      </div>
+      <div class="slide-notes">
+        <strong>Speaker notes.</strong> Anchor: <em>We are building the first platform that has solved the six root causes of enterprise AI failure. Today I want to walk you through the problem, our architecture, and why the window to win is now.</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 2 · THE PROBLEM ============ -->
+  <section class="slide slide-content">
+    <div class="slide-inner">
+      <div class="slide-eyebrow">The Problem</div>
+      <h2>80% of enterprise AI projects fail in production.</h2>
+      <p class="lead">They all fail for the same six reasons. <strong>The same six. Every time.</strong></p>
+      <table class="slide-table">
+        <thead>
+          <tr><th>Root cause</th><th>What goes wrong</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Reliability</strong></td><td>95% per-step accuracy collapses to 60% across 10 chained steps. Confident, well-formatted output that is operationally wrong passes human review.</td></tr>
+          <tr><td><strong>Expertise</strong></td><td>Generic LLMs improvise where they should execute validated procedures. HR law, finance compliance, security engineering — each takes years of specialist judgment.</td></tr>
+          <tr><td><strong>Data unity</strong></td><td>CRM, ERP, HRIS, codebase — separate systems with no shared schema. 72–80% of RAG implementations fail within their first year.</td></tr>
+          <tr><td><strong>Agent security</strong></td><td>Teams share human credentials with agents. No standard for identity, scope, or audit. <em>An AI agent deleted a production database in July 2025.</em></td></tr>
+          <tr><td><strong>Trust</strong></td><td>55% of enterprises cite trust as the #1 blocker. Gartner: 40% of agentic AI projects cancelled by 2027.</td></tr>
+          <tr><td><strong>Breadth</strong></td><td>Each new department adds a new data model, compliance surface, and failure mode. Cross-department orchestration is the hardest problem in enterprise AI.</td></tr>
+        </tbody>
+      </table>
+      <div class="slide-notes">
+        <strong>Speaker notes.</strong> Spend 90 seconds. <em>Every credible competitor solves one or two of these. Nobody has solved all six. That's our wedge.</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 3 · MARKET ============ -->
+  <section class="slide slide-content">
+    <div class="slide-inner">
+      <div class="slide-eyebrow">Market</div>
+      <h2>The market is rotating to buyers.</h2>
+      <p class="lead">Demand is supply-blocked, not demand-blocked. The companies that fail at building it themselves are the ones buying our solution.</p>
+      <div class="stat-bar">
+        <div class="stat-bar-cell">
+          <div class="stat-bar-value">$7B → $93B</div>
+          <div class="stat-bar-label">Enterprise AI agent market<br />2025 → 2032 (44.6% CAGR)</div>
+        </div>
+        <div class="stat-bar-cell">
+          <div class="stat-bar-value">76%</div>
+          <div class="stat-bar-label">Of enterprises now<br />buy AI rather than build it</div>
+        </div>
+        <div class="stat-bar-cell">
+          <div class="stat-bar-value">48%</div>
+          <div class="stat-bar-label">Of enterprises already<br />deploying agentic AI</div>
+        </div>
+        <div class="stat-bar-cell">
+          <div class="stat-bar-value">$37B</div>
+          <div class="stat-bar-label">Spent on generative AI<br />in 2025 alone</div>
+        </div>
+      </div>
+      <div class="slide-notes">
+        <strong>Speaker notes.</strong> <em>Demand exists. The gap is supply-side — no one has built the right thing. We sell to buyers who have already failed at building it themselves.</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 4 · OUR SOLUTION ============ -->
+  <section class="slide slide-content">
+    <div class="slide-inner">
+      <div class="slide-eyebrow">Our Solution</div>
+      <h2>Six architectural decisions. One unified platform.</h2>
+      <p class="lead">Every root cause maps to a non-negotiable design decision — built into the platform's core, not bolted on as a feature.</p>
+      <table class="slide-table">
+        <thead><tr><th>Root cause</th><th>Architectural decision</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Reliability</strong></td><td><strong>Validation Gates</strong> between every agent — schema, business logic, confidence, contradiction checks</td></tr>
+          <tr><td><strong>Expertise</strong></td><td><strong>Domain Expert Councils</strong> — lawyers, CPAs, compliance officers write the playbooks</td></tr>
+          <tr><td><strong>Data unity</strong></td><td><strong>Universal Data Bridge</strong> — semantic normalisation across every connected system</td></tr>
+          <tr><td><strong>Agent security</strong></td><td><strong>Zero-Trust Agent Identity</strong> — every agent has its own scoped OAuth keys</td></tr>
+          <tr><td><strong>Trust</strong></td><td><strong>Phased Autonomy</strong> + <strong>Change Management Module</strong> — trust is earned, not assumed</td></tr>
+          <tr><td><strong>Breadth</strong></td><td><strong>Modular core</strong> — shared orchestration; isolated department services</td></tr>
+        </tbody>
+      </table>
+      <div class="slide-notes">
+        <strong>Speaker notes.</strong> <em>This is the moat. None of these are individually impossible. Together they take a focused, well-funded competitor 24+ months to replicate — and that is our window.</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 5 · DEMO ============ -->
+  <section class="slide slide-content">
+    <div class="slide-inner">
+      <div class="slide-eyebrow">Demo · Five Minutes</div>
+      <h2>From "describe your business" to a working AI company.</h2>
+      <p class="lead">Onboarding is the wedge. We collapse a six-month enterprise AI rollout into five minutes.</p>
+      <div class="slide-cards">
+        <div class="slide-card">
+          <div class="slide-card-tag">Step 1 · 60 sec</div>
+          <h3>Describe your business</h3>
+          <p>Free text. Industry, what you do, team size, jurisdictions, the painful work you wish would just happen. No taxonomies.</p>
+        </div>
+        <div class="slide-card slide-card-feature">
+          <div class="slide-card-tag">Step 2 · 2–5 min</div>
+          <h3>AI Business Consultant researches</h3>
+          <p>Pulls public info on similar businesses + matching wiki playbooks + tool-stack suggestions + jurisdiction compliance. Every recommendation cited.</p>
+        </div>
+        <div class="slide-card">
+          <div class="slide-card-tag">Step 3 · in-session</div>
+          <h3>Custom blueprint produced</h3>
+          <p>Ranked departments · per-department starting playbook · recommended integrations · 30/60/90 day plan · Phased Autonomy starting point.</p>
+        </div>
+      </div>
+      <div class="slide-notes">
+        <strong>Speaker notes.</strong> <em>This is what Durable.ai pioneered for automation; we are doing it for an entire AI organisation. Show the live demo if available; if not, walk through this flow on the screen.</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 6 · PRODUCT ============ -->
+  <section class="slide slide-content">
+    <div class="slide-inner">
+      <div class="slide-eyebrow">Product</div>
+      <h2>Seven departments. One platform.</h2>
+      <p class="lead">All-department coverage with software engineering inside the same governance fabric. <strong>Dev Agent is the category-defining differentiator.</strong></p>
+      <div class="slide-cards cols-4">
+        <div class="slide-card"><div class="slide-card-tag">HR</div><h3>Hiring · onboarding · policy</h3><p>Jurisdiction-aware from day one.</p></div>
+        <div class="slide-card"><div class="slide-card-tag">Finance</div><h3>Close · AR/AP · forecasting</h3><p>GAAP / IFRS validated.</p></div>
+        <div class="slide-card"><div class="slide-card-tag">Sales</div><h3>Pipeline · outreach</h3><p>Plays nicely with your CRM.</p></div>
+        <div class="slide-card"><div class="slide-card-tag">Marketing</div><h3>Campaigns · attribution</h3><p>Stays on brand via wiki.</p></div>
+        <div class="slide-card"><div class="slide-card-tag">Legal</div><h3>Contracts · compliance</h3><p>Multi-jurisdiction reviewed.</p></div>
+        <div class="slide-card"><div class="slide-card-tag">Operations</div><h3>Vendors · procurement</h3><p>Runs the company while you sleep.</p></div>
+        <div class="slide-card slide-card-feature"><div class="slide-card-tag">Software Development</div><h3>Tickets → spec → code → PR</h3><p>Validation gates between every step. No competitor has this inside the same fabric.</p></div>
+      </div>
+      <div class="slide-notes">
+        <strong>Speaker notes.</strong> <em>Dev Agent is the category-defining differentiator. No business-OS competitor has it. No coding-agent competitor has the business operations. We close the loop.</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 7 · TRUST RAMP ============ -->
+  <section class="slide slide-content">
+    <div class="slide-inner">
+      <div class="slide-eyebrow">How Trust Ramps</div>
+      <h2>Trust is a product problem, not a sales problem.</h2>
+      <p class="lead">No customer is ever asked to trust an agent before they have witnessed its performance at lower autonomy. Movement is <strong>evidence-based, never contractual.</strong></p>
+      <div class="phase-row">
+        <div class="phase-pill"><div class="pm">01</div><h4>Draft</h4><p>Agents draft, you approve every action.</p></div>
+        <div class="phase-pill"><div class="pm">02</div><h4>Read</h4><p>Agents read &amp; summarise; humans still write.</p></div>
+        <div class="phase-pill"><div class="pm">03</div><h4>Approve</h4><p>Agents act with your approval queue.</p></div>
+        <div class="phase-pill"><div class="pm">04</div><h4>Auto</h4><p>Agents act within policy; humans handle exceptions.</p></div>
+      </div>
+      <p class="lead" style="margin-top:32px">Every customer starts in Draft. The Trust Score Dashboard accumulates evidence. <strong>Delete and financial actions always require a human — hard rule.</strong></p>
+      <div class="slide-notes">
+        <strong>Speaker notes.</strong> <em>This is why our customers do not cancel. The pilot starts in Draft mode — literally zero risk. By the time we ask them to go to Approve mode, they have months of trust-score evidence.</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 8 · COMPETITION ============ -->
+  <section class="slide slide-content">
+    <div class="slide-inner">
+      <div class="slide-eyebrow">Competitive Landscape</div>
+      <h2>The empty upper-right quadrant is the platform we are building.</h2>
+      <p class="lead">Every credible competitor sits in one of the other three. Closest adjacent: Durable.ai ($26.5M Series A) — strong on onboarding, but no business OS, no department agents, no BYOC.</p>
+      <div class="slide-quadrant">
+        <div class="q-c">
+          <div class="q-c-label">Governed but narrow</div>
+          <div class="q-c-name">IBM watsonx Orchestrate</div>
+          <div class="q-c-name">ServiceNow Now Assist</div>
+        </div>
+        <div class="q-c us">
+          <div class="q-c-label">All-department + production governance</div>
+          <div class="q-c-name us-name">★ Atlantis</div>
+          <div class="q-c-note">The empty quadrant we are building into.</div>
+        </div>
+        <div class="q-c">
+          <div class="q-c-label">Point tools</div>
+          <div class="q-c-name">Devin / Cognition</div>
+          <div class="q-c-name">SAP Joule</div>
+        </div>
+        <div class="q-c">
+          <div class="q-c-label">Broad reach, weak governance</div>
+          <div class="q-c-name">Microsoft Copilot Studio</div>
+          <div class="q-c-name">Salesforce Agentforce</div>
+          <div class="q-c-name">Workday / Sana</div>
+        </div>
+      </div>
+      <div class="slide-notes">
+        <strong>Speaker notes.</strong> <em>Microsoft, Salesforce, Workday will eventually attempt this. The gap is 3–5 years. Fifty enterprise customers with strong NPS before they catch up — that is the plan.</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 9 · BUSINESS MODEL ============ -->
+  <section class="slide slide-content">
+    <div class="slide-inner">
+      <div class="slide-eyebrow">Business Model</div>
+      <h2>We price the outcome, not the input.</h2>
+      <p class="lead">Customers buy department capacity, not LLM credits. Predictable annual pricing. <strong>Net retention target 125%</strong> at steady state.</p>
+      <table class="slide-table">
+        <thead><tr><th>Tier</th><th>Annual fee</th><th>Best fit</th><th>Included</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Starter</strong></td><td>from <strong>$30K</strong></td><td>Startup / SMB · 1–49 employees</td><td>2 of 7 agents</td></tr>
+          <tr><td><strong>Growth</strong></td><td>from <strong>$90K</strong></td><td>Medium business · 50–249 employees</td><td>4 of 7 agents</td></tr>
+          <tr><td><strong>Enterprise</strong></td><td>from <strong>$250K</strong></td><td>Enterprise · 250+ employees</td><td>All 7 + Dev Agent</td></tr>
+          <tr><td><strong>Enterprise Regulated</strong></td><td>from <strong>$400K</strong></td><td>Healthcare · FS · defence</td><td>+ self-hosted LLMs · sovereign cell</td></tr>
+        </tbody>
+      </table>
+      <div class="slide-notes">
+        <strong>Speaker notes.</strong> <em>Expansion is the unit-economics engine. Phase 1 customers start with two agents and grow into four. Phase 3 customers add Dev Agent. Every department earned is a multiplier.</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 10 · GO-TO-MARKET ============ -->
+  <section class="slide slide-content">
+    <div class="slide-inner">
+      <div class="slide-eyebrow">Go-to-Market</div>
+      <h2>Land via the department that hurts most. Expand once Trust Score earns it.</h2>
+      <table class="slide-table">
+        <thead><tr><th>Window</th><th>Move</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr><td>Months 1–6</td><td><strong>Design partners</strong> — 3–5 onboarded against Core Infrastructure + HR Agent</td><td>Free × 6 months in exchange for logo + 2 ref calls/quarter post-GA</td></tr>
+          <tr><td>Months 7–12</td><td><strong>First commercial customers</strong> — HR + Finance in Approval Mode</td><td>First paying tier (Starter / Growth); Trust Score Dashboard live</td></tr>
+          <tr><td>Months 13–24</td><td><strong>Agent expansion</strong> — Sales, Marketing, Ops, Dev</td><td>20+ enterprise customers; Domain Playbook Marketplace beta</td></tr>
+          <tr><td>Months 25–36</td><td><strong>Full autonomy + scale</strong> — BYOC, regulated tier, mid-market self-serve</td><td>50+ enterprise customers; ISO 27001</td></tr>
+        </tbody>
+      </table>
+      <p class="lead" style="margin-top:32px">Buyer: <strong>CHRO / CFO / CTO / COO</strong> with a departmental P&amp;L. Business-unit-level land; central IT comes in once value is proven.</p>
+      <div class="slide-notes">
+        <strong>Speaker notes.</strong> <em>The buyer is whoever owns the P&amp;L for the most-broken department. Once we win HR or Finance, the next department is an evidence-based expansion conversation.</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 11 · ROADMAP ============ -->
+  <section class="slide slide-content">
+    <div class="slide-inner">
+      <div class="slide-eyebrow">Roadmap</div>
+      <h2>Infrastructure before agents. Always.</h2>
+      <p class="lead"><strong>Reliability isn't a feature you add later.</strong> Every competitor that skipped the foundation is now stuck in production-reliability hell. We are building the foundation first, on purpose.</p>
+      <table class="slide-table">
+        <thead><tr><th>Phase</th><th>Months</th><th>What ships</th><th>Milestone</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1</strong></td><td>1–6</td><td>Orchestration · Validation Gates · Zero-Trust Identity · Universal Data Bridge · Wiki · Ticketing</td><td>SOC 2 Type II readiness; 3–5 design partners</td></tr>
+          <tr><td><strong>Phase 2</strong></td><td>7–12</td><td>HR Agent · Finance Agent in Draft → Read mode</td><td>Trust Score Dashboard live; first commercial customers</td></tr>
+          <tr><td><strong>Phase 3</strong></td><td>13–24</td><td>Sales · Marketing · Ops · Dev Agent · Domain Playbook Marketplace</td><td>SOC 2 Type II certified; 20+ enterprise customers</td></tr>
+          <tr><td><strong>Phase 4</strong></td><td>25–36</td><td>Dev Agent in Approve + Auto · Legal Agent · BYOC · ISO 27001 · HIPAA</td><td>50+ enterprise customers; mid-market tier</td></tr>
+        </tbody>
+      </table>
+      <div class="slide-notes">
+        <strong>Speaker notes.</strong> <em>The infrastructure-first sequencing is the moat. Every competitor who skipped Phase 1 is now stuck. We are building the foundation first, on purpose.</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 12 · TEAM & THE ASK ============ -->
+  <section class="slide slide-content">
+    <div class="slide-inner">
+      <div class="slide-eyebrow">Team &amp; The Ask</div>
+      <h2>Du Ha · Founder &amp; CEO</h2>
+      <p class="lead">Architect of Atlantis's blueprint — <strong>38 wiki pages, 17 architecture principles, 7 department playbooks, cross-agent coordination patterns, multi-tenant + BYOC data plane design</strong> — all readable end-to-end before the meeting at <a href="wiki.html" style="color:var(--accent)">our wiki</a>.</p>
+      <p class="lead"><em>We are not asking you to bet on a deck. We are asking you to bet on a blueprint that is already further along than most pre-seed companies' MVPs.</em></p>
+      <div class="slide-two-col">
+        <div>
+          <h3>The Ask · $5M seed</h3>
+          <ul>
+            <li><strong>$3M lead</strong> — board seat, pro-rata</li>
+            <li><strong>$1.5M strategic angels</strong> — ex-enterprise-platform founders, ex-CHRO / CFO of F500</li>
+            <li><strong>$0.5M Domain Expert SAFEs</strong> — Council members convert to equity</li>
+          </ul>
+          <h3 style="margin-top:24px">Use of funds · 24 months</h3>
+          <ul>
+            <li>50% — Founding eng team (6 hires)</li>
+            <li>15% — Domain Expert Councils</li>
+            <li>10% — SOC 2 Type II audit</li>
+            <li>10% — Design partner co-dev + GTM</li>
+            <li>15% — Legal · IP · operating · tooling</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Series A milestone (24 months)</h3>
+          <ul>
+            <li>Phase 1 complete · Core infrastructure in production</li>
+            <li>SOC 2 Type II audit in flight or certified</li>
+            <li>3 paying commercial customers in Read / Approve mode</li>
+            <li>2 Domain Expert Council playbooks live (HR Law + Finance/Accounting)</li>
+            <li><strong>$1M+ committed ARR</strong> from converted design partners</li>
+          </ul>
+          <h3 style="margin-top:24px">First 6 hires (post-close)</h3>
+          <ul>
+            <li>Platform Architect · Security Engineer · Data Engineer</li>
+            <li>AI/ML Engineer × 2 · Product Designer</li>
+          </ul>
+        </div>
+      </div>
+      <div class="slide-notes">
+        <strong>Speaker notes.</strong> <em>Close: what we need to make Phase 1 happen, what evidence the next round will see, and what the win looks like — fifty enterprise customers and the empty upper-right quadrant filled before the incumbents wake up.</em>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Bottom chrome -->
+<footer class="deck-bottom">
+  <div class="deck-nav">
+    <button class="deck-arrow" id="deck-prev" aria-label="Previous slide">←</button>
+    <button class="deck-arrow" id="deck-next" aria-label="Next slide">→</button>
+  </div>
+  <div class="deck-progress"><div class="deck-progress-bar" id="deck-progress"></div></div>
+  <div class="deck-counter" id="deck-counter"><strong>1</strong> / 12</div>
+</footer>
+
+<script src="deck.js" defer></script>
+</body>
+</html>
