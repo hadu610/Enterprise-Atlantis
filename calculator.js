@@ -96,39 +96,109 @@
     return 'Enterprise (Regulated)';
   }
 
+  /**
+   * Departments covered by Atlantis. Each:
+   *   - emoji: visual cue in the row
+   *   - loadedSalary: blended US fully-loaded comp ($1.3× base on average)
+   *                   reflecting realistic mid-level mix per dept.
+   *                   Engineering and Legal trend higher; HR/Finance lower.
+   *   - shareByTier: typical % of total headcount per company size,
+   *                  from B2B SaaS benchmarks (ICONIQ, OpenView, SHRM,
+   *                  BLS OEWS, ACC 2024 Legal Benchmarking, APQC Finance).
+   *                  Used to seed defaults; user can edit each row.
+   */
+  const DEPARTMENTS = [
+    { id: 'hr',     name: 'HR / People',           emoji: '👥', loadedSalary: 156000, shareByTier: { sb: 0.04, md: 0.020, en: 0.010 } },
+    { id: 'fin',    name: 'Finance / Accounting',  emoji: '💼', loadedSalary: 137000, shareByTier: { sb: 0.04, md: 0.020, en: 0.010 } },
+    { id: 'sales',  name: 'Sales',                 emoji: '💰', loadedSalary: 169000, shareByTier: { sb: 0.20, md: 0.300, en: 0.250 } },
+    { id: 'mkt',    name: 'Marketing',             emoji: '📣', loadedSalary: 169000, shareByTier: { sb: 0.08, md: 0.050, en: 0.040 } },
+    { id: 'legal',  name: 'Legal',                 emoji: '⚖️', loadedSalary: 286000, shareByTier: { sb: 0.00, md: 0.005, en: 0.005 } },
+    { id: 'ops',    name: 'Operations / Support',  emoji: '⚙️', loadedSalary: 150000, shareByTier: { sb: 0.16, md: 0.200, en: 0.200 } },
+    { id: 'eng',    name: 'Engineering / Dev',     emoji: '💻', loadedSalary: 260000, shareByTier: { sb: 0.40, md: 0.250, en: 0.250 } },
+  ];
+
+  function tierFromEmployees(emp) {
+    if (emp < 50) return 'sb';
+    if (emp < 500) return 'md';
+    return 'en';
+  }
+  function defaultHeadcount(deptId, emp) {
+    const dept = DEPARTMENTS.find((d) => d.id === deptId);
+    if (!dept) return 0;
+    const tier = tierFromEmployees(emp);
+    return Math.max(0, Math.round(emp * dept.shareByTier[tier]));
+  }
+
   // ----- State -----
   const state = {
     employees: 200,
     enabled: new Set(),
+    teamHeadcount: {},        // { deptId: count } — null means user hasn't overridden
+    teamOverridden: {},       // { deptId: true } if user has manually edited
+    productivityGain: 0.15,   // 15% default — McKinsey/Gartner consensus for AI-augmented teams
   };
 
   // ----- Format -----
   function fmtK(n) {
-    // Compact: $30K, $1.2M, $1.6M etc.
+    // n is in $K. Compact: $30K, $1.2M, $16M etc.
     if (n >= 1000) return '$' + (n / 1000).toFixed(n >= 10000 ? 0 : 1) + 'M';
     return '$' + Math.round(n) + 'K';
   }
 
   // ----- Compute -----
+  function headcountFor(deptId) {
+    if (state.teamOverridden[deptId] && state.teamHeadcount[deptId] != null) {
+      return state.teamHeadcount[deptId];
+    }
+    return defaultHeadcount(deptId, state.employees);
+  }
+
   function compute() {
-    let lowAnnual = 0, highAnnual = 0;
+    // === SaaS stack ===
+    let saasLow = 0, saasHigh = 0;
     const breakdown = {};
     TOOLS.forEach((t) => {
       if (!state.enabled.has(t.id)) return;
       const l = t.low * state.employees;
       const h = t.high * state.employees;
-      lowAnnual += l;
-      highAnnual += h;
+      saasLow += l;
+      saasHigh += h;
       breakdown[t.cat] = (breakdown[t.cat] || 0) + (l + h) / 2;
     });
+
+    // === Team payroll ===
+    let payroll = 0;
+    const teamBreakdown = {};
+    let totalHeadcount = 0;
+    DEPARTMENTS.forEach((d) => {
+      const hc = headcountFor(d.id);
+      const cost = hc * d.loadedSalary;
+      payroll += cost;
+      teamBreakdown[d.name] = cost;
+      totalHeadcount += hc;
+    });
+
+    // === Atlantis ===
     const atlantis = atlantisPriceK(state.employees) * 1000;
+    const leanerPayroll = payroll * (1 - state.productivityGain);
+
+    // === Run rates ===
+    // Today: SaaS (mid-point of range) + payroll
+    // With Atlantis: Atlantis fee + leaner payroll
+    // (Treats Atlantis as a swap-in for the SaaS bill — same framing as before.
+    //  Footnote acknowledges customers keep systems of record in practice.)
+    const todayLow = saasLow + payroll;
+    const todayHigh = saasHigh + payroll;
+    const atlantisTotal = atlantis + leanerPayroll;
+    const valueLow = Math.max(0, todayLow - atlantisTotal);
+    const valueHigh = Math.max(0, todayHigh - atlantisTotal);
+
     return {
-      lowAnnual,
-      highAnnual,
-      atlantisAnnual: atlantis,
-      savingsLow: Math.max(0, lowAnnual - atlantis),
-      savingsHigh: Math.max(0, highAnnual - atlantis),
-      breakdown,
+      saasLow, saasHigh, atlantis,
+      payroll, leanerPayroll, totalHeadcount,
+      todayLow, todayHigh, atlantisTotal,
+      valueLow, valueHigh,
+      breakdown, teamBreakdown,
     };
   }
 
@@ -175,15 +245,61 @@
     });
   }
 
+  function renderTeam() {
+    const root = el('#calc-team');
+    if (!root) return;
+    const html = DEPARTMENTS.map((d) => {
+      const hc = headcountFor(d.id);
+      const cost = hc * d.loadedSalary;
+      return `
+        <div class="calc-dept" data-id="${d.id}">
+          <div class="calc-dept-name">
+            <span class="calc-dept-emoji">${d.emoji}</span>
+            <span>${d.name}</span>
+          </div>
+          <div class="calc-dept-count">
+            <input type="number" class="calc-dept-input" data-id="${d.id}" min="0" max="2000" step="1" value="${hc}" />
+            <span class="calc-dept-suffix">people</span>
+          </div>
+          <div class="calc-dept-salary">$${(d.loadedSalary / 1000).toFixed(0)}K<span>/yr · fully-loaded</span></div>
+          <div class="calc-dept-cost" data-cost-for="${d.id}">${fmtK(cost / 1000)}<span>/yr</span></div>
+        </div>
+      `;
+    }).join('');
+    root.innerHTML = html;
+
+    els('.calc-dept-input', root).forEach((input) => {
+      input.addEventListener('input', (e) => {
+        const id = e.target.getAttribute('data-id');
+        const v = parseInt(e.target.value, 10);
+        if (Number.isNaN(v)) return;
+        state.teamHeadcount[id] = Math.max(0, Math.min(2000, v));
+        state.teamOverridden[id] = true;
+        const dept = DEPARTMENTS.find((d) => d.id === id);
+        const cost = state.teamHeadcount[id] * dept.loadedSalary;
+        const cell = root.querySelector(`[data-cost-for="${id}"]`);
+        if (cell) cell.innerHTML = `${fmtK(cost / 1000)}<span>/yr</span>`;
+        renderOutput();
+      });
+    });
+  }
+
+  function clearTeamOverrides() {
+    state.teamHeadcount = {};
+    state.teamOverridden = {};
+  }
+
   function renderOutput() {
     const r = compute();
+
+    // ===== SaaS-only comparison (Card row 1) =====
     el('#calc-current-amount').textContent =
-      `${fmtK(r.lowAnnual / 1000)} – ${fmtK(r.highAnnual / 1000)}`;
+      `${fmtK(r.saasLow / 1000)} – ${fmtK(r.saasHigh / 1000)}`;
     el('#calc-atlantis-amount').textContent =
-      `${fmtK(r.atlantisAnnual / 1000)}`;
+      `${fmtK(r.atlantis / 1000)}`;
     el('#calc-atlantis-tier').textContent = atlantisTierName(state.employees);
     el('#calc-savings-amount').textContent =
-      `${fmtK(r.savingsLow / 1000)} – ${fmtK(r.savingsHigh / 1000)}`;
+      `${fmtK(Math.max(0, r.saasLow - r.atlantis) / 1000)} – ${fmtK(Math.max(0, r.saasHigh - r.atlantis) / 1000)}`;
 
     // Breakdown
     const bk = el('#calc-breakdown');
@@ -198,6 +314,25 @@
         ).join('');
       }
     }
+
+    // ===== Total run rate (Card row 2 — SaaS + Payroll) =====
+    setText('#calc-rr-today',     `${fmtK(r.todayLow / 1000)} – ${fmtK(r.todayHigh / 1000)}`);
+    setText('#calc-rr-today-saas',    `${fmtK(r.saasLow / 1000)} – ${fmtK(r.saasHigh / 1000)}`);
+    setText('#calc-rr-today-pay',     `${fmtK(r.payroll / 1000)}`);
+
+    setText('#calc-rr-atlantis', `${fmtK(r.atlantisTotal / 1000)}`);
+    setText('#calc-rr-at-atlantis',   `${fmtK(r.atlantis / 1000)}`);
+    setText('#calc-rr-at-pay',        `${fmtK(r.leanerPayroll / 1000)}`);
+
+    setText('#calc-rr-value',    `${fmtK(r.valueLow / 1000)} – ${fmtK(r.valueHigh / 1000)}`);
+    setText('#calc-rr-headcount', `${r.totalHeadcount.toLocaleString()} people across the 7 departments`);
+    setText('#calc-rr-leaner',   `${Math.round(state.productivityGain * 100)}% leaner team`);
+    setText('#calc-prod-value',  `${Math.round(state.productivityGain * 100)}%`);
+  }
+
+  function setText(sel, value) {
+    const node = el(sel);
+    if (node) node.textContent = value;
   }
 
   function applyPreset(tier) {
@@ -205,23 +340,28 @@
     TOOLS.forEach((t) => {
       if (t.defaultsByTier && t.defaultsByTier[tier]) state.enabled.add(t.id);
     });
-    if (tier === 'sb') setEmployees(25);
-    if (tier === 'md') setEmployees(200);
-    if (tier === 'en') setEmployees(2000);
+    clearTeamOverrides();
+    if (tier === 'sb') setEmployees(25, /*skipReset*/ true);
+    if (tier === 'md') setEmployees(200, true);
+    if (tier === 'en') setEmployees(2000, true);
     renderTools();
+    renderTeam();
     renderOutput();
 
     els('.calc-preset').forEach((b) => b.classList.toggle('active', b.getAttribute('data-tier') === tier));
   }
 
-  function setEmployees(n) {
+  function setEmployees(n, skipReset) {
     state.employees = Math.max(5, Math.min(2000, Math.round(n)));
+    // Sliding the employee count blows away team overrides so defaults rescale
+    if (!skipReset) clearTeamOverrides();
     const slider = el('#calc-emp-slider');
     const out = el('#calc-emp-value');
     const input = el('#calc-emp-input');
     if (slider) slider.value = state.employees;
     if (out) out.textContent = `${state.employees.toLocaleString()} people`;
     if (input && document.activeElement !== input) input.value = state.employees;
+    renderTeam();
     renderOutput();
 
     // Auto-deactivate preset buttons if the slider drifts off
@@ -229,6 +369,15 @@
       const target = parseInt(b.getAttribute('data-employees'), 10);
       b.classList.toggle('active', target === state.employees);
     });
+  }
+
+  function setProductivityGain(pct) {
+    state.productivityGain = Math.max(0, Math.min(0.5, pct / 100));
+    const slider = el('#calc-prod-slider');
+    if (slider && parseInt(slider.value, 10) !== Math.round(state.productivityGain * 100)) {
+      slider.value = Math.round(state.productivityGain * 100);
+    }
+    renderOutput();
   }
 
   function wire() {
@@ -242,6 +391,19 @@
     els('.calc-preset').forEach((b) =>
       b.addEventListener('click', () => applyPreset(b.getAttribute('data-tier')))
     );
+    const prodSlider = el('#calc-prod-slider');
+    if (prodSlider) {
+      prodSlider.addEventListener('input', (e) => setProductivityGain(parseInt(e.target.value, 10)));
+    }
+    const resetTeam = el('#calc-team-reset');
+    if (resetTeam) {
+      resetTeam.addEventListener('click', (e) => {
+        e.preventDefault();
+        clearTeamOverrides();
+        renderTeam();
+        renderOutput();
+      });
+    }
   }
 
   function init() {

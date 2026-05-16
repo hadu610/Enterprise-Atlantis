@@ -479,46 +479,148 @@
         </div>
       </div>
 
-      <!-- Step 3: Output -->
+      <!-- SaaS-only output (Card row 1) -->
       <div class="calc-output" id="calc-output">
         <div class="calc-output-card calc-card-current">
-          <div class="calc-output-label">Your current stack</div>
+          <div class="calc-output-label">SaaS spend today</div>
           <div class="calc-output-amount" id="calc-current-amount">—</div>
-          <div class="calc-output-sub">Estimated annual SaaS spend</div>
+          <div class="calc-output-sub">Estimated annual subscription bill</div>
         </div>
 
         <div class="calc-output-card calc-card-atlantis">
-          <div class="calc-output-label">With Atlantis</div>
+          <div class="calc-output-label">Atlantis platform</div>
           <div class="calc-output-amount" id="calc-atlantis-amount">—</div>
           <div class="calc-output-sub"><span id="calc-atlantis-tier">Growth</span> tier · one platform fee</div>
         </div>
 
         <div class="calc-output-card calc-card-savings">
-          <div class="calc-output-label">Potential annual value</div>
+          <div class="calc-output-label">SaaS-only annual delta</div>
           <div class="calc-output-amount" id="calc-savings-amount">—</div>
           <div class="calc-output-sub">By category ↓</div>
           <div class="calc-breakdown" id="calc-breakdown"></div>
         </div>
       </div>
 
+      <!-- Step 3: Team -->
+      <div class="calc-step">
+        <div class="calc-step-head">
+          <span class="calc-step-num">3</span>
+          <span class="calc-step-title">Your team — the bigger line item</span>
+          <button type="button" class="calc-team-reset-btn" id="calc-team-reset" title="Reset to benchmark defaults">Reset to benchmarks</button>
+        </div>
+        <p class="calc-step-help">
+          Headcounts default to <strong>B2B SaaS industry benchmarks</strong> per company size
+          (HR-to-employee ratio: 1:50–100 · SHRM; sales 25–35% of mid-market · ICONIQ; engineering 25–35% · ICONIQ).
+          Edit any row to match your reality.
+        </p>
+        <div class="calc-team-head">
+          <span>Department</span>
+          <span>Headcount</span>
+          <span>Fully-loaded salary</span>
+          <span>Annual cost</span>
+        </div>
+        <div class="calc-team" id="calc-team">
+          <!-- Department rows render here via calculator.js -->
+        </div>
+        <div class="calc-team-srcs">
+          Salary medians: <a href="https://www.bls.gov/news.release/ocwage.t01.htm" target="_blank" rel="noopener">BLS OEWS May 2024</a> ·
+          <a href="https://www.levels.fyi/t/software-engineer/levels/senior/locations/united-states" target="_blank" rel="noopener">Levels.fyi Sr SWE</a> ·
+          <a href="https://www.roberthalf.com/us/en/insights/salary-guide" target="_blank" rel="noopener">Robert Half 2026 Salary Guide</a>.
+          Fully-loaded = base × 1.3 (<a href="https://www.bls.gov/news.release/ecec.htm" target="_blank" rel="noopener">BLS ECEC</a>; benefits ≈ 31% of total comp).
+          Headcount ratios: <a href="https://www.iconiq.com/growth/reports/2025-state-of-software" target="_blank" rel="noopener">ICONIQ State of Software 2025</a> ·
+          <a href="https://www.shrm.org/topics-tools/news/talent-acquisition/how-many-hr-staff-members-is-best-shrm" target="_blank" rel="noopener">SHRM HR-to-Employee</a> ·
+          <a href="https://www.acc.com/sites/default/files/2024-06/2024_LDMB_List_of_Metrics.pdf" target="_blank" rel="noopener">ACC 2024 Law Dept Benchmarking</a>.
+        </div>
+      </div>
+
+      <!-- Step 4: Productivity expectation -->
+      <div class="calc-step calc-prod-step">
+        <div class="calc-step-head">
+          <span class="calc-step-num">4</span>
+          <span class="calc-step-title">Productivity gain you expect with Atlantis</span>
+        </div>
+        <p class="calc-step-help">
+          Atlantis doesn't replace your team — it lets the same team do more, or grow without proportional hiring.
+          Industry research bounds the impact:
+          <strong>McKinsey 2024</strong> (60–70% of work hours augmentable with GenAI),
+          <strong>Gartner 2025</strong> (15% of day-to-day decisions autonomous by 2028, ≥50% process-service cost gap closed by 2027),
+          <strong>GitHub Copilot</strong> (55% faster coding tasks),
+          <strong>ICONIQ AI-Native 2025</strong> (top-quartile companies grew 250% with headcount 7 vs. 12 — ~42% leaner).
+          We default to a conservative <strong>15%</strong>.
+        </p>
+        <div class="calc-prod-row">
+          <input type="range" id="calc-prod-slider" min="0" max="40" step="1" value="15" />
+          <div class="calc-prod-value">
+            <span id="calc-prod-value">15%</span>
+            <span class="calc-prod-suffix">leaner team / extra leverage</span>
+          </div>
+        </div>
+        <div class="calc-prod-srcs">
+          Sources:
+          <a href="https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier" target="_blank" rel="noopener">McKinsey · Economic Potential of GenAI</a> ·
+          <a href="https://www.gartner.com/en/newsroom/press-releases/2025-08-26-gartner-predicts-40-percent-of-enterprise-apps-will-feature-task-specific-ai-agents-by-2026-up-from-less-than-5-percent-in-2025" target="_blank" rel="noopener">Gartner 2025 agentic-AI predictions</a> ·
+          <a href="https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/" target="_blank" rel="noopener">GitHub Copilot productivity research</a> ·
+          <a href="https://www.saastr.com/iconiqs-state-of-software-in-2025-much-smaller-teams-55-of-gtm-is-now-in-post-sales-2025-is-crushing-2024-for-funding/" target="_blank" rel="noopener">ICONIQ State of Software 2025</a>.
+        </div>
+      </div>
+
+      <!-- Total run rate output (Card row 2 — SaaS + Payroll combined) -->
+      <div class="calc-rr-head">
+        <span class="calc-rr-eyebrow">Total annual run rate</span>
+        <span class="calc-rr-title">SaaS + team payroll · the complete picture</span>
+        <span class="calc-rr-meta" id="calc-rr-headcount">—</span>
+      </div>
+      <div class="calc-output calc-output-rr">
+        <div class="calc-output-card calc-card-current">
+          <div class="calc-output-label">Today's total</div>
+          <div class="calc-output-amount" id="calc-rr-today">—</div>
+          <div class="calc-rr-stack">
+            <div class="calc-rr-line"><span>SaaS</span><strong id="calc-rr-today-saas">—</strong></div>
+            <div class="calc-rr-line"><span>Team payroll</span><strong id="calc-rr-today-pay">—</strong></div>
+          </div>
+        </div>
+
+        <div class="calc-output-card calc-card-atlantis">
+          <div class="calc-output-label">With Atlantis</div>
+          <div class="calc-output-amount" id="calc-rr-atlantis">—</div>
+          <div class="calc-rr-stack">
+            <div class="calc-rr-line"><span>Atlantis platform</span><strong id="calc-rr-at-atlantis">—</strong></div>
+            <div class="calc-rr-line"><span>Team payroll · <em id="calc-rr-leaner">15% leaner</em></span><strong id="calc-rr-at-pay">—</strong></div>
+          </div>
+        </div>
+
+        <div class="calc-output-card calc-card-savings">
+          <div class="calc-output-label">Total annual value</div>
+          <div class="calc-output-amount" id="calc-rr-value">—</div>
+          <div class="calc-output-sub">
+            SaaS consolidation + a team that runs <strong id="calc-prod-value">15%</strong> leaner because agents handle routine work
+          </div>
+        </div>
+      </div>
+
       <p class="calc-footnote">
         <strong>Methodology &amp; honest framing.</strong>
-        Per-employee-per-year numbers are derived from each vendor's published 2026 list price,
-        normalised for typical seat coverage (CRM seats ≈ 20% of staff, support agents ≈ 5%,
-        ServiceNow fulfillers ≈ 10%, productivity / payroll ≈ 100%).
-        Quote-only vendors (Workday, ServiceNow, NetSuite, Ironclad, Marketo, Snowflake, MuleSoft, Greenhouse Expert)
-        use buyer benchmarks from
-        <a href="https://www.vendr.com/insights/saas-trends-report" target="_blank" rel="noopener">Vendr SaaS Trends 2025</a>,
-        <a href="https://www.spendhound.com/blog" target="_blank" rel="noopener">Spendhound</a>, and G2 RFPs.
-        SaaS-count baselines per company size are reported by
-        <a href="https://productiv.com/state-of-saas/2024-saas-trends-spend/" target="_blank" rel="noopener">Productiv State of SaaS 2024</a>
-        (mid-market avg 217 apps, 10K+ enterprise avg 473) and
-        <a href="https://zylo.com/news/2025-saas-management-index/" target="_blank" rel="noopener">Zylo SaaS Management Index 2025</a>
-        (660 apps at 10K+ employees including shadow IT).
-        Calculator output is linear-scaled per employee — your actual contracts depend on
-        negotiation. <strong>Atlantis is the agent + governance layer</strong>; most customers keep
-        their systems of record (Salesforce, Workday) and use Atlantis to consolidate the
-        rest. Real value comes from retired tools + reduced platform-team headcount, not magic.
+        <em>SaaS:</em> per-employee numbers from each vendor's published 2026 list price normalised
+        for typical seat coverage (CRM ≈ 20%, support agents ≈ 5%, ServiceNow fulfillers ≈ 10%,
+        productivity / payroll ≈ 100%). Quote-only vendors use
+        <a href="https://www.vendr.com/insights/saas-trends-report" target="_blank" rel="noopener">Vendr SaaS Trends 2025</a>
+        and G2 RFP benchmarks.
+        <em>Team:</em> fully-loaded comp = base × 1.3 (per
+        <a href="https://www.bls.gov/news.release/ecec.htm" target="_blank" rel="noopener">BLS ECEC</a>;
+        benefits ≈ 31% of total comp). Department headcount defaults from B2B SaaS benchmarks
+        (<a href="https://www.iconiq.com/growth/reports/2025-state-of-software" target="_blank" rel="noopener">ICONIQ 2025</a>,
+        <a href="https://www.shrm.org/topics-tools/news/talent-acquisition/how-many-hr-staff-members-is-best-shrm" target="_blank" rel="noopener">SHRM</a>,
+        <a href="https://www.bls.gov/news.release/ocwage.t01.htm" target="_blank" rel="noopener">BLS OEWS</a>).
+        <em>Productivity:</em> the leaner-team factor is your assumption, bounded by
+        <a href="https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier" target="_blank" rel="noopener">McKinsey 2024</a>
+        (60–70% of work hours augmentable),
+        <a href="https://www.gartner.com/en/newsroom/press-releases/2025-08-26-gartner-predicts-40-percent-of-enterprise-apps-will-feature-task-specific-ai-agents-by-2026-up-from-less-than-5-percent-in-2025" target="_blank" rel="noopener">Gartner 2025</a>,
+        and
+        <a href="https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/" target="_blank" rel="noopener">GitHub Copilot research</a>.
+        <strong>Atlantis is the agent + governance layer</strong>; most customers keep their systems
+        of record (Salesforce, Workday) and use Atlantis to consolidate the rest plus run leaner.
+        Numbers are linear-scaled — your actual contracts and team mix depend on negotiation and
+        industry.
       </p>
 
       <div class="calc-cta">
