@@ -1,6 +1,9 @@
 ### Atlantis Wiki
 
-**[Home](Home)** · **[Master Blueprint Index](Master-Blueprint-Index)** · **[Business Workflows](Business-Workflows)**
+- **[Home](Home)**
+- **[Master Blueprint Index](Master-Blueprint-Index)**
+- **[Business Workflows](Business-Workflows)**
+- **[Customer Journeys](Customer-Journeys)**
 
 ---
 
@@ -88,7 +91,9 @@
 - [Executive Summary](Executive-Summary)
 - [The Six Barriers](The-Six-Barriers)
 - [Product Concept](Product-Concept)
+  - [AI Business Consultant Onboarding](AI-Business-Consultant-Onboarding)
 - [Competitor Analysis](Competitor-Analysis)
+  - [Deep Dive · Durable.ai](Competitor-Deep-Dive-Durable)
 - [Advantages & Risks](Advantages-and-Risks)
 - [Product Requirements](Product-Requirements)
 - [Build Roadmap](Build-Roadmap)

@@ -14,6 +14,8 @@ Every agent reads this Wiki before acting. Every human contributing to the platf
 
 → **[Business Workflows](Business-Workflows)** — every workflow Atlantis supports, across the customer journey (lead → renewal) and the employee journey (interview → offboarding). Also browseable interactively at [/workflows.html](https://hadu610.github.io/Enterprise-Atlantis/workflows.html).
 
+→ **[Customer Journeys — Startup / Medium / Enterprise](Customer-Journeys)** — how a 5-person startup, a 500-person mid-market company, and a 50,000-person enterprise each get started, build, and operate their AI company on Atlantis.
+
 If you are new to the Wiki, read these four foundation pages **in order**:
 
 1. **[Wiki Conventions](Wiki-Conventions)** — page structure and metadata block
@@ -69,7 +71,7 @@ Decisions, rationale, alternatives considered, and revisit conditions. Every pag
 
 - [Coding Standards](Coding-Standards) — what we draw from (Google, Airbnb, PEP 8, Effective Go, OWASP), and our additions
 - [Technology Stack](Technology-Stack) — languages, frameworks, databases, infra, AI providers, with rationale and alternatives
-- [Architecture Principles](Architecture-Principles) — the 16 constitutional rules of the platform's architecture
+- [Architecture Principles](Architecture-Principles) — the 17 constitutional rules of the platform's architecture (incl. multi-tenancy by design and managed-first / BYOC)
 - [Cross-Agent Coordination](Cross-Agent-Coordination) — how agents work on the same entity without conflict: entity-keyed action queue, Action Executor, OCC, sagas, leases, conflict arbitration
 - [AI Model and Prompt Standards](AI-Model-and-Prompt-Standards) — model routing, prompt versioning, eval gates, safety
 - [Security and Data Policy](Security-and-Data-Policy) — classification, encryption, IAM, vuln management, compliance, IR
