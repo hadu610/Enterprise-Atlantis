@@ -93,9 +93,11 @@ Backed by [AI Business Consultant Onboarding](AI-Business-Consultant-Onboarding)
 
 ---
 
-## Slide 6 · Product — Seven Departments on One Platform
+## Slide 6 · Product — Six Departments on One Dev Agent Foundation
 
-> **Key message.** All-department coverage with software engineering inside the same governance fabric.
+> **Key message.** The Dev Agent is not a peer department; it is the foundation that makes the other six customisable to every customer's business. This is the loop no competitor has closed.
+
+### The six department agents
 
 | Agent | What it does |
 |---|---|
@@ -105,13 +107,24 @@ Backed by [AI Business Consultant Onboarding](AI-Business-Consultant-Onboarding)
 | **Marketing** | Campaigns, content, attribution, briefs |
 | **Legal** | Contract review, jurisdiction-aware compliance, e-signing workflow |
 | **Operations** | Vendor management, procurement, internal ticketing |
-| **Software Development** | Tickets → spec → code → PR with validation gates |
 
 All read from the same Wiki, share data through the same Universal Data Bridge, and coordinate through the same Action Executor.
 
-**Speaker notes.** *Dev Agent is the category-defining differentiator. No business-OS competitor has it. No coding-agent competitor has the business operations. We are the only platform that closes the loop.*
+### The foundation — Software Development Agent
 
-Backed by the agent playbooks: [HR](HR-Agent-Playbook) · [Finance](Finance-Agent-Playbook) · [Sales](Sales-Agent-Playbook) · [Marketing](Marketing-Agent-Playbook) · [Legal](Legal-Agent-Playbook) · [Operations](Operations-Agent-Playbook) · [Dev](Dev-Agent-Playbook).
+The Dev Agent sits **below** the six department agents in the layer stack. **Every customer-specific extension** is shipped by it:
+
+- **Custom integrations** — when a customer needs a connector to a system the Universal Data Bridge doesn't already support, the Dev Agent writes it inside the sales cycle.
+- **Custom workflows** — when a customer's industry needs a department playbook extended (e.g., construction-industry HR, biotech-industry Finance), the Dev Agent writes the playbook delta.
+- **Custom features** — when a customer asks for a new console capability, the Dev Agent ships it without growing our human eng team.
+
+Tickets → spec → code → reviewed PR, with validation gates between every step.
+
+**Why this loop is the moat.** Business-OS competitors (Workday, Microsoft, Salesforce, ServiceNow) let you buy department agents but expect *you* to grow a platform team to customise them. Coding-agent competitors (Devin, Cognition) ship code but have no business operations to plug into. **Only Atlantis closes the loop — the platform that ships its own customisations, inside one governance fabric.**
+
+**Speaker notes.** *"The way to think about it: HR / Finance / Sales / Marketing / Legal / Ops are the verticals. The Dev Agent is the horizontal that makes those verticals fit your specific business. Without it, every customer engagement turns into a custom services project. With it, the platform builds itself for each customer."*
+
+Backed by the agent playbooks: [HR](HR-Agent-Playbook) · [Finance](Finance-Agent-Playbook) · [Sales](Sales-Agent-Playbook) · [Marketing](Marketing-Agent-Playbook) · [Legal](Legal-Agent-Playbook) · [Operations](Operations-Agent-Playbook) · **[Dev — foundation](Dev-Agent-Playbook)**.
 
 ---
 

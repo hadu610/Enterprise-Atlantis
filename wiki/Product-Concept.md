@@ -6,14 +6,15 @@ The platform is built in three horizontal layers. This architecture directly add
 
 | Layer | Components & barrier addressed |
 |---|---|
-| **Layer 1: Core Infrastructure** | Orchestration Engine, Zero-Trust Agent Identity (B4), Universal Data Bridge (B3), Knowledge Wiki, Ticketing System, Audit Engine — built once, shared by all departments |
-| **Layer 2: Department Agents** | HR, Finance, Marketing, Sales, Legal, Operations, Dev — each a modular plugin to the Core; Domain Expert Councils own each module (B2); Validation Gates at every handoff (B1) |
-| **Layer 3: Customer Interface** | Console, Onboarding Interview, Trust Dashboard (B5), Change Management Module (B5), Activity Tracking, Integration Marketplace |
+| **Layer 1: Core Infrastructure** | Orchestration Engine, Zero-Trust Agent Identity (B4), Universal Data Bridge (B3), Knowledge Wiki, Ticketing System, Audit Engine — built once, shared by every agent above |
+| **Layer 2: Dev Agent Foundation** | The Dev Agent sits directly on top of Core Infrastructure and **below** the department agents. Every customer-specific connector, playbook extension, and feature is shipped by the Dev Agent. Validation Gates at every step (B1). This is the loop no business-OS competitor has closed. |
+| **Layer 3: Department Agents** | HR, Finance, Marketing, Sales, Legal, Operations — each a modular plugin to the Core; Domain Expert Councils own each playbook (B2); Validation Gates at every handoff (B1); customisations to each are shipped by the Dev Agent (Layer 2) |
+| **Layer 4: Customer Interface** | Console, AI Business Consultant onboarding, Trust Dashboard (B5), Change Management Module (B5), Activity Tracking, Integration Marketplace |
 
 ## Four core pillars
 
-- **AI Department Agents** — Dedicated autonomous agents for HR, Finance, Marketing/Sales, Legal, Operations, and Software Development — each with domain-expert-validated knowledge, jurisdiction awareness, and confidence-bounded decision-making.
-- **AI Development Team Agent** — The category-defining differentiator. An autonomous software engineering agent that receives feature requests via the ticketing system, writes production code per wiki standards, and deploys through a governed pipeline — with validation gates at every step.
+- **Six AI Department Agents** — Dedicated autonomous agents for HR, Finance, Marketing, Sales, Legal, and Operations — each with domain-expert-validated knowledge, jurisdiction awareness, and confidence-bounded decision-making.
+- **Software Development Agent — the foundation underneath the other six.** The Dev Agent is not a peer department; it is the foundation that makes every other department customisable to each customer's business. **Every customer-specific extension** — a new connector for a system we don't yet support, a workflow tuned to the customer's industry, a feature request from the customer's console — **is shipped by the Dev Agent.** Tickets → spec → code → reviewed PR, with validation gates at every step. Without it, every customer engagement would require a human platform team. With it, the platform builds itself.
 - **Unified Governance Core** — Orchestration Engine, Zero-Trust Agent Identity, Validation Gate Architecture, complete audit trail, and the Phased Autonomy Model — the infrastructure layer that makes cross-department agents safe and auditable.
 - **Centralized Knowledge Wiki** — All domain playbooks, compliance rules, coding standards, company context, and agent instructions stored in a version-controlled wiki that every agent reads before acting.
 
