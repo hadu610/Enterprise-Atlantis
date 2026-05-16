@@ -22,7 +22,7 @@ Everyone starts in **Drafting Mode** — agents draft, humans approve. Trust is 
 
 | | **Startup** | **Medium** | **Enterprise** |
 |---|---|---|---|
-| **Headcount** | 1–250 | 250–2,000 | 2,000+ |
+| **Headcount** | 1–49 | 50–249 | 250+ |
 | **Tier** | [Starter](Pricing-and-Packaging#2-tiers) | [Growth](Pricing-and-Packaging#2-tiers) | [Enterprise](Pricing-and-Packaging#2-tiers) (or **Regulated** for healthcare / FS / defence) |
 | **Deployment** | Managed multi-tenant cloud — no setup | Managed multi-tenant cloud, optional single-tenant cell | Managed cell by default; **bring-your-own-cloud (AWS / GCP / Azure)** when central IT is ready |
 | **First departments** | Pick 1–2 (Sales+Marketing, or Dev) | Pick 3–4 (e.g. Sales+Marketing+HR+Finance) | Pilot 1 department in 1 business unit, then expand |
@@ -35,7 +35,7 @@ Everyone starts in **Drafting Mode** — agents draft, humans approve. Trust is 
 
 ---
 
-## 🚀 The Startup journey *(1–250 people)*
+## 🚀 The Startup journey *(1–49 people)*
 
 ### Why startups choose Atlantis
 
@@ -72,7 +72,7 @@ A 12-person company that operates like a 60-person company. Lead-to-customer cyc
 
 ---
 
-## 🏢 The Medium-business journey *(250–2,000 people)*
+## 🏢 The Medium-business journey *(50–249 people)*
 
 ### Why medium-size companies choose Atlantis
 
@@ -107,7 +107,7 @@ You held headcount flat in three departments while revenue grew 60%. Two of your
 
 ---
 
-## 🏛️ The Enterprise journey *(2,000+ people)*
+## 🏛️ The Enterprise journey *(250+ people)*
 
 ### Why enterprises choose Atlantis
 

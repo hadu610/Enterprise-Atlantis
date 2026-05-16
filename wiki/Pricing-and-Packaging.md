@@ -32,9 +32,9 @@ This structure:
 
 | Tier | Annual platform fee | Active agents included | Tenants | Best fit |
 |---|---|---|---|---|
-| **Starter** | $30K | Up to 2 agents (HR + one of Finance/Sales/Ops) | 1 | SMB (50–250 employees) testing the model |
-| **Growth** | $90K | Up to 4 agents | 1 | Mid-market (250–2,000 employees) |
-| **Enterprise** | $250K+ | All 7 agents + Dev Agent | 1, with cell isolation options | Enterprise (2,000+ employees) |
+| **Starter** | $30K | Up to 2 agents (HR + one of Finance/Sales/Ops) | 1 | Startup / SMB (1–49 employees) testing the model |
+| **Growth** | $90K | Up to 4 agents | 1 | Medium-sized business (50–249 employees) |
+| **Enterprise** | $250K+ | All 7 agents + Dev Agent | 1, with cell isolation options | Enterprise (250+ employees) |
 | **Enterprise Regulated** | $400K+ | All agents + self-hosted models for sensitive data | Dedicated cell | Regulated industries (healthcare, financial services, defence) |
 
 Annual contracts. Monthly contracts available at 25% premium and only for pilot/conversion paths.
