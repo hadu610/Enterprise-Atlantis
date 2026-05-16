@@ -7,6 +7,18 @@
 
 ---
 
+#### Investor materials
+
+- **[Investor Deck](Investor-Deck)**
+- [Executive Summary](Executive-Summary)
+- [The Six Barriers](The-Six-Barriers)
+- [Competitor Analysis](Competitor-Analysis)
+- [Build Roadmap](Build-Roadmap)
+- [Advantages & Risks](Advantages-and-Risks)
+- [Strategic Considerations](Strategic-Considerations)
+
+---
+
 #### Start here
 
 - [Wiki Conventions](Wiki-Conventions)

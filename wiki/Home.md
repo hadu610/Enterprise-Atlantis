@@ -16,6 +16,8 @@ Every agent reads this Wiki before acting. Every human contributing to the platf
 
 → **[Customer Journeys — Startup / Medium / Enterprise](Customer-Journeys)** — how a 5-person startup, a 500-person mid-market company, and a 50,000-person enterprise each get started, build, and operate their AI company on Atlantis.
 
+→ **[Investor Deck](Investor-Deck)** — 12-slide pitch artifact: problem, market, solution, demo, product, trust ramp, competition, business model, go-to-market, roadmap, team, ask. Confidential — share under NDA.
+
 If you are new to the Wiki, read these four foundation pages **in order**:
 
 1. **[Wiki Conventions](Wiki-Conventions)** — page structure and metadata block
