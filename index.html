@@ -398,6 +398,43 @@
       </p>
     </div>
 
+    <!-- Industry research baseline -->
+    <div class="calc-research">
+      <div class="calc-research-head">
+        <span class="calc-research-eyebrow">Research baseline</span>
+        <span class="calc-research-title">How many SaaS apps do companies actually run?</span>
+      </div>
+      <div class="calc-research-stats">
+        <div class="calc-research-stat">
+          <div class="calc-research-stat-label">Startups · 1–49 employees</div>
+          <div class="calc-research-stat-value">15–50 <span>SaaS apps</span></div>
+          <div class="calc-research-stat-src">Okta SMB · Vendr 2025</div>
+        </div>
+        <div class="calc-research-stat">
+          <div class="calc-research-stat-label">Mid-market · 50–500 employees</div>
+          <div class="calc-research-stat-value">75–250 <span>SaaS apps</span></div>
+          <div class="calc-research-stat-src">Vendr 2025 · Productiv 2024</div>
+        </div>
+        <div class="calc-research-stat">
+          <div class="calc-research-stat-label">Enterprise · 500+ employees</div>
+          <div class="calc-research-stat-value">130–470+ <span>SaaS apps</span></div>
+          <div class="calc-research-stat-src">Productiv 2024 · Zylo 2025</div>
+        </div>
+      </div>
+      <div class="calc-research-cites">
+        Sources:
+        <a href="https://productiv.com/state-of-saas/2024-saas-trends-spend/" target="_blank" rel="noopener">Productiv State of SaaS 2024</a>
+        ·
+        <a href="https://www.vendr.com/insights/saas-trends-report" target="_blank" rel="noopener">Vendr SaaS Trends 2025</a>
+        ·
+        <a href="https://zylo.com/news/2025-saas-management-index/" target="_blank" rel="noopener">Zylo SaaS Management Index 2025</a>
+        ·
+        <a href="https://www.bettercloud.com/monitor/the-2024-state-of-saasops-report/" target="_blank" rel="noopener">BetterCloud State of SaaSOps 2024</a>
+        ·
+        <a href="https://www.okta.com/sites/default/files/2024-04/Okta-2024_Businesses_at_Work.pdf" target="_blank" rel="noopener">Okta Businesses at Work 2024</a>
+      </div>
+    </div>
+
     <div class="calc" id="calc">
       <!-- Step 1: Company size -->
       <div class="calc-step">
@@ -422,9 +459,9 @@
         </div>
 
         <div class="calc-slider-row">
-          <input type="range" id="calc-emp-slider" min="5" max="10000" step="5" value="200" />
+          <input type="range" id="calc-emp-slider" min="5" max="2000" step="5" value="200" />
           <div class="calc-slider-out">
-            <input type="number" id="calc-emp-input" min="5" max="10000" step="1" value="200" />
+            <input type="number" id="calc-emp-input" min="5" max="2000" step="1" value="200" />
             <span class="calc-slider-suffix">people</span>
           </div>
         </div>
@@ -465,13 +502,23 @@
       </div>
 
       <p class="calc-footnote">
-        <strong>Honest framing.</strong> Estimates use published 2026 list prices; quote-only vendors
-        (Workday, ServiceNow, NetSuite, Ironclad, Marketo, Snowflake) use Vendr / Spendhound / G2
-        buyer benchmarks. Linear-scaled per employee — your actual contract depends on
+        <strong>Methodology &amp; honest framing.</strong>
+        Per-employee-per-year numbers are derived from each vendor's published 2026 list price,
+        normalised for typical seat coverage (CRM seats ≈ 20% of staff, support agents ≈ 5%,
+        ServiceNow fulfillers ≈ 10%, productivity / payroll ≈ 100%).
+        Quote-only vendors (Workday, ServiceNow, NetSuite, Ironclad, Marketo, Snowflake, MuleSoft, Greenhouse Expert)
+        use buyer benchmarks from
+        <a href="https://www.vendr.com/insights/saas-trends-report" target="_blank" rel="noopener">Vendr SaaS Trends 2025</a>,
+        <a href="https://www.spendhound.com/blog" target="_blank" rel="noopener">Spendhound</a>, and G2 RFPs.
+        SaaS-count baselines per company size are reported by
+        <a href="https://productiv.com/state-of-saas/2024-saas-trends-spend/" target="_blank" rel="noopener">Productiv State of SaaS 2024</a>
+        (mid-market avg 217 apps, 10K+ enterprise avg 473) and
+        <a href="https://zylo.com/news/2025-saas-management-index/" target="_blank" rel="noopener">Zylo SaaS Management Index 2025</a>
+        (660 apps at 10K+ employees including shadow IT).
+        Calculator output is linear-scaled per employee — your actual contracts depend on
         negotiation. <strong>Atlantis is the agent + governance layer</strong>; most customers keep
-        their systems of record and use Atlantis to consolidate the rest (ticketing, marketing
-        ops, integration platform, helpdesk, internal admin overhead). Real value comes from
-        retired tools + reduced platform-team headcount, not magic.
+        their systems of record (Salesforce, Workday) and use Atlantis to consolidate the
+        rest. Real value comes from retired tools + reduced platform-team headcount, not magic.
       </p>
 
       <div class="calc-cta">

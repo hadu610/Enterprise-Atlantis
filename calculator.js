@@ -19,53 +19,67 @@
    */
   const TOOLS = [
     // ===== CRM =====
-    { id: 'sf',   cat: 'CRM',           name: 'Salesforce Sales Cloud',     vendor: 'salesforce.com', low: 60,  high: 840, note: '$25–350/seat/mo · ~20% of staff have seats', defaultsByTier: { md: true, en: true } },
-    { id: 'hub',  cat: 'CRM',           name: 'HubSpot Sales Hub',          vendor: 'hubspot.com',    low: 36,  high: 360, note: '$15–150/seat/mo · ~20% seat coverage',       defaultsByTier: { sb: true } },
+    { id: 'sf',     cat: 'CRM',           name: 'Salesforce Sales Cloud',     vendor: 'salesforce.com',         low: 60,  high: 840,  note: '$25–350/seat/mo · ~20% staff have seats',     defaultsByTier: { md: true, en: true } },
+    { id: 'hub',    cat: 'CRM',           name: 'HubSpot Sales Hub',          vendor: 'hubspot.com',            low: 36,  high: 360,  note: '$15–150/seat/mo · ~20% seat coverage',        defaultsByTier: { sb: true } },
+    { id: 'zcrm',   cat: 'CRM',           name: 'Zoho CRM',                   vendor: 'zoho.com',               low: 34,  high: 96,   note: '$14–40/seat/mo · SMB pick',                   defaultsByTier: {} },
+    { id: 'pd',     cat: 'CRM',           name: 'Pipedrive',                  vendor: 'pipedrive.com',          low: 34,  high: 120,  note: '$14–50/seat/mo · sales-team focused',         defaultsByTier: {} },
 
     // ===== HRIS =====
-    { id: 'wd',   cat: 'HRIS',          name: 'Workday HCM',                vendor: 'workday.com',    low: 420, high: 1200, note: '$35–100/employee/mo · all employees',        defaultsByTier: { en: true } },
-    { id: 'bh',   cat: 'HRIS',          name: 'BambooHR / Rippling',        vendor: 'bamboohr.com',   low: 96,  high: 300, note: '$8–25/employee/mo · all employees',          defaultsByTier: { sb: true, md: true } },
+    { id: 'wd',     cat: 'HRIS',          name: 'Workday HCM',                vendor: 'workday.com',            low: 420, high: 1200, note: '$35–100/employee/mo · all employees',         defaultsByTier: { en: true } },
+    { id: 'bh',     cat: 'HRIS',          name: 'BambooHR / Rippling',        vendor: 'bamboohr.com',           low: 96,  high: 300,  note: '$8–25/employee/mo · all employees',           defaultsByTier: { sb: true, md: true } },
 
     // ===== Payroll =====
-    { id: 'gst',  cat: 'Payroll',       name: 'Gusto / Justworks',          vendor: 'gusto.com',      low: 84,  high: 276, note: '$49 base + $6–22/employee/mo',               defaultsByTier: { sb: true, md: true } },
-    { id: 'adp',  cat: 'Payroll',       name: 'ADP Workforce Now',          vendor: 'adp.com',        low: 276, high: 660, note: '$23–55/employee/mo · enterprise payroll',    defaultsByTier: { en: true } },
+    { id: 'gst',    cat: 'Payroll',       name: 'Gusto / Justworks',          vendor: 'gusto.com',              low: 84,  high: 276,  note: '$49 base + $6–22/employee/mo',                defaultsByTier: { sb: true, md: true } },
+    { id: 'adp',    cat: 'Payroll',       name: 'ADP Workforce Now',          vendor: 'adp.com',                low: 276, high: 660,  note: '$23–55/employee/mo · enterprise payroll',     defaultsByTier: { en: true } },
 
     // ===== Finance / ERP =====
-    { id: 'qb',   cat: 'Finance / ERP', name: 'QuickBooks Online',          vendor: 'quickbooks.intuit.com', low: 12,  high: 80,  note: '$38–275/mo flat · diminishes per emp',  defaultsByTier: { sb: true } },
-    { id: 'ns',   cat: 'Finance / ERP', name: 'NetSuite',                   vendor: 'netsuite.com',   low: 144, high: 360, note: '$999 base + $99–199/user/mo · ~10% seats',   defaultsByTier: { md: true, en: true } },
-    { id: 'sage', cat: 'Finance / ERP', name: 'Sage Intacct',               vendor: 'sage.com',       low: 90,  high: 250, note: '$9–75K/yr · scales with users',              defaultsByTier: {} },
+    { id: 'qb',     cat: 'Finance / ERP', name: 'QuickBooks Online',          vendor: 'quickbooks.intuit.com',  low: 12,  high: 80,   note: '$38–275/mo flat · SMB accounting',            defaultsByTier: { sb: true } },
+    { id: 'xero',   cat: 'Finance / ERP', name: 'Xero',                       vendor: 'xero.com',               low: 8,   high: 60,   note: '$29–69/mo flat · global SMB',                 defaultsByTier: {} },
+    { id: 'ns',     cat: 'Finance / ERP', name: 'NetSuite',                   vendor: 'netsuite.com',           low: 144, high: 360,  note: '$999 base + $99–199/user/mo · ~10% seats',    defaultsByTier: { md: true, en: true } },
+    { id: 'sage',   cat: 'Finance / ERP', name: 'Sage Intacct',               vendor: 'sage.com',               low: 90,  high: 250,  note: '$9–75K/yr · scales with users',               defaultsByTier: {} },
 
     // ===== Ticketing / Project Management =====
-    { id: 'jira', cat: 'Ticketing / PM', name: 'Jira + Confluence',         vendor: 'atlassian.com',  low: 84,  high: 156, note: '$14–26/user/mo · ~50% coverage',             defaultsByTier: { sb: true, md: true, en: true } },
-    { id: 'sn',   cat: 'Ticketing / PM', name: 'ServiceNow ITSM',           vendor: 'servicenow.com', low: 120, high: 300, note: '$100–200/fulfiller/mo · ~10% fulfillers',    defaultsByTier: { en: true } },
-    { id: 'lin',  cat: 'Ticketing / PM', name: 'Linear / Asana',            vendor: 'linear.app',     low: 36,  high: 120, note: '$8–45/user/mo · project teams',              defaultsByTier: { sb: true, md: true } },
+    { id: 'jira',   cat: 'Ticketing / PM', name: 'Jira + Confluence',         vendor: 'atlassian.com',          low: 84,  high: 156,  note: '$14–26/user/mo · ~50% coverage',              defaultsByTier: { sb: true, md: true, en: true } },
+    { id: 'sn',     cat: 'Ticketing / PM', name: 'ServiceNow ITSM',           vendor: 'servicenow.com',         low: 120, high: 300,  note: '$100–200/fulfiller/mo · ~10% fulfillers',     defaultsByTier: { en: true } },
+    { id: 'lin',    cat: 'Ticketing / PM', name: 'Linear / Asana',            vendor: 'linear.app',             low: 36,  high: 120,  note: '$8–45/user/mo · project teams',               defaultsByTier: { sb: true, md: true } },
+    { id: 'clk',    cat: 'Ticketing / PM', name: 'ClickUp',                   vendor: 'clickup.com',            low: 28,  high: 76,   note: '$7–19/user/mo · ~40% coverage',               defaultsByTier: {} },
+    { id: 'notion', cat: 'Ticketing / PM', name: 'Notion (docs + projects)',  vendor: 'notion.so',              low: 60,  high: 130,  note: '$10–18/user/mo · ~50% coverage',              defaultsByTier: {} },
 
     // ===== Customer Support =====
-    { id: 'zd',   cat: 'Customer Support', name: 'Zendesk Suite',           vendor: 'zendesk.com',    low: 33,  high: 120, note: '$55–169/agent/mo · ~5% agents',              defaultsByTier: { md: true, en: true } },
-    { id: 'ic',   cat: 'Customer Support', name: 'Intercom',                vendor: 'intercom.com',   low: 30,  high: 110, note: '$29–132/seat/mo · ~5% seats',                defaultsByTier: { sb: true } },
+    { id: 'zd',     cat: 'Customer Support', name: 'Zendesk Suite',           vendor: 'zendesk.com',            low: 33,  high: 120,  note: '$55–169/agent/mo · ~5% agents',               defaultsByTier: { md: true, en: true } },
+    { id: 'ic',     cat: 'Customer Support', name: 'Intercom',                vendor: 'intercom.com',           low: 30,  high: 110,  note: '$29–132/seat/mo · ~5% seats',                 defaultsByTier: { sb: true } },
+    { id: 'fd',     cat: 'Customer Support', name: 'Freshdesk',               vendor: 'freshworks.com',         low: 9,   high: 30,   note: '$15–49/agent/mo · ~5% agents',                defaultsByTier: {} },
+    { id: 'hs',     cat: 'Customer Support', name: 'Help Scout',              vendor: 'helpscout.com',          low: 13,  high: 26,   note: '$22–44/user/mo · ~5% agents',                 defaultsByTier: {} },
 
     // ===== Marketing =====
-    { id: 'hubm', cat: 'Marketing',     name: 'HubSpot Marketing Hub',      vendor: 'hubspot.com',    low: 60,  high: 360, note: 'Starter to Enterprise flat tiers',           defaultsByTier: { sb: true, md: true } },
-    { id: 'mkto', cat: 'Marketing',     name: 'Marketo Engage',             vendor: 'business.adobe.com', low: 240, high: 1200, note: '$1.5K–50K/mo · scales by DB size',        defaultsByTier: { en: true } },
+    { id: 'hubm',   cat: 'Marketing',     name: 'HubSpot Marketing Hub',      vendor: 'hubspot.com',            low: 60,  high: 360,  note: 'Starter to Enterprise flat tiers',            defaultsByTier: { md: true } },
+    { id: 'mkto',   cat: 'Marketing',     name: 'Marketo Engage',             vendor: 'business.adobe.com',     low: 240, high: 1200, note: '$1.5K–50K/mo · scales by DB size',            defaultsByTier: { en: true } },
+    { id: 'mc',     cat: 'Marketing',     name: 'Mailchimp',                  vendor: 'mailchimp.com',          low: 6,   high: 60,   note: '$13–350/mo flat · by list size',              defaultsByTier: { sb: true } },
+    { id: 'brevo',  cat: 'Marketing',     name: 'Brevo (Sendinblue)',         vendor: 'brevo.com',              low: 5,   high: 40,   note: '$9–69/mo flat · by send volume',              defaultsByTier: {} },
 
     // ===== Productivity / Communication =====
-    { id: 'm365', cat: 'Productivity',  name: 'Microsoft 365 / Workspace',  vendor: 'microsoft.com',  low: 96,  high: 360, note: '$8–30/user/mo · all employees',              defaultsByTier: { sb: true, md: true, en: true } },
-    { id: 'slk',  cat: 'Productivity',  name: 'Slack / Teams',              vendor: 'slack.com',      low: 87,  high: 336, note: '$7.25–28/user/mo · all employees',           defaultsByTier: { sb: true, md: true, en: true } },
+    { id: 'm365',   cat: 'Productivity',  name: 'Microsoft 365 / Google Workspace', vendor: 'microsoft.com',    low: 96,  high: 360,  note: '$8–30/user/mo · all employees',               defaultsByTier: { sb: true, md: true, en: true } },
+    { id: 'slk',    cat: 'Productivity',  name: 'Slack / Teams',              vendor: 'slack.com',              low: 87,  high: 336,  note: '$7.25–28/user/mo · all employees',            defaultsByTier: { sb: true, md: true, en: true } },
+    { id: 'zwk',    cat: 'Productivity',  name: 'Zoho Workplace',             vendor: 'zoho.com',               low: 36,  high: 108,  note: '$3–9/user/mo · SMB office suite',             defaultsByTier: {} },
 
-    // ===== Legal / Contract =====
-    { id: 'ds',   cat: 'Legal',         name: 'DocuSign',                   vendor: 'docusign.com',   low: 36,  high: 144, note: '$10–40/user/mo · ~30% coverage',             defaultsByTier: { md: true, en: true } },
-    { id: 'iron', cat: 'Legal',         name: 'Ironclad CLM',               vendor: 'ironclad.com',   low: 60,  high: 400, note: '$80–400K/yr enterprise quote',               defaultsByTier: { en: true } },
+    // ===== Legal / E-sign =====
+    { id: 'ds',     cat: 'Legal',         name: 'DocuSign',                   vendor: 'docusign.com',           low: 36,  high: 144,  note: '$10–40/user/mo · ~30% coverage',              defaultsByTier: { md: true, en: true } },
+    { id: 'pd2',    cat: 'Legal',         name: 'PandaDoc',                   vendor: 'pandadoc.com',           low: 68,  high: 176,  note: '$19–49/user/mo · ~30% coverage',              defaultsByTier: {} },
+    { id: 'dsign',  cat: 'Legal',         name: 'Dropbox Sign',               vendor: 'sign.dropbox.com',       low: 54,  high: 90,   note: '$15–25/user/mo · ~30% coverage',              defaultsByTier: { sb: true } },
+    { id: 'iron',   cat: 'Legal',         name: 'Ironclad CLM',               vendor: 'ironclad.com',           low: 60,  high: 400,  note: '$80–400K/yr enterprise CLM',                  defaultsByTier: { en: true } },
 
     // ===== Recruiting =====
-    { id: 'gh',   cat: 'Recruiting',    name: 'Greenhouse / Lever',         vendor: 'greenhouse.io', low: 30,  high: 200, note: '$6.5K–144K/yr · scales by headcount',         defaultsByTier: { md: true, en: true } },
+    { id: 'gh',     cat: 'Recruiting',    name: 'Greenhouse / Lever',         vendor: 'greenhouse.io',          low: 30,  high: 200,  note: '$6.5K–144K/yr · scales with hires',           defaultsByTier: { md: true, en: true } },
+    { id: 'wkbl',   cat: 'Recruiting',    name: 'Workable',                   vendor: 'workable.com',           low: 20,  high: 80,   note: '$149–599/mo flat · SMB ATS',                  defaultsByTier: { sb: true } },
 
     // ===== Data / Integration =====
-    { id: 'snow', cat: 'Data',          name: 'Snowflake / BigQuery + ETL', vendor: 'snowflake.com',  low: 120, high: 500, note: '$24K–700K/yr consumption',                   defaultsByTier: { en: true } },
-    { id: 'ipaas', cat: 'Data',         name: 'Workato / MuleSoft (iPaaS)', vendor: 'workato.com',    low: 60,  high: 500, note: '$15K–200K/yr · integration tax',             defaultsByTier: { md: true, en: true } },
+    { id: 'snow',   cat: 'Data / Integration', name: 'Snowflake / BigQuery + ETL', vendor: 'snowflake.com',     low: 120, high: 500,  note: '$24K–700K/yr consumption',                    defaultsByTier: { en: true } },
+    { id: 'ipaas',  cat: 'Data / Integration', name: 'Workato / MuleSoft (iPaaS)', vendor: 'workato.com',       low: 60,  high: 500,  note: '$15K–200K/yr · enterprise integration',       defaultsByTier: { md: true, en: true } },
+    { id: 'zap',    cat: 'Data / Integration', name: 'Zapier / Make.com',     vendor: 'zapier.com',             low: 5,   high: 24,   note: '$20–69/mo flat · SMB automation',             defaultsByTier: { sb: true } },
 
     // ===== Hidden costs =====
-    { id: 'consult', cat: 'Hidden costs', name: 'Implementation consultants', vendor: '',             low: 80,  high: 300, note: 'One-time + ongoing config / training',       defaultsByTier: { md: true, en: true } },
-    { id: 'admin',   cat: 'Hidden costs', name: 'Internal SaaS admin / IT',  vendor: '',              low: 120, high: 400, note: 'Salary load for tool ownership',             defaultsByTier: { md: true, en: true } },
+    { id: 'consult', cat: 'Hidden costs', name: 'Implementation consultants',  vendor: '',                      low: 80,  high: 300,  note: 'One-time + ongoing config / training',        defaultsByTier: { md: true, en: true } },
+    { id: 'admin',   cat: 'Hidden costs', name: 'Internal SaaS admin / IT',    vendor: '',                      low: 120, high: 400,  note: 'Salary load for tool ownership',              defaultsByTier: { md: true, en: true } },
   ];
 
   // Atlantis published pricing tiers (USD / year)
@@ -201,7 +215,7 @@
   }
 
   function setEmployees(n) {
-    state.employees = Math.max(5, Math.min(10000, Math.round(n)));
+    state.employees = Math.max(5, Math.min(2000, Math.round(n)));
     const slider = el('#calc-emp-slider');
     const out = el('#calc-emp-value');
     const input = el('#calc-emp-input');
