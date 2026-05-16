@@ -20,16 +20,22 @@
       <span class="brand-mark" aria-hidden="true"></span>
       <span class="brand-name">Atlantis</span>
     </a>
-    <nav class="nav-links" aria-label="Primary">
+    <nav class="nav-links" id="nav-links" aria-label="Primary">
       <a href="index.html#problem">Problem</a>
       <a href="index.html#solution">Solution</a>
       <a href="index.html#platform">Platform</a>
+      <a href="wiki.html#Customer-Journeys" class="nav-link-feature">Get started</a>
       <a href="workflows.html">Workflows</a>
       <a href="wiki.html" class="active">Wiki</a>
       <a href="index.html#roadmap">Roadmap</a>
     </nav>
     <div class="nav-right">
       <a href="https://github.com/hadu610/Enterprise-Atlantis" target="_blank" rel="noopener" class="btn btn-ghost nav-cta">GitHub →</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
     </div>
   </div>
 </header>
@@ -82,9 +88,7 @@
   <div class="container wiki-grid">
 
     <!-- Mobile sidebar toggle -->
-    <button class="wiki-mobile-toggle" id="mobile-toggle" aria-label="Open sidebar">
-      ☰ Navigation
-    </button>
+    <button class="wiki-mobile-toggle" id="mobile-toggle" aria-label="Open Wiki navigation" aria-expanded="false">Browse the Wiki</button>
 
     <!-- Left sidebar -->
     <aside class="wiki-sidebar" id="sidebar" aria-label="Wiki navigation">
@@ -121,6 +125,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+<script src="nav.js" defer></script>
 <script src="wiki.js" defer></script>
 </body>
 </html>

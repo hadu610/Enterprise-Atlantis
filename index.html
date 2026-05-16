@@ -19,15 +19,23 @@
       <span class="brand-mark" aria-hidden="true"></span>
       <span class="brand-name">Atlantis</span>
     </a>
-    <nav class="nav-links" aria-label="Primary">
+    <nav class="nav-links" id="nav-links" aria-label="Primary">
       <a href="#problem">Problem</a>
       <a href="#solution">Solution</a>
       <a href="#platform">Platform</a>
+      <a href="#get-started" class="nav-link-feature">Get started</a>
       <a href="workflows.html">Workflows</a>
       <a href="wiki.html">Wiki</a>
       <a href="#roadmap">Roadmap</a>
     </nav>
-    <a href="#cta" class="btn btn-primary nav-cta">Talk to us</a>
+    <div class="nav-right">
+      <a href="#cta" class="btn btn-primary nav-cta">Talk to us</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -444,6 +452,99 @@
   </div>
 </section>
 
+<!-- ============ GET STARTED — CUSTOMER JOURNEYS ============ -->
+<section class="section" id="get-started">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Get Started</div>
+      <h2 class="section-title">Five minutes to your AI company.</h2>
+      <p class="section-sub">
+        Describe your business in plain English. Our AI Business Consultant researches similar
+        companies, pulls the right playbooks from our validated wiki, and produces a custom
+        blueprint with the departments you should activate first, the integrations you'll need, and
+        a 30 / 60 / 90 day plan. <strong>No cloud setup. No procurement gate.</strong> Pick the
+        departments you need — turn on the rest when you're ready.
+      </p>
+    </div>
+
+    <div class="journeys-grid">
+      <article class="journey">
+        <div class="journey-head">
+          <div class="journey-tag">Startup</div>
+          <div class="journey-size">1–250 people</div>
+        </div>
+        <h3>Frictionless quick-start</h3>
+        <p class="journey-claim">Same day to a working agent.</p>
+        <ul class="journey-points">
+          <li>Sign up, describe your business, agents running by lunch</li>
+          <li>Start with 1–2 departments (Sales+Marketing or Dev)</li>
+          <li>Managed multi-tenant cloud — no infrastructure to set up</li>
+          <li>From <strong>$30K/year</strong> · self-serve + shared CSM pool</li>
+        </ul>
+      </article>
+
+      <article class="journey journey-feature">
+        <div class="journey-head">
+          <div class="journey-tag">Medium</div>
+          <div class="journey-size">250–2,000 people</div>
+        </div>
+        <h3>Guided onboarding, named CSM</h3>
+        <p class="journey-claim">Running across 3–4 departments inside a quarter.</p>
+        <ul class="journey-points">
+          <li>Half-day kickoff with named Customer Success Manager</li>
+          <li>3–4 departments (typically Sales+Marketing+HR+Finance)</li>
+          <li>Workday / Salesforce / NetSuite / Snowflake connectors included</li>
+          <li>From <strong>$90K/year</strong> · 4 agents included, optional dedicated cell</li>
+        </ul>
+      </article>
+
+      <article class="journey">
+        <div class="journey-head">
+          <div class="journey-tag">Enterprise</div>
+          <div class="journey-size">2,000+ people</div>
+        </div>
+        <h3>Land in one unit, expand</h3>
+        <p class="journey-claim">Pilot a business unit, then scale across the org.</p>
+        <ul class="journey-points">
+          <li>Security review, MSA, BAA, custom AI clauses</li>
+          <li>Pilot 1 department in 1 BU, then expand across departments + units</li>
+          <li><strong>Bring-your-own-cloud</strong> (AWS / GCP / Azure) when central IT requires it</li>
+          <li>From <strong>$250K/year</strong> · Regulated tier from $400K</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="journey-foundations">
+      <div class="jf-item">
+        <div class="jf-icon">🧭</div>
+        <div>
+          <h4>AI Business Consultant onboarding</h4>
+          <p>Every customer starts the same way. Describe your business, get a blueprint cited to industry best practice in minutes.</p>
+        </div>
+      </div>
+      <div class="jf-item">
+        <div class="jf-icon">🛡</div>
+        <div>
+          <h4>Multi-tenant by design</h4>
+          <p>Your data, wiki, audit log, and billing isolated from every other customer. Optional dedicated cell or your own cloud at higher tiers.</p>
+        </div>
+      </div>
+      <div class="jf-item">
+        <div class="jf-icon">🪜</div>
+        <div>
+          <h4>Phased Autonomy — Drafting first, always</h4>
+          <p>Every customer starts in Drafting Mode. Trust is earned per company, not assumed from the playbook.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="journey-cta">
+      <a href="wiki.html#Customer-Journeys" class="btn btn-primary btn-lg">See the full Customer Journeys →</a>
+      <a href="wiki.html#AI-Business-Consultant-Onboarding" class="btn btn-ghost btn-lg">How onboarding works</a>
+    </div>
+  </div>
+</section>
+
 <!-- ============ COMPETITIVE ============ -->
 <section class="section" id="competition">
   <div class="container">
@@ -656,6 +757,7 @@
   </div>
 </footer>
 
+<script src="nav.js" defer></script>
 <script src="script.js" defer></script>
 </body>
 </html>

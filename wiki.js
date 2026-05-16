@@ -190,13 +190,40 @@
     const toggle = document.getElementById('mobile-toggle');
     const sidebar = document.getElementById('sidebar');
     if (!toggle || !sidebar) return;
-    toggle.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-    });
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', 'sidebar');
+
+    const setOpen = (open) => {
+      sidebar.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.firstChild && (toggle.firstChild.nodeValue = open ? 'Hide navigation' : 'Browse the Wiki');
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+
+    // Initial label
+    toggle.textContent = 'Browse the Wiki';
+    toggle.addEventListener('click', () => setOpen(!sidebar.classList.contains('open')));
+
     // Auto-close on link click
     sidebar.addEventListener('click', e => {
-      if (e.target.tagName === 'A') sidebar.classList.remove('open');
+      if (e.target.tagName === 'A') setOpen(false);
     });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sidebar.classList.contains('open')) setOpen(false);
+    });
+
+    // Close on backdrop tap (anywhere outside the sidebar)
+    document.addEventListener('click', (e) => {
+      if (!sidebar.classList.contains('open')) return;
+      if (sidebar.contains(e.target) || toggle.contains(e.target)) return;
+      setOpen(false);
+    });
+
+    // Reset if viewport grows past mobile breakpoint
+    const mq = window.matchMedia('(min-width: 761px)');
+    mq.addEventListener('change', (e) => { if (e.matches) setOpen(false); });
   }
 
   // -------- Route --------
