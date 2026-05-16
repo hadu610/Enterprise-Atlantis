@@ -385,6 +385,103 @@
   </div>
 </section>
 
+<!-- ============ STACK COST CALCULATOR ============ -->
+<section class="section" id="calculator">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Stack calculator</div>
+      <h2 class="section-title">What does your stack cost today?</h2>
+      <p class="section-sub">
+        Pick your company size and the tools you currently run. We estimate
+        your annual SaaS spend using <strong>published list prices</strong> — then show what the
+        same coverage looks like governed by Atlantis. Drag the slider to see the bill.
+      </p>
+    </div>
+
+    <div class="calc" id="calc">
+      <!-- Step 1: Company size -->
+      <div class="calc-step">
+        <div class="calc-step-head">
+          <span class="calc-step-num">1</span>
+          <span class="calc-step-title">How many people work at your company?</span>
+        </div>
+
+        <div class="calc-presets">
+          <button type="button" class="calc-preset" data-tier="sb" data-employees="25">
+            <span class="calc-preset-label">Startup</span>
+            <span class="calc-preset-meta">25 people</span>
+          </button>
+          <button type="button" class="calc-preset" data-tier="md" data-employees="200">
+            <span class="calc-preset-label">Medium</span>
+            <span class="calc-preset-meta">200 people</span>
+          </button>
+          <button type="button" class="calc-preset" data-tier="en" data-employees="2000">
+            <span class="calc-preset-label">Enterprise</span>
+            <span class="calc-preset-meta">2,000 people</span>
+          </button>
+        </div>
+
+        <div class="calc-slider-row">
+          <input type="range" id="calc-emp-slider" min="5" max="10000" step="5" value="200" />
+          <div class="calc-slider-out">
+            <input type="number" id="calc-emp-input" min="5" max="10000" step="1" value="200" />
+            <span class="calc-slider-suffix">people</span>
+          </div>
+        </div>
+        <output id="calc-emp-value" class="visually-hidden">200 people</output>
+      </div>
+
+      <!-- Step 2: Tools -->
+      <div class="calc-step">
+        <div class="calc-step-head">
+          <span class="calc-step-num">2</span>
+          <span class="calc-step-title">Which tools do you currently run?</span>
+        </div>
+        <div class="calc-tools" id="calc-tools">
+          <!-- Tool grid renders here via calculator.js -->
+        </div>
+      </div>
+
+      <!-- Step 3: Output -->
+      <div class="calc-output" id="calc-output">
+        <div class="calc-output-card calc-card-current">
+          <div class="calc-output-label">Your current stack</div>
+          <div class="calc-output-amount" id="calc-current-amount">—</div>
+          <div class="calc-output-sub">Estimated annual SaaS spend</div>
+        </div>
+
+        <div class="calc-output-card calc-card-atlantis">
+          <div class="calc-output-label">With Atlantis</div>
+          <div class="calc-output-amount" id="calc-atlantis-amount">—</div>
+          <div class="calc-output-sub"><span id="calc-atlantis-tier">Growth</span> tier · one platform fee</div>
+        </div>
+
+        <div class="calc-output-card calc-card-savings">
+          <div class="calc-output-label">Potential annual value</div>
+          <div class="calc-output-amount" id="calc-savings-amount">—</div>
+          <div class="calc-output-sub">By category ↓</div>
+          <div class="calc-breakdown" id="calc-breakdown"></div>
+        </div>
+      </div>
+
+      <p class="calc-footnote">
+        <strong>Honest framing.</strong> Estimates use published 2026 list prices; quote-only vendors
+        (Workday, ServiceNow, NetSuite, Ironclad, Marketo, Snowflake) use Vendr / Spendhound / G2
+        buyer benchmarks. Linear-scaled per employee — your actual contract depends on
+        negotiation. <strong>Atlantis is the agent + governance layer</strong>; most customers keep
+        their systems of record and use Atlantis to consolidate the rest (ticketing, marketing
+        ops, integration platform, helpdesk, internal admin overhead). Real value comes from
+        retired tools + reduced platform-team headcount, not magic.
+      </p>
+
+      <div class="calc-cta">
+        <a href="wiki.html#Pricing-and-Packaging" class="btn btn-primary">See what's included →</a>
+        <a href="#cta" class="btn btn-ghost">Talk to us about your stack</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ RESOURCES STRIP ============ -->
 <section class="section" id="resources">
   <div class="container">
@@ -495,5 +592,6 @@
 
 <script src="nav.js" defer></script>
 <script src="script.js" defer></script>
+<script src="calculator.js" defer></script>
 </body>
 </html>
