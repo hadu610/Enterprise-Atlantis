@@ -11,7 +11,7 @@
 
   // Reveal on scroll (very light, no dependencies)
   const targets = document.querySelectorAll(
-    '.barrier, .solution, .layer, .pillar, .phase, .rm-step, .why, .stat, .journey, .jf-item, .shared-card'
+    '.barrier, .solution, .layer, .pillar, .phase, .rm-step, .why, .stat, .journey, .jf-item, .shared-card, .trust-card, .quadrant-cell'
   );
   targets.forEach(el => {
     el.style.opacity = '0';
