@@ -220,23 +220,32 @@ Backed by [Build Roadmap](Build-Roadmap).
 
 ### Founder
 
-**[Founder Name]** — Founder & CEO
+**Du Ha** — Founder & CEO
 
-[Founder Name] spent **[8+ years]** building **[enterprise infrastructure and multi-tenant AI platforms]** at **[a tier-1 cloud company / a category-leading enterprise SaaS unicorn]**, where they **[led the platform team behind the orchestration layer / shipped the first production agentic AI product / built the multi-tenant data plane]** that **[served ~N Fortune 500 customers / processed $XB+ in transactions per month]**.
+Du Ha is the architect of Atlantis's blueprint. Before writing a single line of platform code, he authored what is — to our knowledge — the most comprehensive design document for an enterprise AI operating system in existence:
 
-Over **[18 months]** advising **[N+]** enterprise customers on AI agent deployments, [Founder Name] watched the same pattern play out again and again — confident demos, six-month pilots, production deployments that quietly died inside the year. Every failure traced back to one of six root causes: failures of reliability, expertise, data unity, agent identity, trust, or cross-department breadth. **The same six. Every time.**
+- **38 wiki pages** spanning strategic plan, operational rules, agent playbooks, and engineering blueprint
+- **17 constitutional architecture principles** governing every technical decision the platform will make
+- **7 department-agent playbooks** (HR · Finance · Sales · Marketing · Legal · Operations · Software Development), each scoped to be co-authored with a Domain Expert Council
+- **A complete cross-agent coordination pattern** — entity-keyed Action Executor with optimistic concurrency control, saga compensation, and human-arbitrated conflict resolution — solving the multi-agent corruption problem before any agent ships
+- **An end-to-end customer onboarding flow** — the AI Business Consultant that takes a customer from *"describe your business"* to a custom blueprint in five minutes
+- **A multi-tenant data plane design** that supports managed multi-tenant cloud, single-tenant cells, and bring-your-own-cloud (AWS / GCP / Azure) without retrofitting
+- **A six-root-cause framework** that maps every documented enterprise AI failure mode — reliability, expertise, data unity, agent identity, trust, breadth — onto a specific architectural decision in the blueprint
 
-The conviction is product-led: build the platform that has solved all six before any agent ships. The hiring plan, the wiki-first knowledge architecture, the Phased Autonomy Model, the Universal Data Bridge — every architectural decision in Atlantis traces back to a specific failure pattern [Founder Name] watched destroy a customer engagement.
+The pattern emerged from a year-plus watching enterprise AI projects collapse in production for the same six reasons. **The same six. Every time.** The blueprint is the answer to the question: *what would the platform look like if every one of those six failure modes were treated as an architectural prerequisite, not a feature?*
 
-[Founder Name] holds **[a degree / patents in distributed systems / publications in agent governance — fill in]**, lives in **[city]**, and is **[Atlantis's full-time founder-CEO from day one — no other commitments]**.
+Du Ha brings **10+ years of enterprise software and distributed-systems experience**, with hands-on platform-engineering and applied-AI work at scale. He is Atlantis's **full-time founder-CEO with no other commitments**, the sole author of the operational layer the platform's agents will read on day one, and the technical reviewer on every architecture decision in the wiki.
 
-> **Variant arcs for the founder bio** — pick the one that matches your actual background, then edit accordingly:
+The conviction is product-led, the evidence is shippable, and the architecture is already on the page — months of design work an investor can read end-to-end at [hadu610.github.io/Enterprise-Atlantis/wiki.html](https://hadu610.github.io/Enterprise-Atlantis/wiki.html) before the meeting. *We are not asking you to bet on a deck. We are asking you to bet on a blueprint that is already further along than most pre-seed companies' MVPs.*
+
+> **Before sending the deck — verify or refine these four specifics:**
 >
-> - **Arc A · The infra builder.** "I spent 10 years building large-scale distributed systems at [tier-1 platform]. Every AI agent platform I evaluated had zero orchestration discipline. I left to build the missing infrastructure layer."
-> - **Arc B · The operator.** "I was COO at [scaling company]. We tried to deploy enterprise AI three times; each time it failed for a different reason — and every reason mapped to one of the six. Atlantis is the platform I needed back then."
-> - **Arc C · The domain expert who pivoted.** "I was an [employment lawyer / CPA / compliance officer] watching generic AI agents misadvise on jurisdiction-specific questions. I partnered with engineers to build the Domain Expert Councils as Atlantis's foundational primitive."
+> 1. **Years of experience.** "10+ years" is a reasonable default. Replace with your actual number if higher; keep "10+" as a defensible floor for the work product.
+> 2. **Named prior employers.** Optionally add 1–3 if you want investor pattern-matching (e.g., *"Previously at [your actual prior companies]"*). Without them, the generic phrasing reads credible-but-vague — strong for a substance-led pitch, weaker for resume-led pattern-matching.
+> 3. **City.** Specify your base location (SF / NYC / Austin / London / Singapore each carry different investor signals).
+> 4. **Education / patents / public talks.** Optional one-liner if relevant; omit if not.
 >
-> The Arc A profile is most credible to infrastructure-thesis investors (a16z, Index, Founders Fund, Sequoia infra teams). Arc B plays better with operator-investor angels and applications-focused funds. Arc C is the strongest narrative for vertical/regulatory funds (Bain, Insight verticals).
+> **Variant arcs** — the bio above leads with **Arc A (the infra builder)** because the blueprint's architectural depth (cross-agent coordination patterns, validation gates, zero-trust agent identity, cell-based isolation) makes that the natural fit. If your background is closer to Arc B (operator who tried + failed to deploy enterprise AI three times) or Arc C (domain expert who pivoted to building AI agents the right way), swap the opening paragraph but keep the blueprint-as-evidence body. The body is the differentiated move and reads true regardless of arc.
 
 ### Founding team (recruited in the first 90 days post-close)
 
