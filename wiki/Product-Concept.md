@@ -19,18 +19,23 @@ The platform is built in three horizontal layers. This architecture directly add
 
 ---
 
-## The onboarding experience
+## The onboarding experience — *AI Business Consultant, five minutes to value*
 
-New customers are guided through a structured business interview that simultaneously collects the information needed to configure agents AND begins the Data Readiness Assessment required before any agent can act autonomously.
+Day one is the most important day of the customer relationship. We do not ask the customer to set up a cloud, fill in a procurement form, or navigate an integration wizard. We ask them to **describe their business** — and an AI Business Consultant produces a complete, citable, custom-fit blueprint in minutes.
 
-- **Company profile** — industry, size, geography, regulatory environment, operating jurisdictions (drives jurisdiction-aware agents — B2)
-- **Business strategy** — revenue model, growth goals, competitive positioning
-- **Existing operations** — current tools, processes, team structure, existing data systems (drives Universal Data Bridge configuration — B3)
-- **Data quality assessment** — completeness and freshness of key data sources per department (B3)
-- **Risk tolerance** — which action types require approval at which autonomy phases (drives Phased Autonomy Model setup — B5)
-- **Priority pain points** — where automation is most urgent
+The flow:
 
-Based on the interview, the platform auto-configures agent teams, pre-populates the wiki with relevant enterprise blueprints from our playbook library, and presents a Department Activation Checklist showing data readiness status for each department.
+1. **Describe the business** *(60 seconds)* — industry, what you do, team size, jurisdictions, the painful work you wish would just happen. Free text; no taxonomies.
+2. **The Consultant researches** *(2–5 minutes, live activity feed)* — public information about similar businesses of similar size; matching playbooks pulled from our Wiki; tool-stack and integration suggestions; jurisdiction-aware compliance match. Every recommendation is cited.
+3. **Custom blueprint produced** — recommended department lineup ranked by impact, per-department starting playbooks, recommended integrations, Phased Autonomy starting point (Drafting Mode by default), and a 30 / 60 / 90 day plan.
+4. **Customer reviews and chooses** — accept as-is, click any line to edit in plain English, **pick which departments to activate first**. Most customers start with two (e.g. Sales + Marketing for revenue-stage; HR + Finance for compliance-stage; Dev for engineering-led teams). Others can be turned on later from the same console.
+5. **Activation** — agents spin up on our managed cloud immediately. Integrations are connected via OAuth as the active agents need them, not all up-front.
+
+**No cloud account on the customer's side. No SRE on call. No environment setup.** This is the design promise — and the path of least friction that wins SMB and mid-market deals, and lands enterprise *business units* before central IT brings them into the corporate envelope.
+
+For customers who need their own cloud — regulated industries, large enterprises, sovereignty constraints — [bring-your-own-cloud](Architecture-Principles) is available as an upmarket path. **Managed quick-start is the default; BYOC is the option.**
+
+See [AI Business Consultant · Quick-Start Onboarding](AI-Business-Consultant-Onboarding) for the full design, what the Consultant must never do, and how this maps to the six-barrier moat.
 
 ---
 

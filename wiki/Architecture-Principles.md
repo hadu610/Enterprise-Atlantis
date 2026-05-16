@@ -4,7 +4,7 @@
 
 ## Summary
 
-The fifteen principles below are the constitutional rules of the platform's architecture. Individual ADRs may refine them; nothing overrides them without an explicit "supersedes" entry on this page and a CTO-signed ADR.
+The seventeen principles below are the constitutional rules of the platform's architecture. Individual ADRs may refine them; nothing overrides them without an explicit "supersedes" entry on this page and a CTO-signed ADR.
 
 These principles exist because Atlantis's central technical bet — solving [Barrier B6 (Breadth Multiplies Complexity)](The-Six-Barriers#b6--breadth-multiplies-complexity) — is won or lost at the architecture level, not the code level.
 
@@ -131,7 +131,23 @@ When multiple agents touch the same entity, mutations are serialised through an 
 
 **Implication.** New agents inherit coordination for free; the same machinery serves all departments. See [Cross-Agent Coordination](Cross-Agent-Coordination) for the full pattern, schema, and walked-through scenarios.
 
-## 16. Architecture decisions are documented or they didn't happen
+## 16. Managed-first with customer-owned integrations and bring-your-own-cloud as an option
+
+The customer arrives in two postures and we serve both. **SMBs, growth-stage teams, and enterprise business units** arrive wanting a frictionless quick start — *"I described my business and got a working blueprint in five minutes"* (see [AI Business Consultant Onboarding](AI-Business-Consultant-Onboarding)). **Regulated enterprises, sovereignty-constrained customers, and large IT organisations** arrive needing to run the agent runtime inside their own AWS / GCP / Azure perimeter, against their own systems of record (Salesforce, ServiceNow, Zendesk, Workday, M365, SAP, Snowflake, Oracle, GitHub, etc.).
+
+Three commitments follow:
+
+- **Managed quick-start is the default.** Every customer can sign up, describe their business, and have agents running in our managed cloud in minutes. No cloud account, no integration wizard up front. This is the marketing surface and the day-one onboarding path. See [AI Business Consultant Onboarding](AI-Business-Consultant-Onboarding).
+- **On-demand integration with the customer's existing platforms.** Every system of record is a first-class connector in the [Universal Data Bridge](Product-Requirements), activatable per customer at onboarding. A connector is never "future roadmap" that blocks a deal — when a target system is missing, we ship a connector inside the sales cycle. Connectors publish a schema fingerprint; drift triggers a Dev Agent ticket automatically (mirroring [Durable's API-drift detection](Competitor-Deep-Dive-Durable)).
+- **Bring-your-own-cloud (BYOC) is available, not required.** Customers who need it choose where the agent runtime executes: our managed multi-tenant cloud (default), our managed single-tenant cell (mid-tier), or **their own AWS / GCP / Azure tenant under their IAM** (upmarket / regulated). In the BYOC path, customer data and credentials never leave the customer's chosen jurisdiction. The control plane (orchestration, identity issuance, audit aggregation) stays ours; the data plane (agent execution, connector calls, intermediate state) runs where the customer chooses.
+
+**Why.** Forcing BYOC on every customer is the wrong default — it loses the SMB market, slows enterprise adoption, and replicates Durable's friction at the wrong end of the funnel. Forbidding BYOC is also wrong — it loses every regulated, sovereignty-constrained, or large-IT deal where data residency and exit risk are owned by the customer's existing cloud commitments. The right answer is both, with managed as the path of least resistance.
+
+**Implication.** Every service is packaged as a container that can run in our cloud or theirs. State is externalised (cloud-portable Postgres, object storage, secrets vaults). The orchestration plane authenticates BYOC data-plane nodes via mTLS + short-lived JWT (see [Principle 10](#10-zero-trust-between-services)). Cell-based architecture ([Principle 13](#13-cell-based-architecture-for-tenant-isolation)) generalises naturally — a BYOC tenant is a cell whose infrastructure happens to be customer-owned. Connector code is open or source-available so customers can audit what runs against their systems.
+
+**Phasing.** Phase 1 (Months 1–6) ships only the managed multi-tenant path — this is the quick-start onboarding surface. Managed single-tenant cells follow in Phase 2 (Months 7–12). Full BYOC ships in Phase 3 (Months 13–24). The architecture must not foreclose BYOC at any phase. See [Build Roadmap](Build-Roadmap).
+
+## 17. Architecture decisions are documented or they didn't happen
 
 Every non-trivial architectural choice is recorded as an ADR ([Coding Standards § 12](Coding-Standards#12-architecture-decision-records-adrs)). "We talked about this in a meeting" is not a decision; it's a memory that will not survive a team change.
 
