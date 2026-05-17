@@ -2863,295 +2863,521 @@ img { max-width: 100%; display: block; }
   justify-content: center;
 }
 
-/* ---------- Builder filters ---------- */
-.builder-filters {
+/* ---------- Section head (tight variant) ---------- */
+.section-head-tight { max-width: 760px; margin: 0 auto 36px; text-align: center; }
+.section-sub-tight {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #6b6b78;
+  margin: 8px auto 0;
+  max-width: 560px;
+}
+
+/* ---------- Pickers (dropdowns for company shape) ---------- */
+.picker-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 320px;
-  gap: 28px;
-  margin-bottom: 32px;
-  padding: 24px;
-  background: #fafafd;
-  border: 1px solid #ececf2;
-  border-radius: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  max-width: 880px;
+  margin: 0 auto 28px;
 }
-@media (max-width: 980px) {
-  .builder-filters { grid-template-columns: 1fr; gap: 18px; }
+@media (max-width: 760px) {
+  .picker-row { grid-template-columns: 1fr; }
 }
-.filter-block { display: flex; flex-direction: column; gap: 10px; }
-.filter-label {
+.picker {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(15,23,42,0.10);
+  border-radius: 14px;
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  box-shadow:
+    0 1px 0 rgba(20,20,26,0.02),
+    0 14px 40px -28px rgba(20,20,26,0.18);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.picker:focus-within {
+  border-color: rgba(91,140,255,0.55);
+  box-shadow: 0 0 0 3px rgba(91,140,255,0.12), 0 14px 40px -22px rgba(91,140,255,0.40);
+  transform: translateY(-1px);
+}
+.picker-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: #6b6b78;
 }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip {
-  padding: 9px 14px;
-  border: 1px solid #d8d8e0;
-  background: #ffffff;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #2c2c36;
+.picker-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 2px 16px 2px 0;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: #14141a;
   cursor: pointer;
-  transition: all 0.15s ease;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #6b6b78 50%),
+    linear-gradient(135deg, #6b6b78 50%, transparent 50%);
+  background-position: right 4px center, right 0 center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  width: 100%;
+}
+.picker-select:focus { outline: none; }
+
+/* ---------- Deck filters (department pills) ---------- */
+.deck-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 880px;
+  margin: 0 auto 24px;
+}
+.deck-filter {
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 500;
+  font-family: inherit;
+  border-radius: 999px;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.70);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #4b4b56;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: all .15s ease;
+}
+.deck-filter:hover { border-color: rgba(15,23,42,0.22); color: #14141a; }
+.deck-filter-on {
+  background: #14141a;
+  color: #ffffff;
+  border-color: #14141a;
+}
+.deck-filter-icon { font-size: 12px; opacity: 0.75; }
+.deck-filter-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  opacity: 0.7;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Card deck ---------- */
+.deck-wrap {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+  gap: 18px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+@media (max-width: 640px) {
+  .deck-wrap { grid-template-columns: 40px 1fr 40px; gap: 10px; }
+}
+.deck-arrow {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 22px;
+  font-weight: 400;
+  color: #14141a;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  transition: all .15s ease;
+  z-index: 4;
+  padding: 0;
+}
+.deck-arrow:hover {
+  background: #14141a;
+  color: #ffffff;
+  border-color: #14141a;
+  transform: scale(1.05);
+}
+.deck-arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+@media (max-width: 640px) {
+  .deck-arrow { width: 40px; height: 40px; font-size: 18px; }
+}
+
+.deck {
+  position: relative;
+  height: 460px;
+  perspective: 1200px;
+}
+@media (max-width: 640px) {
+  .deck { height: 500px; }
+}
+.deck-card {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #ffffff 0%, #fafbff 100%);
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 22px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow:
+    0 1px 0 rgba(20,20,26,0.02),
+    0 24px 60px -30px rgba(20,20,26,0.25);
+  transition: transform .35s cubic-bezier(.22,.61,.36,1), opacity .35s ease, box-shadow .25s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+  overflow: hidden;
+  will-change: transform;
+}
+.deck-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(91,140,255,0.10), transparent 55%),
+    radial-gradient(circle at 100% 100%, rgba(124,92,255,0.09), transparent 55%);
+  pointer-events: none;
+}
+.deck-card-active {
+  z-index: 3;
+  transform: translateX(0) scale(1) rotate(0);
+  cursor: grab;
+}
+.deck-card-active:active { cursor: grabbing; }
+.deck-card-next {
+  z-index: 2;
+  transform: translateY(14px) scale(0.96);
+  opacity: 0.65;
+  pointer-events: none;
+}
+.deck-card-next-2 {
+  z-index: 1;
+  transform: translateY(28px) scale(0.92);
+  opacity: 0.35;
+  pointer-events: none;
+}
+.deck-card-gone-left {
+  transform: translateX(-130%) rotate(-12deg) !important;
+  opacity: 0;
+  pointer-events: none;
+}
+.deck-card-gone-right {
+  transform: translateX(130%) rotate(12deg) !important;
+  opacity: 0;
+  pointer-events: none;
+}
+.deck-card-active.is-dragging {
+  transition: none;
+}
+
+.deck-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+.deck-card-dept {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-}
-.chip:hover { border-color: #a8a8b8; }
-.chip-on {
-  background: #14141a;
-  color: #ffffff;
-  border-color: #14141a;
-}
-.chip-strong { font-weight: 600; }
-.chip-meta {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
-  opacity: 0.7;
-}
-.select-wrap {
-  position: relative;
-}
-.select-wrap select {
-  width: 100%;
-  padding: 10px 14px;
-  border: 1px solid #d8d8e0;
-  background: #ffffff;
-  border-radius: 10px;
-  font-size: 14px;
-  color: #2c2c36;
-  font-family: inherit;
-  cursor: pointer;
-  appearance: none;
-}
-
-/* ---------- Builder grid (catalog + summary) ---------- */
-.builder-grid {
-  display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 28px;
-  align-items: flex-start;
-}
-@media (max-width: 1100px) {
-  .builder-grid { grid-template-columns: 1fr; }
-}
-
-/* ---------- Catalog (department columns) ---------- */
-.catalog { display: flex; flex-direction: column; gap: 24px; }
-.dept {
-  border: 1px solid #ececf2;
-  border-radius: 14px;
-  background: #ffffff;
-  overflow: hidden;
-}
-.dept-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 20px;
-  background: #fafafd;
-  border-bottom: 1px solid #ececf2;
-}
-.dept-icon {
-  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
   color: #6b6b78;
 }
-.dept-name {
-  font-size: 15px;
-  font-weight: 700;
-  color: #14141a;
-  flex: 1;
-}
-.dept-count {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  color: #6b6b78;
-  background: #ffffff;
-  padding: 3px 10px;
-  border-radius: 999px;
-  border: 1px solid #ececf2;
-}
-.dept-cards {
-  padding: 14px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-@media (max-width: 700px) {
-  .dept-cards { grid-template-columns: 1fr; }
-}
-
-/* ---------- Playbook card ---------- */
-.playbook {
-  position: relative;
-  display: flex;
-  gap: 12px;
-  padding: 14px 14px 14px 14px;
-  border: 1px solid #ececf2;
-  border-radius: 10px;
-  background: #ffffff;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-.playbook:hover { border-color: #c9c9d4; background: #fcfcff; }
-.playbook-on {
-  border-color: #14141a;
-  background: #fcfcff;
-  box-shadow: 0 1px 0 #14141a inset, 0 0 0 1px #14141a;
-}
-.playbook-toggle {
-  margin: 3px 0 0 0;
-  width: 16px;
-  height: 16px;
-  accent-color: #14141a;
-  flex-shrink: 0;
-}
-.playbook-body {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-  min-width: 0;
-}
-.playbook-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
-}
-.playbook-name {
+.deck-card-dept-icon {
   font-size: 14px;
-  font-weight: 600;
-  color: #14141a;
-  line-height: 1.3;
+  background: linear-gradient(135deg, #5b8cff, #7c5cff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
-.playbook-risk {
+.deck-card-risk {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
-  padding: 2px 7px;
-  border-radius: 4px;
+  padding: 4px 9px;
+  border-radius: 6px;
   font-weight: 500;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   white-space: nowrap;
-  flex-shrink: 0;
 }
-.playbook-risk-read     { background: #f0f7fc; color: #1f5b85; }
-.playbook-risk-write    { background: #f3f3f9; color: #2c2c36; }
-.playbook-risk-external { background: #fff7e8; color: #8a5a14; }
-.playbook-risk-financial{ background: #fff0ee; color: #a04339; }
-.playbook-risk-delete   { background: #fbe7e7; color: #8b2c2c; }
-.playbook-desc {
-  font-size: 12.5px;
+.deck-card-risk-read     { background: #f0f7fc; color: #1f5b85; }
+.deck-card-risk-write    { background: #f3f3f9; color: #2c2c36; }
+.deck-card-risk-external { background: #fff7e8; color: #8a5a14; }
+.deck-card-risk-financial{ background: #fff0ee; color: #a04339; }
+.deck-card-risk-delete   { background: #fbe7e7; color: #8b2c2c; }
+
+.deck-card-name {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: #14141a;
+  line-height: 1.18;
+  margin: 4px 0 0;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 640px) {
+  .deck-card-name { font-size: 22px; }
+}
+.deck-card-desc {
+  font-size: 15px;
   color: #4b4b56;
-  line-height: 1.45;
+  line-height: 1.5;
+  margin: 0;
+  position: relative;
+  z-index: 1;
 }
-.playbook-meta {
+.deck-card-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 12px;
-  font-size: 11.5px;
+  gap: 8px 18px;
+  font-size: 12.5px;
   color: #6b6b78;
-  margin-top: 2px;
+  margin-top: auto;
+  padding-top: 8px;
+  position: relative;
+  z-index: 1;
 }
-.playbook-meta-item { white-space: nowrap; }
-.playbook-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  padding: 2px 8px;
-  background: #14141a;
-  color: #ffffff;
-  border-radius: 999px;
-  letter-spacing: 0.04em;
+.deck-card-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
-.playbook-customize {
-  align-self: flex-start;
-  margin-top: 4px;
-  font-size: 11px;
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.04em;
-  background: transparent;
-  border: 1px solid #d8d8e0;
-  color: #6b6b78;
-  padding: 3px 9px;
-  border-radius: 999px;
+.deck-card-meta-icon { opacity: 0.55; }
+.deck-card-meta-strong { color: #14141a; font-weight: 600; }
+
+.deck-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+  position: relative;
+  z-index: 1;
+}
+.deck-action {
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.15s ease;
-}
-.playbook-customize:hover {
-  border-color: #14141a;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: #ffffff;
+  transition: all .15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
   color: #14141a;
 }
-
-/* ---------- Summary panel ---------- */
-.summary-panel {
-  position: sticky;
-  top: 96px;
-  background: #ffffff;
-  border: 1px solid #ececf2;
-  border-radius: 16px;
-  padding: 22px;
-  box-shadow: 0 1px 0 rgba(20,20,26,0.04);
+.deck-action:hover { border-color: #14141a; transform: translateY(-1px); }
+.deck-action-skip { color: #6b6b78; }
+.deck-action-include {
+  background: linear-gradient(180deg, #6f97ff 0%, #4b6bd6 100%);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 8px 26px -10px rgba(91,140,255,0.50);
 }
-.summary-head {
+.deck-action-include:hover {
+  box-shadow: 0 14px 30px -10px rgba(91,140,255,0.65);
+}
+.deck-action-included {
+  background: #eef3ff;
+  border-color: rgba(91,140,255,0.30);
+  color: #2a3fa5;
+}
+
+.deck-card-customize {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.10em;
+  color: #8a8a96;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  transition: color .15s ease, background .15s ease;
+  z-index: 2;
+}
+.deck-card-customize:hover { background: rgba(20,20,26,0.05); color: #14141a; }
+
+.deck-card-stamp {
+  position: absolute;
+  top: 60px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  padding: 8px 16px;
+  border: 3px solid currentColor;
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity .12s ease;
+  pointer-events: none;
+  z-index: 2;
+  text-transform: uppercase;
+}
+.deck-card-stamp-include {
+  right: 32px;
+  color: #16a34a;
+  transform: rotate(10deg);
+}
+.deck-card-stamp-skip {
+  left: 32px;
+  color: #a04339;
+  transform: rotate(-10deg);
+}
+.deck-card-active[data-intent="include"] .deck-card-stamp-include { opacity: 0.95; }
+.deck-card-active[data-intent="skip"] .deck-card-stamp-skip { opacity: 0.95; }
+
+.deck-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  border: 1px dashed rgba(15,23,42,0.12);
+  border-radius: 22px;
+  background: rgba(255,255,255,0.5);
+  color: #6b6b78;
+}
+.deck-empty strong {
+  color: #14141a;
+  font-weight: 600;
+  display: block;
+  font-size: 17px;
+  margin-bottom: 6px;
+}
+
+/* ---------- Deck foot ---------- */
+.deck-foot {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 14px;
+  max-width: 760px;
+  margin: 20px auto 0;
+  padding: 0 66px;
+  font-size: 12.5px;
+  color: #6b6b78;
+}
+@media (max-width: 640px) {
+  .deck-foot { padding: 0 50px; grid-template-columns: 1fr; justify-items: center; }
+}
+.deck-progress {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.10em;
+  color: #4b4b56;
+}
+.deck-progress strong { color: #14141a; font-weight: 700; }
+.deck-tip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.10em;
+  color: #8a8a96;
+  text-transform: uppercase;
+  text-align: center;
+}
+.deck-skip-end {
+  justify-self: end;
+  background: transparent;
+  border: 0;
+  color: #4b4b56;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12.5px;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.deck-skip-end:hover { color: #14141a; }
+@media (max-width: 640px) {
+  .deck-skip-end { justify-self: center; }
+}
+
+/* ---------- Compact summary card ---------- */
+.summary-card {
+  max-width: 760px;
+  margin: 40px auto 0;
+  background: linear-gradient(180deg, #ffffff 0%, #f9fafe 100%);
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 18px;
+  padding: 24px 26px;
+  box-shadow:
+    0 1px 0 rgba(20,20,26,0.02),
+    0 18px 50px -30px rgba(20,20,26,0.22);
+}
+.summary-card-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(15,23,42,0.06);
+}
+@media (max-width: 600px) {
+  .summary-card-stats { grid-template-columns: repeat(2, 1fr); }
+}
+.sc-stat {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-bottom: 18px;
 }
-.summary-eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #6b6b78;
-}
-.summary-title {
-  font-size: 18px;
+.sc-num {
+  font-size: 28px;
   font-weight: 700;
   color: #14141a;
-}
-.summary-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 18px;
-}
-.summary-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 12px;
-  background: #fafafd;
-  border: 1px solid #f1f1f5;
-  border-radius: 10px;
-}
-.summary-stat-num {
-  font-size: 26px;
-  font-weight: 700;
-  color: #14141a;
-  font-feature-settings: 'tnum';
   line-height: 1;
+  font-feature-settings: 'tnum';
 }
-.summary-stat-label {
+.sc-lbl {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.10em;
   color: #6b6b78;
-  margin-top: 4px;
 }
-.summary-agents {
+.summary-card-agents {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   margin-bottom: 18px;
+  min-height: 26px;
 }
-.summary-agents-empty {
+.summary-card-agents-empty {
   font-size: 12.5px;
-  color: #6b6b78;
+  color: #8a8a96;
   font-style: italic;
 }
 .agent-pill {
@@ -3159,29 +3385,34 @@ img { max-width: 100%; display: block; }
   align-items: center;
   gap: 6px;
   padding: 4px 10px;
-  background: #f3f3f9;
-  border: 1px solid #ececf2;
+  background: rgba(91,140,255,0.08);
+  border: 1px solid rgba(91,140,255,0.22);
   border-radius: 999px;
   font-size: 11.5px;
   font-weight: 500;
-  color: #2c2c36;
+  color: #2a3fa5;
 }
-.agent-pill-icon { color: #6b6b78; }
-.summary-cta { margin-bottom: 10px; }
-.btn-block { width: 100%; justify-content: center; }
-.summary-help {
-  text-align: center;
+.agent-pill-icon { opacity: 0.7; }
+.summary-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
 }
+.summary-card-actions .btn { padding: 11px 20px; }
 .link-button {
   background: transparent;
   border: none;
-  color: #5a5cd8;
+  color: #4c6fff;
   cursor: pointer;
-  font-size: 12.5px;
+  font-size: 13px;
   text-decoration: underline;
-  padding: 4px;
+  text-underline-offset: 3px;
+  padding: 4px 0;
   font-family: inherit;
 }
+.link-button:hover { color: #2a3fa5; }
 
 /* ---------- Autonomy step ---------- */
 .autonomy-grid {
@@ -3733,15 +3964,14 @@ img { max-width: 100%; display: block; }
       Build your company
     </div>
     <h1 class="build-hero-title">
-      Design your operating model — <span class="grad-text">in five minutes.</span>
+      Build your company — <span class="grad-text">in five minutes.</span>
     </h1>
     <p class="build-hero-sub">
-      Pick the operational playbooks your business runs. We pre-check the standard set for your industry and size — you adjust, customize, set your autonomy mode, and activate.
-      Or ask the <strong>Atlantis Manager</strong> to walk you through it conversationally.
+      Pick your shape. Swipe the deck. Activate.
     </p>
     <div class="build-hero-actions">
       <button class="btn btn-primary btn-lg" id="open-manager-hero" type="button">Walk me through it →</button>
-      <a href="#builder" class="btn btn-ghost btn-lg">Or browse the catalog ↓</a>
+      <a href="#builder" class="btn btn-ghost btn-lg">Or start the deck ↓</a>
     </div>
   </div>
 </section>
@@ -3752,9 +3982,8 @@ img { max-width: 100%; display: block; }
     <details class="cost-collapse" id="cost-collapse">
       <summary class="cost-summary">
         <div class="cost-summary-left">
-          <span class="cost-summary-eyebrow">Step A · optional</span>
+          <span class="cost-summary-eyebrow">Optional · cost check</span>
           <span class="cost-summary-title">What does your stack cost today?</span>
-          <span class="cost-summary-sub">Open to compare your current SaaS + payroll spend with Atlantis — most companies see a meaningful gap.</span>
         </div>
         <div class="cost-summary-right">
           <span class="cost-summary-chevron" aria-hidden="true">▾</span>
@@ -3938,74 +4167,66 @@ img { max-width: 100%; display: block; }
 <!-- ============ STEP B — BUILD YOUR COMPANY ============ -->
 <section class="section" id="builder">
   <div class="container">
-    <div class="section-head">
-      <div class="section-eyebrow">Step B · build your operating model</div>
-      <h2 class="section-title">Pick the playbooks your business runs.</h2>
-      <p class="section-sub">
-        Choose your industry and size — we pre-check the standard set. The catalog shows every operation Atlantis ships out of the box, organized by department. Check what you need; uncheck what you don't; customize the details before you activate.
+    <div class="section-head section-head-tight">
+      <div class="section-eyebrow">Your playbooks</div>
+      <h2 class="section-title">Swipe to build.</h2>
+      <p class="section-sub-tight">
+        Pre-loaded for your shape. Swipe right to include, left to skip.
       </p>
     </div>
 
-    <!-- Industry chip row -->
-    <div class="builder-filters">
-      <div class="filter-block">
-        <div class="filter-label">Industry</div>
-        <div class="chips chip-industries" id="chip-industries"></div>
-      </div>
-      <div class="filter-block">
-        <div class="filter-label">Company size</div>
-        <div class="chips chip-sizes" id="chip-sizes"></div>
-      </div>
-      <div class="filter-block">
-        <div class="filter-label">Headquartered in</div>
-        <div class="select-wrap">
-          <select id="filter-jurisdiction">
-            <option value="us" selected>United States</option>
-            <option value="ca">Canada</option>
-            <option value="uk">United Kingdom</option>
-            <option value="eu">European Union</option>
-            <option value="au">Australia</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-      </div>
+    <!-- Company shape: three dropdowns -->
+    <div class="picker-row">
+      <label class="picker">
+        <span class="picker-label">Industry</span>
+        <select class="picker-select" id="picker-industry"></select>
+      </label>
+      <label class="picker">
+        <span class="picker-label">Company size</span>
+        <select class="picker-select" id="picker-size"></select>
+      </label>
+      <label class="picker">
+        <span class="picker-label">Headquartered in</span>
+        <select class="picker-select" id="picker-jurisdiction">
+          <option value="us" selected>United States</option>
+          <option value="ca">Canada</option>
+          <option value="uk">United Kingdom</option>
+          <option value="eu">European Union</option>
+          <option value="au">Australia</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
     </div>
 
-    <!-- Catalog grid + sticky summary -->
-    <div class="builder-grid">
-      <div class="catalog" id="catalog"></div>
+    <!-- Department filter pills -->
+    <div class="deck-filters" id="deck-filters"></div>
 
-      <aside class="summary-panel" id="summary-panel">
-        <div class="summary-head">
-          <span class="summary-eyebrow">Your selection</span>
-          <span class="summary-title">Summary</span>
-        </div>
-        <div class="summary-stats">
-          <div class="summary-stat">
-            <span class="summary-stat-num" id="sum-playbooks">0</span>
-            <span class="summary-stat-label">playbooks</span>
-          </div>
-          <div class="summary-stat">
-            <span class="summary-stat-num" id="sum-agents">0</span>
-            <span class="summary-stat-label">agents</span>
-          </div>
-          <div class="summary-stat">
-            <span class="summary-stat-num" id="sum-hours">0</span>
-            <span class="summary-stat-label">hrs / mo saved</span>
-          </div>
-          <div class="summary-stat">
-            <span class="summary-stat-num" id="sum-approvals">0</span>
-            <span class="summary-stat-label">need approval</span>
-          </div>
-        </div>
-        <div class="summary-agents" id="sum-agents-list"></div>
-        <div class="summary-cta">
-          <a href="#autonomy" class="btn btn-primary btn-block">Set autonomy & activate →</a>
-        </div>
-        <div class="summary-help">
-          <button class="link-button" id="ask-manager-summary" type="button">Ask the Atlantis Manager to recommend</button>
-        </div>
-      </aside>
+    <!-- Card deck -->
+    <div class="deck-wrap">
+      <button class="deck-arrow deck-arrow-prev" id="deck-prev" type="button" aria-label="Previous">‹</button>
+      <div class="deck" id="deck" role="region" aria-label="Playbook deck"></div>
+      <button class="deck-arrow deck-arrow-next" id="deck-next" type="button" aria-label="Next">›</button>
+    </div>
+
+    <div class="deck-foot">
+      <div class="deck-progress" id="deck-progress"></div>
+      <div class="deck-tip">← → · drag · or tap</div>
+      <button class="deck-skip-end" id="deck-skip-end" type="button">Skip to summary ↓</button>
+    </div>
+
+    <!-- Compact summary card -->
+    <div class="summary-card" id="summary-card">
+      <div class="summary-card-stats">
+        <div class="sc-stat"><span class="sc-num" id="sum-playbooks">0</span><span class="sc-lbl">playbooks</span></div>
+        <div class="sc-stat"><span class="sc-num" id="sum-agents">0</span><span class="sc-lbl">agents</span></div>
+        <div class="sc-stat"><span class="sc-num" id="sum-hours">0</span><span class="sc-lbl">hrs / mo</span></div>
+        <div class="sc-stat"><span class="sc-num" id="sum-approvals">0</span><span class="sc-lbl">approvals</span></div>
+      </div>
+      <div class="summary-card-agents" id="sum-agents-list"></div>
+      <div class="summary-card-actions">
+        <button class="link-button" id="ask-manager-summary" type="button">Ask the Manager to recommend</button>
+        <a href="#autonomy" class="btn btn-primary">Set autonomy →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -4013,23 +4234,20 @@ img { max-width: 100%; display: block; }
 <!-- ============ STEP C — AUTONOMY MODE & GUARDRAILS ============ -->
 <section class="section section-alt" id="autonomy">
   <div class="container">
-    <div class="section-head">
-      <div class="section-eyebrow">Step C · autonomy</div>
+    <div class="section-head section-head-tight">
+      <div class="section-eyebrow">Autonomy</div>
       <h2 class="section-title">How much do you want to gate?</h2>
-      <p class="section-sub">
-        Pick the autonomy mode per agent. Drafting means the agent never executes — you review every output. Approval means the agent produces a Resolution Plan and waits for your sign-off. Silent means the agent executes immediately and surfaces every action in the Live Activity Stream with a 30-second undo. <a href="wiki.html#Autonomy-Modes">Read the spec →</a>
+      <p class="section-sub-tight">
+        Drafting · Approval · Silent — per agent. <a href="wiki.html#Autonomy-Modes">Spec →</a>
       </p>
     </div>
 
     <div class="autonomy-grid" id="autonomy-grid"></div>
 
     <div class="guardrails">
-      <div class="section-head">
-        <div class="section-eyebrow">Platform-floor guardrails</div>
-        <h3 class="section-title-sm">Hard limits that survive every mode.</h3>
-        <p class="section-sub">
-          These thresholds always require human approval, regardless of the autonomy mode you pick. You can tighten any number; you cannot disable the floor itself.
-        </p>
+      <div class="section-head section-head-tight">
+        <div class="section-eyebrow">Platform floors</div>
+        <h3 class="section-title-sm">Hard limits — survive every mode.</h3>
       </div>
       <div class="guardrails-grid">
         <label class="guardrail">

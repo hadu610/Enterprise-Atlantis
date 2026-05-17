@@ -1,7 +1,7 @@
 /* build.js — Company Operation Builder
  *
  * Renders the playbook catalog from Company-Operation-Builder-Catalog.md as
- * an interactive picker. State lives in BuilderState; the Atlantis Manager
+ * a swipeable deck. State lives in BuilderState; the Atlantis Manager
  * widget reads and writes the same state via window.AtlantisBuilder.
  */
 
@@ -42,9 +42,6 @@
   ];
 
   // ---------- Playbook Catalog ----------
-  // Mirrors wiki/Company-Operation-Builder-Catalog.md. Each entry:
-  //   id, name, dept, trigger, risk, hrs (mo saved),
-  //   industries (array), sizes (array), desc (one-liner)
   const ALL = ['saas','ecom','proserv','health','mfg','realestate','hosp','edu','fin_svc','trades','other'];
   const ALL_SIZES = ['startup','medium','enterprise'];
   const MED_ENT = ['medium','enterprise'];
@@ -194,18 +191,38 @@
     customizations: {},
     autonomy: {},
     guardrails: { wire: 1000, comms: 50, rate: 50, spend: 500 },
+    deckFilter: 'all',
+    deckIndex: 0,
   };
 
   // ---------- Helpers ----------
-  function playbookApplies(p, industry) {
-    return p.industries.includes(industry) || p.industries.includes('other') || p.industries === ALL || p.industries.length === ALL.length;
+  function industryMatches(p) {
+    return p.industries.includes(BuilderState.industry)
+      || p.industries === ALL
+      || p.industries.length === ALL.length;
+  }
+
+  function visibleByIndustry() {
+    return PLAYBOOKS.filter(industryMatches);
+  }
+
+  function visiblePlaybooks() {
+    return visibleByIndustry().filter(p =>
+      BuilderState.deckFilter === 'all' || p.dept === BuilderState.deckFilter
+    );
   }
 
   function defaultsFor(industry, size) {
-    return PLAYBOOKS
-      .filter(p => p.industries.includes(industry) || p.industries === ALL || p.industries.length === ALL.length)
+    const prevIndustry = BuilderState.industry;
+    const prevSize = BuilderState.size;
+    BuilderState.industry = industry;
+    BuilderState.size = size;
+    const ids = visibleByIndustry()
       .filter(p => p.sizes.includes(size))
       .map(p => p.id);
+    BuilderState.industry = prevIndustry;
+    BuilderState.size = prevSize;
+    return ids;
   }
 
   function computeAgents() {
@@ -214,7 +231,8 @@
       const pb = PLAYBOOKS.find(p => p.id === id);
       if (pb) set.add(pb.dept);
     });
-    return Array.from(set);
+    // Stable display order
+    return DEPTS.map(d => d.id).filter(id => set.has(id));
   }
 
   function totalHours() {
@@ -235,156 +253,348 @@
     return c;
   }
 
-  // ---------- Renderers ----------
-  function renderIndustryChips() {
-    const wrap = document.getElementById('chip-industries');
-    if (!wrap) return;
-    wrap.innerHTML = INDUSTRIES.map(i =>
-      `<button type="button" class="chip ${BuilderState.industry === i.id ? 'chip-on' : ''}" data-industry="${i.id}">${i.name}</button>`
-    ).join('');
-    wrap.querySelectorAll('[data-industry]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        BuilderState.industry = btn.dataset.industry;
-        applyDefaults();
-        renderAll();
-      });
+  function ensureAutonomyForSelected() {
+    computeAgents().forEach(a => {
+      if (!BuilderState.autonomy[a]) BuilderState.autonomy[a] = recommendedMode(a);
     });
   }
 
-  function renderSizeChips() {
-    const wrap = document.getElementById('chip-sizes');
-    if (!wrap) return;
-    wrap.innerHTML = SIZES.map(s =>
-      `<button type="button" class="chip ${BuilderState.size === s.id ? 'chip-on' : ''}" data-size="${s.id}">
-        <span class="chip-strong">${s.name}</span>
-        <span class="chip-meta">${s.range}</span>
-      </button>`
-    ).join('');
-    wrap.querySelectorAll('[data-size]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        BuilderState.size = btn.dataset.size;
-        applyDefaults();
-        renderAll();
+  // ---------- Pickers (dropdowns) ----------
+  function renderPickers() {
+    const ind = document.getElementById('picker-industry');
+    if (ind) {
+      if (!ind.dataset.wired) {
+        ind.innerHTML = INDUSTRIES.map(i =>
+          `<option value="${i.id}">${escape(i.name)}</option>`
+        ).join('');
+        ind.addEventListener('change', () => {
+          BuilderState.industry = ind.value;
+          BuilderState.deckFilter = 'all';
+          BuilderState.deckIndex = 0;
+          applyDefaults();
+          renderAll();
+        });
+        ind.dataset.wired = '1';
+      }
+      ind.value = BuilderState.industry;
+    }
+
+    const sz = document.getElementById('picker-size');
+    if (sz) {
+      if (!sz.dataset.wired) {
+        sz.innerHTML = SIZES.map(s =>
+          `<option value="${s.id}">${escape(s.name)} · ${escape(s.range)}</option>`
+        ).join('');
+        sz.addEventListener('change', () => {
+          BuilderState.size = sz.value;
+          BuilderState.deckIndex = 0;
+          applyDefaults();
+          renderAll();
+        });
+        sz.dataset.wired = '1';
+      }
+      sz.value = BuilderState.size;
+    }
+
+    const ju = document.getElementById('picker-jurisdiction');
+    if (ju && !ju.dataset.wired) {
+      ju.addEventListener('change', () => {
+        BuilderState.jurisdiction = ju.value;
       });
-    });
+      ju.dataset.wired = '1';
+      ju.value = BuilderState.jurisdiction;
+    }
   }
 
-  function renderCatalog() {
-    const wrap = document.getElementById('catalog');
+  // ---------- Deck filters (department pills) ----------
+  function renderDeckFilters() {
+    const wrap = document.getElementById('deck-filters');
     if (!wrap) return;
-    const html = DEPTS.map(d => {
-      const deptPlaybooks = PLAYBOOKS.filter(p => p.dept === d.id);
-      const visible = deptPlaybooks.filter(p =>
-        p.industries.includes(BuilderState.industry) ||
-        p.industries.includes('other') ||
-        p.industries === ALL ||
-        p.industries.length === ALL.length
-      );
-      // also show industry-specific cards for this dept when in matching industry — already filtered above
-      return `
-        <div class="dept">
-          <div class="dept-head">
-            <span class="dept-icon" aria-hidden="true">${d.icon}</span>
-            <span class="dept-name">${d.name}</span>
-            <span class="dept-count">${visible.filter(p => BuilderState.selected.has(p.id)).length} / ${visible.length}</span>
-          </div>
-          <div class="dept-cards">
-            ${visible.map(p => playbookCard(p)).join('')}
-          </div>
-        </div>
-      `;
-    }).join('');
-    wrap.innerHTML = html;
+    const all = visibleByIndustry();
+    const totalSelected = all.filter(p => BuilderState.selected.has(p.id)).length;
 
-    wrap.querySelectorAll('.playbook-toggle').forEach(input => {
-      input.addEventListener('change', e => {
-        const id = e.target.dataset.id;
-        if (e.target.checked) BuilderState.selected.add(id);
-        else BuilderState.selected.delete(id);
-        renderSummary();
-        renderCatalogDeptCounts();
-        renderAutonomy();
-      });
-    });
-
-    wrap.querySelectorAll('.playbook-customize').forEach(btn => {
-      btn.addEventListener('click', e => {
-        const id = e.currentTarget.dataset.id;
-        openCustomizer(id);
-      });
-    });
-  }
-
-  function renderCatalogDeptCounts() {
+    const items = [{ id: 'all', name: 'All', icon: '⊙', count: all.length, sel: totalSelected }];
     DEPTS.forEach(d => {
-      const deptEl = document.querySelectorAll('.dept');
-      // simpler: re-query and update
+      const list = all.filter(p => p.dept === d.id);
+      if (list.length === 0) return;
+      items.push({
+        id: d.id, name: d.name, icon: d.icon,
+        count: list.length,
+        sel: list.filter(p => BuilderState.selected.has(p.id)).length,
+      });
     });
-    // re-render headers only
-    document.querySelectorAll('.dept').forEach((el, idx) => {
-      const d = DEPTS[idx];
-      if (!d) return;
-      const deptPlaybooks = PLAYBOOKS.filter(p => p.dept === d.id);
-      const visible = deptPlaybooks.filter(p =>
-        p.industries.includes(BuilderState.industry) ||
-        p.industries.includes('other') ||
-        p.industries === ALL ||
-        p.industries.length === ALL.length
-      );
-      const count = el.querySelector('.dept-count');
-      if (count) count.textContent = `${visible.filter(p => BuilderState.selected.has(p.id)).length} / ${visible.length}`;
+
+    wrap.innerHTML = items.map(it => `
+      <button type="button" class="deck-filter ${BuilderState.deckFilter === it.id ? 'deck-filter-on' : ''}" data-deck-filter="${it.id}">
+        <span class="deck-filter-icon">${it.icon}</span>
+        <span>${escape(it.name)}</span>
+        <span class="deck-filter-count">${it.sel}/${it.count}</span>
+      </button>
+    `).join('');
+
+    wrap.querySelectorAll('[data-deck-filter]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        BuilderState.deckFilter = btn.dataset.deckFilter;
+        BuilderState.deckIndex = 0;
+        renderDeckFilters();
+        renderDeck();
+      });
     });
   }
 
-  function playbookCard(p) {
-    const checked = BuilderState.selected.has(p.id);
+  // ---------- Deck (card stack) ----------
+  function renderDeck() {
+    const wrap = document.getElementById('deck');
+    if (!wrap) return;
+    const list = visiblePlaybooks();
+    const prevBtn = document.getElementById('deck-prev');
+    const nextBtn = document.getElementById('deck-next');
+    const prog = document.getElementById('deck-progress');
+
+    if (list.length === 0) {
+      wrap.innerHTML = '<div class="deck-empty"><strong>Nothing in this slice.</strong>Pick another department, or switch industry above.</div>';
+      if (prog) prog.innerHTML = '';
+      if (prevBtn) prevBtn.disabled = true;
+      if (nextBtn) nextBtn.disabled = true;
+      return;
+    }
+
+    if (BuilderState.deckIndex >= list.length) BuilderState.deckIndex = list.length - 1;
+    if (BuilderState.deckIndex < 0) BuilderState.deckIndex = 0;
+    const i = BuilderState.deckIndex;
+    const visible = [list[i], list[i + 1], list[i + 2]].filter(Boolean);
+
+    // Render back-to-front so the active card is last in DOM (top of stack)
+    wrap.innerHTML = visible.slice().reverse().map((p, revIdx) => {
+      const idx = visible.length - 1 - revIdx;
+      return deckCardHTML(p, idx);
+    }).join('');
+
+    const activeEl = wrap.querySelector('.deck-card-active');
+    if (activeEl) wireDragOnCard(activeEl, list[i]);
+
+    wrap.querySelectorAll('[data-deck-action]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const action = btn.dataset.deckAction;
+        const id = btn.dataset.id;
+        if (action === 'include') {
+          BuilderState.selected.add(id);
+          ensureAutonomyForSelected();
+          advanceDeck(1, 'right');
+        } else if (action === 'skip') {
+          BuilderState.selected.delete(id);
+          advanceDeck(1, 'left');
+        }
+      });
+    });
+
+    wrap.querySelectorAll('[data-deck-customize]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        openCustomizer(btn.dataset.id);
+      });
+    });
+
+    if (prog) prog.innerHTML = `<strong>${i + 1}</strong> / ${list.length}`;
+    if (prevBtn) prevBtn.disabled = i === 0;
+    if (nextBtn) nextBtn.disabled = i >= list.length - 1;
+  }
+
+  function deckCardHTML(p, stackIdx) {
+    const cls = stackIdx === 0 ? 'deck-card-active'
+              : stackIdx === 1 ? 'deck-card-next'
+              : 'deck-card-next-2';
+    const included = BuilderState.selected.has(p.id);
+    const dept = DEPTS.find(d => d.id === p.dept);
     const sizeMatch = p.sizes.includes(BuilderState.size);
-    const industryMatch = p.industries.includes(BuilderState.industry) || p.industries === ALL || p.industries.length === ALL.length;
-    const isCommon = sizeMatch && industryMatch && (!p.industries.includes('other') || p.industries.length === 1 || p.industries === ALL || p.industries.length === ALL.length);
+    const isActive = stackIdx === 0;
+
     return `
-      <label class="playbook ${checked ? 'playbook-on' : ''}">
-        <input type="checkbox" class="playbook-toggle" data-id="${p.id}" ${checked ? 'checked' : ''} />
-        <span class="playbook-body">
-          <span class="playbook-head">
-            <span class="playbook-name">${escape(p.name)}</span>
-            <span class="playbook-risk playbook-risk-${p.risk.toLowerCase()}">${p.risk}</span>
+      <article class="deck-card ${cls}" data-id="${p.id}">
+        ${isActive ? `<button type="button" class="deck-card-customize" data-deck-customize data-id="${p.id}">Customize</button>` : ''}
+        <div class="deck-card-stamp deck-card-stamp-include">Include</div>
+        <div class="deck-card-stamp deck-card-stamp-skip">Skip</div>
+        <header class="deck-card-head">
+          <span class="deck-card-dept">
+            <span class="deck-card-dept-icon">${dept ? dept.icon : '◇'}</span>
+            ${escape(p.dept)}
           </span>
-          <span class="playbook-desc">${escape(p.desc)}</span>
-          <span class="playbook-meta">
-            <span class="playbook-meta-item">Trigger: ${escape(p.trigger)}</span>
-            <span class="playbook-meta-item">~${p.hrs} hrs/mo saved</span>
-            ${isCommon && sizeMatch ? `<span class="playbook-tag">Common in ${capitalize(BuilderState.size)}</span>` : ''}
+          <span class="deck-card-risk deck-card-risk-${p.risk.toLowerCase()}">${escape(p.risk)}</span>
+        </header>
+        <h3 class="deck-card-name">${escape(p.name)}</h3>
+        <p class="deck-card-desc">${escape(p.desc)}</p>
+        <div class="deck-card-meta">
+          <span class="deck-card-meta-item">
+            <span class="deck-card-meta-icon">⏵</span>
+            <span>Trigger · <span class="deck-card-meta-strong">${escape(p.trigger)}</span></span>
           </span>
-          <button type="button" class="playbook-customize" data-id="${p.id}" aria-label="Customize playbook">Customize</button>
-        </span>
-      </label>
+          <span class="deck-card-meta-item">
+            <span class="deck-card-meta-icon">◷</span>
+            <span><span class="deck-card-meta-strong">~${p.hrs} hrs</span> / mo saved</span>
+          </span>
+          ${sizeMatch ? `
+            <span class="deck-card-meta-item">
+              <span class="deck-card-meta-icon">★</span>
+              <span>Common for ${escape(capitalize(BuilderState.size))}</span>
+            </span>
+          ` : ''}
+        </div>
+        ${isActive ? `
+          <div class="deck-card-actions">
+            <button type="button" class="deck-action deck-action-skip" data-deck-action="skip" data-id="${p.id}">${included ? '✕ Drop' : 'Skip'}</button>
+            <button type="button" class="deck-action ${included ? 'deck-action-included' : 'deck-action-include'}" data-deck-action="include" data-id="${p.id}">${included ? '✓ Included' : 'Include →'}</button>
+          </div>
+        ` : ''}
+      </article>
     `;
   }
 
-  function renderSummary() {
-    const playbooks = BuilderState.selected.size;
-    const agents = computeAgents();
-    const hours = totalHours();
-    const approvals = approvalCount();
+  function advanceDeck(delta, dir) {
+    const list = visiblePlaybooks();
+    const next = Math.min(list.length - 1, Math.max(0, BuilderState.deckIndex + delta));
+    const active = document.querySelector('.deck-card-active');
+    const animate = active && dir && next !== BuilderState.deckIndex;
 
-    setNum('sum-playbooks', playbooks);
+    if (animate) {
+      active.classList.add(dir === 'right' ? 'deck-card-gone-right' : 'deck-card-gone-left');
+    }
+
+    const commit = () => {
+      BuilderState.deckIndex = next;
+      renderDeck();
+      renderSummary();
+      renderDeckFilters();
+    };
+
+    if (animate) {
+      setTimeout(commit, 240);
+    } else {
+      commit();
+    }
+  }
+
+  // ---------- Drag / swipe handling ----------
+  function wireDragOnCard(card, playbook) {
+    let startX = 0, startY = 0, dx = 0, dy = 0, dragging = false, intent = null;
+    const THRESH = 110;
+
+    const setTransform = () => {
+      const rot = dx / 24;
+      card.style.transform = `translateX(${dx}px) rotate(${rot}deg)`;
+      if (dx > 40) {
+        if (intent !== 'include') { intent = 'include'; card.dataset.intent = 'include'; }
+      } else if (dx < -40) {
+        if (intent !== 'skip') { intent = 'skip'; card.dataset.intent = 'skip'; }
+      } else if (intent !== null) {
+        intent = null;
+        delete card.dataset.intent;
+      }
+    };
+
+    const onDown = (e) => {
+      if (e.target.closest('button')) return;
+      dragging = true;
+      const pt = e.touches ? e.touches[0] : e;
+      startX = pt.clientX; startY = pt.clientY; dx = 0; dy = 0;
+      card.classList.add('is-dragging');
+      if (e.pointerId !== undefined && card.setPointerCapture) {
+        try { card.setPointerCapture(e.pointerId); } catch (_) {}
+      }
+    };
+
+    const onMove = (e) => {
+      if (!dragging) return;
+      const pt = e.touches ? e.touches[0] : e;
+      dx = pt.clientX - startX;
+      dy = pt.clientY - startY;
+      // If user is mostly scrolling vertically, bail
+      if (Math.abs(dy) > Math.abs(dx) * 1.3 && Math.abs(dy) > 18) {
+        cancel();
+        return;
+      }
+      setTransform();
+      if (e.cancelable) e.preventDefault();
+    };
+
+    const cancel = () => {
+      dragging = false;
+      card.classList.remove('is-dragging');
+      card.style.transform = '';
+      delete card.dataset.intent;
+      dx = 0; dy = 0; intent = null;
+    };
+
+    const onUp = () => {
+      if (!dragging) return;
+      dragging = false;
+      card.classList.remove('is-dragging');
+      if (dx > THRESH) {
+        BuilderState.selected.add(playbook.id);
+        ensureAutonomyForSelected();
+        advanceDeck(1, 'right');
+      } else if (dx < -THRESH) {
+        BuilderState.selected.delete(playbook.id);
+        advanceDeck(1, 'left');
+      } else {
+        card.style.transform = '';
+        delete card.dataset.intent;
+      }
+      dx = 0; dy = 0; intent = null;
+    };
+
+    card.addEventListener('pointerdown', onDown);
+    card.addEventListener('pointermove', onMove);
+    card.addEventListener('pointerup', onUp);
+    card.addEventListener('pointercancel', cancel);
+  }
+
+  // ---------- Deck controls (arrows + keyboard + skip-to-end) ----------
+  function wireDeckControls() {
+    document.getElementById('deck-prev')?.addEventListener('click', () => advanceDeck(-1, null));
+    document.getElementById('deck-next')?.addEventListener('click', () => advanceDeck(1, null));
+    document.getElementById('deck-skip-end')?.addEventListener('click', () => {
+      const card = document.getElementById('summary-card');
+      if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      const tag = (e.target && e.target.tagName || '').toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+      if (e.target && e.target.isContentEditable) return;
+      // Only intercept when the deck is roughly in view
+      const deck = document.getElementById('deck');
+      if (!deck) return;
+      const r = deck.getBoundingClientRect();
+      const inView = r.top < window.innerHeight && r.bottom > 0;
+      if (!inView) return;
+      if (e.key === 'ArrowRight') { advanceDeck(1, null); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft') { advanceDeck(-1, null); e.preventDefault(); }
+    });
+  }
+
+  // ---------- Summary card ----------
+  function renderSummary() {
+    setNum('sum-playbooks', BuilderState.selected.size);
+    const agents = computeAgents();
     setNum('sum-agents', agents.length);
-    setNum('sum-hours', hours);
-    setNum('sum-approvals', approvals);
+    setNum('sum-hours', totalHours());
+    setNum('sum-approvals', approvalCount());
 
     const list = document.getElementById('sum-agents-list');
     if (list) {
       if (agents.length === 0) {
-        list.innerHTML = '<span class="summary-agents-empty">No agents activated yet — pick some playbooks above.</span>';
+        list.innerHTML = '<span class="summary-card-agents-empty">No agents yet — swipe right on the deck to include playbooks.</span>';
       } else {
         list.innerHTML = agents.map(a => {
           const dept = DEPTS.find(d => d.id === a);
-          return `<span class="agent-pill"><span class="agent-pill-icon" aria-hidden="true">${dept ? dept.icon : '◇'}</span>${escape(a)} Agent</span>`;
+          return `<span class="agent-pill"><span class="agent-pill-icon">${dept ? dept.icon : '◇'}</span>${escape(a)} Agent</span>`;
         }).join('');
       }
     }
   }
 
+  // ---------- Autonomy step ----------
   function renderAutonomy() {
     const wrap = document.getElementById('autonomy-grid');
     if (!wrap) return;
@@ -415,7 +625,7 @@
     }).join('');
 
     wrap.querySelectorAll('.mode-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
+      btn.addEventListener('click', () => {
         BuilderState.autonomy[btn.dataset.agent] = btn.dataset.mode;
         renderAutonomy();
       });
@@ -442,7 +652,7 @@
     if (!pb) return;
     const existing = BuilderState.customizations[playbookId] || {};
     const note = prompt(
-      `Customize "${pb.name}"\n\nDefault trigger: ${pb.trigger}\nDefault risk: ${pb.risk}\n\nDescribe what you want changed (one line). This becomes the override note the Atlantis Manager will use. Leave blank to skip.\n\nExisting customization:`,
+      `Customize "${pb.name}"\n\nDefault trigger: ${pb.trigger}\nDefault risk: ${pb.risk}\n\nDescribe what you want changed (one line). This becomes the override note the Atlantis Manager will use. Leave blank to skip.`,
       existing.note || ''
     );
     if (note === null) return;
@@ -451,17 +661,13 @@
     } else {
       BuilderState.customizations[playbookId] = { note: note.trim(), at: new Date().toISOString() };
     }
-    renderCatalog();
   }
 
   // ---------- Defaults ----------
   function applyDefaults() {
     const defaults = defaultsFor(BuilderState.industry, BuilderState.size);
     BuilderState.selected = new Set(defaults);
-    // Initialize autonomy for new agents
-    computeAgents().forEach(a => {
-      if (!BuilderState.autonomy[a]) BuilderState.autonomy[a] = recommendedMode(a);
-    });
+    ensureAutonomyForSelected();
   }
 
   // ---------- Guardrails ----------
@@ -516,19 +722,8 @@
     };
   }
 
-  function wireJurisdiction() {
-    const el = document.getElementById('filter-jurisdiction');
-    if (!el) return;
-    el.value = BuilderState.jurisdiction;
-    el.addEventListener('change', () => {
-      BuilderState.jurisdiction = el.value;
-    });
-  }
-
   function wireAskManager() {
-    const btn = document.getElementById('ask-manager-summary');
-    if (!btn) return;
-    btn.addEventListener('click', () => {
+    document.getElementById('ask-manager-summary')?.addEventListener('click', () => {
       const snap = buildSnapshot();
       if (window.AtlantisManager) {
         window.AtlantisManager.open();
@@ -550,9 +745,9 @@
 
   // ---------- Render all ----------
   function renderAll() {
-    renderIndustryChips();
-    renderSizeChips();
-    renderCatalog();
+    renderPickers();
+    renderDeckFilters();
+    renderDeck();
     renderSummary();
     renderAutonomy();
   }
@@ -575,19 +770,43 @@
     sizes: SIZES,
     depts: DEPTS,
     snapshot: buildSnapshot,
-    setIndustry(id) { BuilderState.industry = id; applyDefaults(); renderAll(); },
-    setSize(id) { BuilderState.size = id; applyDefaults(); renderAll(); },
-    select(id) { BuilderState.selected.add(id); renderCatalog(); renderSummary(); renderAutonomy(); },
-    deselect(id) { BuilderState.selected.delete(id); renderCatalog(); renderSummary(); renderAutonomy(); },
+    setIndustry(id) {
+      BuilderState.industry = id;
+      BuilderState.deckFilter = 'all';
+      BuilderState.deckIndex = 0;
+      applyDefaults();
+      renderAll();
+    },
+    setSize(id) {
+      BuilderState.size = id;
+      BuilderState.deckIndex = 0;
+      applyDefaults();
+      renderAll();
+    },
+    select(id) {
+      BuilderState.selected.add(id);
+      ensureAutonomyForSelected();
+      renderDeck();
+      renderDeckFilters();
+      renderSummary();
+      renderAutonomy();
+    },
+    deselect(id) {
+      BuilderState.selected.delete(id);
+      renderDeck();
+      renderDeckFilters();
+      renderSummary();
+      renderAutonomy();
+    },
   };
 
   // ---------- Boot ----------
   document.addEventListener('DOMContentLoaded', () => {
     applyDefaults();
     renderAll();
+    wireDeckControls();
     wireGuardrails();
     wireActivate();
-    wireJurisdiction();
     wireAskManager();
   });
 })();
