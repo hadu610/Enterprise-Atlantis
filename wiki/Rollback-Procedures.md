@@ -1,12 +1,14 @@
 # Rollback Procedures
 
-> **Type:** Rule · **Owner:** Engineering · **Status:** Approved · **Applies to:** All agents · **Jurisdiction:** Global · **Last reviewed:** 2026-05-15
+> **Type:** Rule · **Owner:** Engineering · **Status:** Approved · **Applies to:** All agents · **Jurisdiction:** Global · **Last reviewed:** 2026-05-17
 
 ## Summary
 
 Every state-changing action that any agent executes captures a rollback snapshot before the action runs. This page defines the snapshot contents, retention, and the one-click rollback procedure.
 
 The rule: **if it changed state, it can be rolled back.** Where genuine irreversibility exists (an email is sent, a payment clears), the platform makes it as recoverable as possible (issue retraction, refund) and clearly labels the limit.
+
+> **How a non-engineering user actually performs a rollback.** Rollback is a **ticket operation**, not a department-specific procedure. Every state-changing action in Atlantis is a [ticket](Unified-Ticketing-Blueprint#1-what-ticket-means-in-atlantis); every ticket carries its inverse spec; the [Control Center](Control-Center#4-rollback-as-a-ticket-operation) exposes the five rollback verbs (cancel, reject, roll back, supersede, saga rollback) with one consistent UI across all departments. A department manager who saw the wrong thing happen does not need to understand HR vs. Finance semantics — they open the Activity Log, find the action, click `Roll back`, and the inverse runs through the same approval workflow the original would have. This page specifies what the platform does under the hood when that button is pressed.
 
 ---
 
@@ -97,6 +99,8 @@ When an orchestrated workflow fails partway, the orchestration engine performs a
 
 ## Cross-references
 
+- [Control Center § 4](Control-Center#4-rollback-as-a-ticket-operation) — the manager-facing surface that exposes rollback
+- [Unified Ticketing Blueprint](Unified-Ticketing-Blueprint) — the ticket lifecycle that ends with `rolled_back`
 - [Validation Gate Specifications](Validation-Gate-Specifications)
 - [Approval Workflow Framework](Approval-Workflow-Framework)
 - [Action Risk Classification](Action-Risk-Classification)

@@ -12,6 +12,10 @@
 - **[Unified CRM Blueprint](Unified-CRM-Blueprint)**
 - **[Unified Ticketing Blueprint](Unified-Ticketing-Blueprint)**
 
+#### Platform surfaces
+
+- **[Control Center](Control-Center)**
+
 ---
 
 #### Live presentations

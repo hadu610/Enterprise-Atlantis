@@ -27,7 +27,7 @@ If you are new to the Wiki, read these four foundation pages **in order**:
 
 ---
 
-## The two foundations
+## The two foundations and the cockpit
 
 The Atlantis platform rests on **two load-bearing substrates** that every other component depends on. Every department agent and the Dev Agent reads from, proposes writes to, and is audited through these two:
 
@@ -35,6 +35,10 @@ The Atlantis platform rests on **two load-bearing substrates** that every other 
 - **[Unified Ticketing Blueprint](Unified-Ticketing-Blueprint)** — the single work substrate (one ticket lifecycle, one approval framework, one audit trail) for every department's day-to-day operation. Collapses what is fragmented across Jira + Zendesk + ServiceNow + Asana + Greenhouse + … today.
 
 Every existing enterprise runs these substrates fragmented because no SaaS vendor owns the agent runtime across departments. Atlantis does — so the substrates can and must be unified.
+
+Above the substrates sits the surface humans actually use:
+
+- **[Control Center](Control-Center)** — the cockpit where department managers and customer admins supervise the fleet of AI agents and human employees. Composes Fleet View, Ticket Ledger, Activity Log, Approval Queue, and Trust Score into one application. This is where rollback, supervision, and autonomy decisions happen — without per-department code, because every action is a ticket.
 
 ---
 
@@ -68,6 +72,10 @@ Why we are building this, what we are building, and how it differs from every co
 - [Validation Gate Specifications](Validation-Gate-Specifications)
 - [Confidence and Escalation Rules](Confidence-and-Escalation-Rules)
 - [Rollback Procedures](Rollback-Procedures)
+
+#### Platform Surfaces
+
+- [Control Center](Control-Center) — the manager cockpit over the substrates
 
 #### Shared Vocabulary
 

@@ -77,6 +77,18 @@ The strategic claim: every existing enterprise runs fragmented CRMs (Salesforce 
 
 ---
 
+## A.3 · Platform Surfaces — where humans supervise the fleet
+
+The substrates above store the truth; the surface below is how humans see and act on it. Where the CRM and Ticketing System are the platform's *memory* and *work-in-flight*, the Control Center is the platform's *cockpit*.
+
+| Page | Status |
+|---|---|
+| [Control Center](Control-Center) — unified manager surface combining Ticketing, Activity Log, Approval Queue, Fleet View, and Trust Score | ✅ |
+
+The Control Center is a **read model**. It owns no business state of its own; it composes the existing substrates into the application a department manager or customer admin actually uses. Critically, it is the surface that makes rollback work without per-department code: because every action is a ticket, and every ticket carries its inverse, "undo" is the same UX whether HR, Finance, Legal, or Marketing took the wrong action. See [Control Center § 4](Control-Center#4-rollback-as-a-ticket-operation) for the architectural answer to the per-department rollback problem.
+
+---
+
 ## B · Wiki Foundation
 
 | Page | Status |
@@ -240,7 +252,8 @@ If a decision contradicts a touchstone, the decision needs explicit explanation 
 - **Investor** — A (strategic plan) is the headline; F (engineering blueprint) is the depth-of-thinking signal; H and I are the honest gap list.
 - **Engineer** — F is your day-to-day; C is your platform contract; D is your shared vocabulary.
 - **Domain expert** — G is your authoring queue; E is the agent playbook that consumes your work.
-- **Customer admin** — A and C cover the model; E covers what the agents you activate will and won't do.
+- **Customer admin** — A and C cover the model; E covers what the agents you activate will and won't do; [Control Center](Control-Center) is the cockpit you will spend your day in.
+- **Department manager** — [Control Center](Control-Center) is your daily driver; [Unified Ticketing](Unified-Ticketing-Blueprint) is the work substrate underneath it; [Approval Workflow Framework](Approval-Workflow-Framework) and [Rollback Procedures](Rollback-Procedures) cover the two operations you exercise most often.
 
 ---
 

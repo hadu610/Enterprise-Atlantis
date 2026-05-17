@@ -48,13 +48,22 @@ This page enumerates the twelve core platform components. Each component is mapp
 - **Live sync with change detection:** data bridge updates the normalised model as source data changes
 - Data migration tools for customer onboarding: bulk historical data ingest with quality validation
 
-## F. Agent Management Console
+## F. Agent Management Console — the Control Center
 
-- Visual dashboard: all active agents, current tasks, queue depth, performance metrics, trust scores
-- **Trust Score Dashboard:** per-agent accuracy rate, override rate, validation gate failure rate (B5)
-- Per-agent and per-employee activity logs with full audit trail
-- Agent health monitoring: automatic alerts for failures, anomalies, performance degradation
-- Agent skill marketplace: install, configure, and extend agent capabilities
+The customer-facing supervision surface is specified in full in the [Control Center Blueprint](Control-Center). It composes five integrated pillars over the existing platform substrates:
+
+- **Fleet View** — live grid of every agent and human, with state, queue depth, current ticket, Trust Score, and cost-so-far
+- **Ticket Ledger** — My Work / Department / Entity / Saga views over the [Unified Ticketing System](Unified-Ticketing-Blueprint)
+- **Activity Log** — immutable who-did-what-when, with one-click rollback inside retention ([Rollback Procedures](Rollback-Procedures))
+- **Approval Queue** — every approval-gated action routed per the [Approval Workflow Framework](Approval-Workflow-Framework)
+- **Trust Score** — per-agent accuracy, human-override, gate-pass, SLA, and escalation inputs; gates [Phased Autonomy](Phased-Autonomy-Reference) progression (B5)
+
+Two role-based defaults ship in v1:
+
+- **Department Manager** lands on Department View; supervises one department's agents and humans
+- **Customer Admin** lands on Fleet View; has cross-department visibility plus emergency controls (pause agent, quarantine, emergency revert window)
+
+Health alerts (failures, anomalies, performance degradation, cost spikes) surface in the Fleet View and page on-call per [Observability Standards](Observability-Standards). The agent skill marketplace (install, configure, extend) is a separate surface; see [Agent Skills Strategy](Agent-Skills-Strategy).
 
 ## G. Centralized Knowledge Wiki
 
