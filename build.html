@@ -3580,6 +3580,473 @@ img { max-width: 100%; display: block; }
   font-weight: 600;
 }
 
+/* ============================================================
+   v2 redesign: accordion stack + custom dropdown + revised deck
+   ============================================================ */
+
+/* ---------- Accordion stack ---------- */
+.build-stack {
+  padding: 32px 0 80px;
+  background: linear-gradient(180deg, #ffffff 0%, #f7f8fd 100%);
+}
+.acc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 880px;
+  margin: 0 auto 28px;
+}
+.acc {
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  box-shadow: 0 1px 0 rgba(20,20,26,0.02);
+  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+  overflow: hidden;
+}
+.acc:hover { border-color: rgba(15,23,42,0.14); }
+.acc.is-open {
+  border-color: rgba(91,140,255,0.35);
+  box-shadow:
+    0 1px 0 rgba(20,20,26,0.02),
+    0 24px 60px -30px rgba(91,140,255,0.30);
+}
+.acc-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  transition: background .15s ease;
+}
+.acc-head:hover { background: rgba(15,23,42,0.025); }
+.acc-step {
+  flex-shrink: 0;
+  width: 34px; height: 34px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, rgba(91,140,255,0.12), rgba(124,92,255,0.12));
+  color: #4c6fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .25s ease, color .25s ease, transform .25s ease;
+}
+.acc.is-open .acc-step {
+  background: linear-gradient(135deg, #5b8cff, #7c5cff);
+  color: #ffffff;
+  transform: scale(1.04);
+}
+.acc-head-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.acc-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #14141a;
+  letter-spacing: -0.005em;
+}
+.acc-optional {
+  color: #8a8a96;
+  font-weight: 400;
+  font-size: 13px;
+}
+.acc-meta {
+  font-size: 13px;
+  color: #6b6b78;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.acc-chev {
+  font-size: 26px;
+  color: #8a8a96;
+  transition: transform .25s ease, color .15s ease;
+  line-height: 1;
+  font-weight: 300;
+}
+.acc.is-open .acc-chev {
+  transform: rotate(90deg);
+  color: #4c6fff;
+}
+.acc-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s cubic-bezier(.22,.61,.36,1);
+}
+.acc-body-inner {
+  padding: 4px 22px 26px;
+  border-top: 1px solid rgba(15,23,42,0.06);
+}
+
+/* ---------- Custom dropdown ---------- */
+.picker-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 16px 0 4px;
+}
+@media (max-width: 720px) {
+  .picker-row { grid-template-columns: 1fr; }
+}
+.picker {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1px solid rgba(15,23,42,0.10);
+  border-radius: 14px;
+  box-shadow: 0 1px 0 rgba(20,20,26,0.02), 0 12px 36px -28px rgba(20,20,26,0.18);
+  transition: border-color .2s ease, box-shadow .2s ease;
+  position: relative;
+}
+.picker:has(.dropdown.is-open) {
+  border-color: rgba(91,140,255,0.50);
+  box-shadow: 0 0 0 3px rgba(91,140,255,0.10), 0 14px 40px -22px rgba(91,140,255,0.35);
+  z-index: 20;
+}
+.picker-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #6b6b78;
+}
+.dropdown { position: relative; }
+.dropdown-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 4px 0;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: #14141a;
+  cursor: pointer;
+  text-align: left;
+}
+.dropdown-trigger-value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dropdown-trigger-arrow {
+  width: 18px; height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #8a8a96;
+  font-size: 11px;
+  transition: transform .18s ease, color .15s ease;
+  flex-shrink: 0;
+}
+.dropdown.is-open .dropdown-trigger-arrow {
+  transform: rotate(180deg);
+  color: #4c6fff;
+}
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: -14px;
+  right: -14px;
+  background: #ffffff;
+  border: 1px solid rgba(15,23,42,0.10);
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow:
+    0 1px 0 rgba(20,20,26,0.02),
+    0 28px 70px -16px rgba(20,20,26,0.30);
+  z-index: 50;
+  max-height: 280px;
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity .15s ease, transform .15s ease;
+}
+.dropdown.is-open .dropdown-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 14px;
+  color: #14141a;
+  cursor: pointer;
+  text-align: left;
+  transition: background .12s ease;
+}
+.dropdown-option:hover { background: rgba(91,140,255,0.08); }
+.dropdown-option-on {
+  background: rgba(91,140,255,0.10);
+  color: #2a3fa5;
+  font-weight: 600;
+}
+.dropdown-option-label { flex: 1; }
+.dropdown-option-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #8a8a96;
+}
+.dropdown-option-check {
+  width: 16px;
+  text-align: center;
+  color: #4c6fff;
+  font-size: 12px;
+  opacity: 0;
+}
+.dropdown-option-on .dropdown-option-check { opacity: 1; }
+
+/* ---------- Deck v2: shorter, wider, external actions ---------- */
+.deck-stage {
+  position: relative;
+  max-width: 620px;
+  margin: 12px auto 0;
+}
+.deck {
+  position: relative;
+  height: 340px;
+  perspective: 1200px;
+}
+@media (max-width: 540px) {
+  .deck { height: 380px; }
+}
+
+.deck-card {
+  padding: 24px 26px 22px;
+  border-radius: 22px;
+}
+.deck-card-name { font-size: 22px; line-height: 1.2; }
+.deck-card-desc { font-size: 14.5px; line-height: 1.5; }
+
+/* Entrance animation for newly-revealed active card */
+@keyframes deckCardEnter {
+  0% {
+    transform: translateY(20px) scale(0.94);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+@keyframes deckCardNextEnter {
+  0% { transform: translateY(28px) scale(0.92); opacity: 0; }
+  100% { transform: translateY(14px) scale(0.96); opacity: 0.65; }
+}
+@keyframes deckCardNext2Enter {
+  0% { transform: translateY(40px) scale(0.88); opacity: 0; }
+  100% { transform: translateY(28px) scale(0.92); opacity: 0.35; }
+}
+.deck-card-active.is-entering {
+  animation: deckCardEnter .38s cubic-bezier(.22,.61,.36,1) both;
+}
+.deck-card-next.is-entering {
+  animation: deckCardNextEnter .42s cubic-bezier(.22,.61,.36,1) both;
+}
+.deck-card-next-2.is-entering {
+  animation: deckCardNext2Enter .46s cubic-bezier(.22,.61,.36,1) both;
+}
+
+/* External action bar */
+.deck-actions {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr auto;
+  align-items: center;
+  gap: 14px;
+  max-width: 620px;
+  margin: 26px auto 0;
+}
+@media (max-width: 540px) {
+  .deck-actions {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .deck-mini-prev, .deck-mini-next {
+    grid-column: span 1;
+    order: 2;
+  }
+  .deck-act-skip { order: 0; }
+  .deck-act-include { order: 1; }
+}
+.deck-mini {
+  background: transparent;
+  border: 0;
+  color: #6b6b78;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 12px;
+  border-radius: 10px;
+  transition: color .15s ease, background .15s ease;
+}
+.deck-mini:hover:not(:disabled) { color: #14141a; background: rgba(15,23,42,0.04); }
+.deck-mini:disabled { opacity: 0.30; cursor: not-allowed; }
+.deck-act {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 22px;
+  border-radius: 14px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(15,23,42,0.10);
+  background: #ffffff;
+  color: #14141a;
+  transition: all .15s ease;
+}
+.deck-act:hover:not(:disabled) { transform: translateY(-1px); border-color: #14141a; }
+.deck-act:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.deck-act-icon {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.deck-act-skip .deck-act-icon {
+  background: #fff0ee;
+  color: #a04339;
+}
+.deck-act-include {
+  background: linear-gradient(180deg, #6f97ff 0%, #4b6bd6 100%);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 10px 28px -10px rgba(91,140,255,0.55);
+}
+.deck-act-include:hover:not(:disabled) {
+  box-shadow: 0 14px 34px -10px rgba(91,140,255,0.70);
+}
+.deck-act-include .deck-act-icon {
+  background: rgba(255,255,255,0.22);
+  color: #ffffff;
+}
+.deck-act-included {
+  background: #eef3ff;
+  color: #2a3fa5;
+  border-color: rgba(91,140,255,0.30);
+  box-shadow: none;
+}
+.deck-act-included .deck-act-icon { background: rgba(91,140,255,0.18); color: #2a3fa5; }
+.deck-progress-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #6b6b78;
+}
+.deck-progress-row .deck-tip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.10em;
+  color: #8a8a96;
+  text-transform: uppercase;
+}
+.deck-progress-row .deck-progress {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.10em;
+  color: #4b4b56;
+}
+.deck-progress-row .deck-progress strong { color: #14141a; font-weight: 700; }
+
+/* ---------- Summary card (always-visible, bottom) ---------- */
+#summary-card {
+  max-width: 880px;
+  margin: 12px auto 0;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f7ff 100%);
+  border: 1px solid rgba(91,140,255,0.22);
+  border-radius: 22px;
+  padding: 28px 30px;
+  box-shadow:
+    0 1px 0 rgba(20,20,26,0.02),
+    0 32px 80px -30px rgba(91,140,255,0.32);
+}
+.summary-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(15,23,42,0.06);
+}
+.summary-card-head > div { display: flex; flex-direction: column; gap: 4px; }
+.summary-card-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #6b6b78;
+}
+.summary-card-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #14141a;
+  letter-spacing: -0.01em;
+}
+.summary-card-cta {
+  display: flex;
+  justify-content: center;
+  margin: 4px 0 0;
+}
+.summary-card-cta .btn-xl {
+  width: 100%;
+  max-width: 360px;
+  justify-content: center;
+}
+.summary-card-help {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  color: #8a8a96;
+  text-align: center;
+  line-height: 1.5;
+}
+.btn-xl {
+  font-size: 16px;
+  padding: 14px 28px;
+  font-weight: 600;
+}
+
 </style>
 <style>
 /* === inlined manager-widget.css === */
@@ -3976,26 +4443,54 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ============ STEP A — COST (collapsed by default) ============ -->
-<section class="section section-alt" id="cost">
+<!-- ============ ACCORDION STACK + SUMMARY ============ -->
+<section class="build-stack" id="build-stack">
   <div class="container">
-    <details class="cost-collapse" id="cost-collapse">
-      <summary class="cost-summary">
-        <div class="cost-summary-left">
-          <span class="cost-summary-eyebrow">Optional · cost check</span>
-          <span class="cost-summary-title">What does your stack cost today?</span>
-        </div>
-        <div class="cost-summary-right">
-          <span class="cost-summary-chevron" aria-hidden="true">▾</span>
-        </div>
-      </summary>
 
-      <div class="cost-collapse-body">
-        <p class="section-sub">
-          Pick your company size and the tools you currently run. We estimate
-          your annual SaaS spend using <strong>published list prices</strong> — then show what the
-          same coverage looks like governed by Atlantis.
-        </p>
+    <div class="acc-list">
+
+      <!-- A · Company shape -->
+      <article class="acc" data-acc-id="shape">
+        <button class="acc-head" type="button" aria-expanded="false" aria-controls="acc-body-shape">
+          <span class="acc-step">A</span>
+          <div class="acc-head-text">
+            <span class="acc-title">Company shape</span>
+            <span class="acc-meta" id="acc-shape-meta">Loading…</span>
+          </div>
+          <span class="acc-chev" aria-hidden="true">›</span>
+        </button>
+        <div class="acc-body" id="acc-body-shape">
+          <div class="acc-body-inner">
+            <div class="picker-row">
+              <div class="picker">
+                <span class="picker-label">Industry</span>
+                <div class="dropdown" data-dropdown="industry"></div>
+              </div>
+              <div class="picker">
+                <span class="picker-label">Company size</span>
+                <div class="dropdown" data-dropdown="size"></div>
+              </div>
+              <div class="picker">
+                <span class="picker-label">Headquartered in</span>
+                <div class="dropdown" data-dropdown="jurisdiction"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- B · Cost check (optional) -->
+      <article class="acc" data-acc-id="cost">
+        <button class="acc-head" type="button" aria-expanded="false" aria-controls="acc-body-cost">
+          <span class="acc-step">B</span>
+          <div class="acc-head-text">
+            <span class="acc-title">Cost check <span class="acc-optional">· optional</span></span>
+            <span class="acc-meta">Compare your stack and team payroll to Atlantis</span>
+          </div>
+          <span class="acc-chev" aria-hidden="true">›</span>
+        </button>
+        <div class="acc-body" id="acc-body-cost">
+          <div class="acc-body-inner">
 
         <div class="calc-research">
           <div class="calc-research-head">
@@ -4156,66 +4651,118 @@ img { max-width: 100%; display: block; }
           </div>
 
           <div class="cost-handoff">
-            <a href="#builder" class="btn btn-primary">Now design your operating model →</a>
+            <button type="button" class="btn btn-primary" data-acc-jump="playbooks">Continue to playbooks ↓</button>
+          </div>
+        </div><!-- /.calc -->
+          </div><!-- /.acc-body-inner -->
+        </div><!-- /.acc-body -->
+      </article>
+
+      <!-- C · Playbooks -->
+      <article class="acc" data-acc-id="playbooks">
+        <button class="acc-head" type="button" aria-expanded="false" aria-controls="acc-body-playbooks">
+          <span class="acc-step">C</span>
+          <div class="acc-head-text">
+            <span class="acc-title">Playbooks</span>
+            <span class="acc-meta" id="acc-playbooks-meta">Loading…</span>
+          </div>
+          <span class="acc-chev" aria-hidden="true">›</span>
+        </button>
+        <div class="acc-body" id="acc-body-playbooks">
+          <div class="acc-body-inner">
+            <div class="deck-filters" id="deck-filters"></div>
+
+            <div class="deck-stage">
+              <div class="deck" id="deck" role="region" aria-label="Playbook deck"></div>
+            </div>
+
+            <div class="deck-actions">
+              <button class="deck-mini deck-mini-prev" id="deck-prev" type="button">‹ Back</button>
+              <button class="deck-act deck-act-skip" id="deck-skip" type="button">
+                <span class="deck-act-icon">✕</span>
+                <span class="deck-act-label">Skip</span>
+              </button>
+              <button class="deck-act deck-act-include" id="deck-include" type="button">
+                <span class="deck-act-icon">✓</span>
+                <span class="deck-act-label">Include</span>
+              </button>
+              <button class="deck-mini deck-mini-next" id="deck-next" type="button">Next ›</button>
+            </div>
+
+            <div class="deck-progress-row">
+              <span class="deck-progress" id="deck-progress"></span>
+              <span class="deck-tip">drag · arrows · or tap</span>
+            </div>
           </div>
         </div>
-      </div>
-    </details>
-  </div>
-</section>
+      </article>
 
-<!-- ============ STEP B — BUILD YOUR COMPANY ============ -->
-<section class="section" id="builder">
-  <div class="container">
-    <div class="section-head section-head-tight">
-      <div class="section-eyebrow">Your playbooks</div>
-      <h2 class="section-title">Swipe to build.</h2>
-      <p class="section-sub-tight">
-        Pre-loaded for your shape. Swipe right to include, left to skip.
-      </p>
+      <!-- D · Autonomy -->
+      <article class="acc" data-acc-id="autonomy">
+        <button class="acc-head" type="button" aria-expanded="false" aria-controls="acc-body-autonomy">
+          <span class="acc-step">D</span>
+          <div class="acc-head-text">
+            <span class="acc-title">Autonomy <span class="acc-optional">· per agent</span></span>
+            <span class="acc-meta" id="acc-autonomy-meta">Drafting · Approval · Silent — defaults applied</span>
+          </div>
+          <span class="acc-chev" aria-hidden="true">›</span>
+        </button>
+        <div class="acc-body" id="acc-body-autonomy">
+          <div class="acc-body-inner">
+            <div class="autonomy-grid" id="autonomy-grid"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- E · Platform floors -->
+      <article class="acc" data-acc-id="floors">
+        <button class="acc-head" type="button" aria-expanded="false" aria-controls="acc-body-floors">
+          <span class="acc-step">E</span>
+          <div class="acc-head-text">
+            <span class="acc-title">Platform floors <span class="acc-optional">· hard limits</span></span>
+            <span class="acc-meta" id="acc-floors-meta">$1,000 wire · 50 recipients · 50/hr · $500/day</span>
+          </div>
+          <span class="acc-chev" aria-hidden="true">›</span>
+        </button>
+        <div class="acc-body" id="acc-body-floors">
+          <div class="acc-body-inner">
+            <div class="guardrails-grid">
+              <label class="guardrail">
+                <span class="guardrail-label">Wire / outbound payment threshold</span>
+                <span class="guardrail-input">$<input type="number" id="gr-wire" min="0" value="1000" step="100"></span>
+                <span class="guardrail-help">Payments above this always require approval.</span>
+              </label>
+              <label class="guardrail">
+                <span class="guardrail-label">Mass external comms cap</span>
+                <span class="guardrail-input"><input type="number" id="gr-comms" min="1" value="50" step="5"> recipients</span>
+                <span class="guardrail-help">Sends to more recipients always require approval.</span>
+              </label>
+              <label class="guardrail">
+                <span class="guardrail-label">Rate limit per agent</span>
+                <span class="guardrail-input"><input type="number" id="gr-rate" min="1" value="50" step="5"> actions / hour</span>
+                <span class="guardrail-help">Beyond this rate, the agent pauses for human review.</span>
+              </label>
+              <label class="guardrail">
+                <span class="guardrail-label">Daily spend cap</span>
+                <span class="guardrail-input">$<input type="number" id="gr-spend" min="0" value="500" step="50"> / day</span>
+                <span class="guardrail-help">Maximum irreversible commitments per agent per day.</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </article>
+
     </div>
 
-    <!-- Company shape: three dropdowns -->
-    <div class="picker-row">
-      <label class="picker">
-        <span class="picker-label">Industry</span>
-        <select class="picker-select" id="picker-industry"></select>
-      </label>
-      <label class="picker">
-        <span class="picker-label">Company size</span>
-        <select class="picker-select" id="picker-size"></select>
-      </label>
-      <label class="picker">
-        <span class="picker-label">Headquartered in</span>
-        <select class="picker-select" id="picker-jurisdiction">
-          <option value="us" selected>United States</option>
-          <option value="ca">Canada</option>
-          <option value="uk">United Kingdom</option>
-          <option value="eu">European Union</option>
-          <option value="au">Australia</option>
-          <option value="other">Other</option>
-        </select>
-      </label>
-    </div>
-
-    <!-- Department filter pills -->
-    <div class="deck-filters" id="deck-filters"></div>
-
-    <!-- Card deck -->
-    <div class="deck-wrap">
-      <button class="deck-arrow deck-arrow-prev" id="deck-prev" type="button" aria-label="Previous">‹</button>
-      <div class="deck" id="deck" role="region" aria-label="Playbook deck"></div>
-      <button class="deck-arrow deck-arrow-next" id="deck-next" type="button" aria-label="Next">›</button>
-    </div>
-
-    <div class="deck-foot">
-      <div class="deck-progress" id="deck-progress"></div>
-      <div class="deck-tip">← → · drag · or tap</div>
-      <button class="deck-skip-end" id="deck-skip-end" type="button">Skip to summary ↓</button>
-    </div>
-
-    <!-- Compact summary card -->
+    <!-- Always-visible summary card -->
     <div class="summary-card" id="summary-card">
+      <div class="summary-card-head">
+        <div>
+          <span class="summary-card-eyebrow">Your build</span>
+          <span class="summary-card-title" id="summary-card-title">Loading…</span>
+        </div>
+        <button class="link-button" id="ask-manager-summary" type="button">Ask the Manager →</button>
+      </div>
       <div class="summary-card-stats">
         <div class="sc-stat"><span class="sc-num" id="sum-playbooks">0</span><span class="sc-lbl">playbooks</span></div>
         <div class="sc-stat"><span class="sc-num" id="sum-agents">0</span><span class="sc-lbl">agents</span></div>
@@ -4223,62 +4770,14 @@ img { max-width: 100%; display: block; }
         <div class="sc-stat"><span class="sc-num" id="sum-approvals">0</span><span class="sc-lbl">approvals</span></div>
       </div>
       <div class="summary-card-agents" id="sum-agents-list"></div>
-      <div class="summary-card-actions">
-        <button class="link-button" id="ask-manager-summary" type="button">Ask the Manager to recommend</button>
-        <a href="#autonomy" class="btn btn-primary">Set autonomy →</a>
+      <div class="summary-card-cta">
+        <button class="btn btn-primary btn-xl" id="activate-btn" type="button">Activate my company →</button>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ STEP C — AUTONOMY MODE & GUARDRAILS ============ -->
-<section class="section section-alt" id="autonomy">
-  <div class="container">
-    <div class="section-head section-head-tight">
-      <div class="section-eyebrow">Autonomy</div>
-      <h2 class="section-title">How much do you want to gate?</h2>
-      <p class="section-sub-tight">
-        Drafting · Approval · Silent — per agent. <a href="wiki.html#Autonomy-Modes">Spec →</a>
+      <p class="summary-card-help">
+        On activation the Atlantis Manager opens with your picks pre-loaded — full Resolution Plan before any state is created.
       </p>
     </div>
 
-    <div class="autonomy-grid" id="autonomy-grid"></div>
-
-    <div class="guardrails">
-      <div class="section-head section-head-tight">
-        <div class="section-eyebrow">Platform floors</div>
-        <h3 class="section-title-sm">Hard limits — survive every mode.</h3>
-      </div>
-      <div class="guardrails-grid">
-        <label class="guardrail">
-          <span class="guardrail-label">Wire / outbound payment threshold</span>
-          <span class="guardrail-input">$<input type="number" id="gr-wire" min="0" value="1000" step="100"></span>
-          <span class="guardrail-help">Default $1,000. Payments above this always require approval.</span>
-        </label>
-        <label class="guardrail">
-          <span class="guardrail-label">Mass external comms cap</span>
-          <span class="guardrail-input"><input type="number" id="gr-comms" min="1" value="50" step="5"> recipients</span>
-          <span class="guardrail-help">Default 50. Sends to more recipients always require approval.</span>
-        </label>
-        <label class="guardrail">
-          <span class="guardrail-label">Rate limit per agent</span>
-          <span class="guardrail-input"><input type="number" id="gr-rate" min="1" value="50" step="5"> actions / hour</span>
-          <span class="guardrail-help">Beyond this rate, the agent pauses for human review.</span>
-        </label>
-        <label class="guardrail">
-          <span class="guardrail-label">Daily spend cap</span>
-          <span class="guardrail-input">$<input type="number" id="gr-spend" min="0" value="500" step="50"> / day</span>
-          <span class="guardrail-help">Maximum irreversible commitments per agent per day.</span>
-        </label>
-      </div>
-    </div>
-
-    <div class="activate-block">
-      <button class="btn btn-primary btn-xl" id="activate-btn" type="button">Activate my company →</button>
-      <p class="activate-help">
-        On activation, the Atlantis Manager will open with your picks pre-loaded. You'll see the full Resolution Plan for the company spin-up before any state is created.
-      </p>
-    </div>
   </div>
 </section>
 

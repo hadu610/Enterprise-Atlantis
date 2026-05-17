@@ -1,8 +1,11 @@
-/* build.js — Company Operation Builder
+/* build.js — Company Operation Builder (v2: accordion + swipe deck)
  *
  * Renders the playbook catalog from Company-Operation-Builder-Catalog.md as
- * a swipeable deck. State lives in BuilderState; the Atlantis Manager
- * widget reads and writes the same state via window.AtlantisBuilder.
+ * a single-open accordion (Company shape → Cost check → Playbooks →
+ * Autonomy → Platform floors) plus an always-visible summary card.
+ *
+ * State lives in BuilderState; the Atlantis Manager widget reads and writes
+ * the same state via window.AtlantisBuilder.
  */
 
 (function () {
@@ -28,6 +31,16 @@
     { id: 'startup',    name: 'Startup',    range: '1–49 people' },
     { id: 'medium',     name: 'Medium',     range: '50–249 people' },
     { id: 'enterprise', name: 'Enterprise', range: '250+ people' },
+  ];
+
+  // ---------- Jurisdictions ----------
+  const JURISDICTIONS = [
+    { id: 'us',    name: 'United States' },
+    { id: 'ca',    name: 'Canada' },
+    { id: 'uk',    name: 'United Kingdom' },
+    { id: 'eu',    name: 'European Union' },
+    { id: 'au',    name: 'Australia' },
+    { id: 'other', name: 'Other' },
   ];
 
   // ---------- Departments (display order) ----------
@@ -201,40 +214,26 @@
       || p.industries === ALL
       || p.industries.length === ALL.length;
   }
-
-  function visibleByIndustry() {
-    return PLAYBOOKS.filter(industryMatches);
-  }
-
+  function visibleByIndustry() { return PLAYBOOKS.filter(industryMatches); }
   function visiblePlaybooks() {
     return visibleByIndustry().filter(p =>
       BuilderState.deckFilter === 'all' || p.dept === BuilderState.deckFilter
     );
   }
-
   function defaultsFor(industry, size) {
-    const prevIndustry = BuilderState.industry;
-    const prevSize = BuilderState.size;
-    BuilderState.industry = industry;
-    BuilderState.size = size;
-    const ids = visibleByIndustry()
+    return PLAYBOOKS
+      .filter(p => p.industries.includes(industry) || p.industries === ALL || p.industries.length === ALL.length)
       .filter(p => p.sizes.includes(size))
       .map(p => p.id);
-    BuilderState.industry = prevIndustry;
-    BuilderState.size = prevSize;
-    return ids;
   }
-
   function computeAgents() {
     const set = new Set();
     BuilderState.selected.forEach(id => {
       const pb = PLAYBOOKS.find(p => p.id === id);
       if (pb) set.add(pb.dept);
     });
-    // Stable display order
     return DEPTS.map(d => d.id).filter(id => set.has(id));
   }
-
   function totalHours() {
     let h = 0;
     BuilderState.selected.forEach(id => {
@@ -243,7 +242,6 @@
     });
     return h;
   }
-
   function approvalCount() {
     let c = 0;
     BuilderState.selected.forEach(id => {
@@ -252,58 +250,193 @@
     });
     return c;
   }
-
   function ensureAutonomyForSelected() {
     computeAgents().forEach(a => {
       if (!BuilderState.autonomy[a]) BuilderState.autonomy[a] = recommendedMode(a);
     });
   }
 
-  // ---------- Pickers (dropdowns) ----------
-  function renderPickers() {
-    const ind = document.getElementById('picker-industry');
-    if (ind) {
-      if (!ind.dataset.wired) {
-        ind.innerHTML = INDUSTRIES.map(i =>
-          `<option value="${i.id}">${escape(i.name)}</option>`
-        ).join('');
-        ind.addEventListener('change', () => {
-          BuilderState.industry = ind.value;
+  // ---------- Custom Dropdown widget ----------
+  function mountDropdown(host, options, getValue, setValue) {
+    host.innerHTML = `
+      <button type="button" class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+        <span class="dropdown-trigger-value"></span>
+        <span class="dropdown-trigger-arrow">▾</span>
+      </button>
+      <div class="dropdown-menu" role="listbox"></div>
+    `;
+    const trigger = host.querySelector('.dropdown-trigger');
+    const valueEl = host.querySelector('.dropdown-trigger-value');
+    const menu = host.querySelector('.dropdown-menu');
+
+    function render() {
+      const current = getValue();
+      const opt = options.find(o => o.id === current);
+      valueEl.textContent = opt ? opt.label : '';
+      menu.innerHTML = options.map(o => `
+        <button type="button" class="dropdown-option ${o.id === current ? 'dropdown-option-on' : ''}" role="option" data-value="${o.id}">
+          <span class="dropdown-option-label">${escape(o.label)}</span>
+          ${o.meta ? `<span class="dropdown-option-meta">${escape(o.meta)}</span>` : ''}
+          <span class="dropdown-option-check">✓</span>
+        </button>
+      `).join('');
+      menu.querySelectorAll('.dropdown-option').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          setValue(btn.dataset.value);
+          close();
+        });
+      });
+    }
+
+    function open() {
+      document.querySelectorAll('.dropdown.is-open').forEach(d => {
+        if (d !== host) closeDropdown(d);
+      });
+      host.classList.add('is-open');
+      trigger.setAttribute('aria-expanded', 'true');
+    }
+    function close() { closeDropdown(host); }
+
+    trigger.addEventListener('click', e => {
+      e.stopPropagation();
+      if (host.classList.contains('is-open')) close();
+      else open();
+    });
+
+    render();
+    return { render, open, close };
+  }
+  function closeDropdown(host) {
+    host.classList.remove('is-open');
+    const t = host.querySelector('.dropdown-trigger');
+    if (t) t.setAttribute('aria-expanded', 'false');
+  }
+
+  let dropdowns = { industry: null, size: null, jurisdiction: null };
+
+  function mountAllDropdowns() {
+    const indHost = document.querySelector('[data-dropdown="industry"]');
+    if (indHost && !indHost.dataset.mounted) {
+      dropdowns.industry = mountDropdown(
+        indHost,
+        INDUSTRIES.map(i => ({ id: i.id, label: i.name })),
+        () => BuilderState.industry,
+        (v) => {
+          BuilderState.industry = v;
           BuilderState.deckFilter = 'all';
           BuilderState.deckIndex = 0;
           applyDefaults();
           renderAll();
-        });
-        ind.dataset.wired = '1';
-      }
-      ind.value = BuilderState.industry;
+        }
+      );
+      indHost.dataset.mounted = '1';
     }
 
-    const sz = document.getElementById('picker-size');
-    if (sz) {
-      if (!sz.dataset.wired) {
-        sz.innerHTML = SIZES.map(s =>
-          `<option value="${s.id}">${escape(s.name)} · ${escape(s.range)}</option>`
-        ).join('');
-        sz.addEventListener('change', () => {
-          BuilderState.size = sz.value;
+    const szHost = document.querySelector('[data-dropdown="size"]');
+    if (szHost && !szHost.dataset.mounted) {
+      dropdowns.size = mountDropdown(
+        szHost,
+        SIZES.map(s => ({ id: s.id, label: s.name, meta: s.range })),
+        () => BuilderState.size,
+        (v) => {
+          BuilderState.size = v;
           BuilderState.deckIndex = 0;
           applyDefaults();
           renderAll();
-        });
-        sz.dataset.wired = '1';
-      }
-      sz.value = BuilderState.size;
+        }
+      );
+      szHost.dataset.mounted = '1';
     }
 
-    const ju = document.getElementById('picker-jurisdiction');
-    if (ju && !ju.dataset.wired) {
-      ju.addEventListener('change', () => {
-        BuilderState.jurisdiction = ju.value;
-      });
-      ju.dataset.wired = '1';
-      ju.value = BuilderState.jurisdiction;
+    const juHost = document.querySelector('[data-dropdown="jurisdiction"]');
+    if (juHost && !juHost.dataset.mounted) {
+      dropdowns.jurisdiction = mountDropdown(
+        juHost,
+        JURISDICTIONS.map(j => ({ id: j.id, label: j.name })),
+        () => BuilderState.jurisdiction,
+        (v) => {
+          BuilderState.jurisdiction = v;
+          updateMetas();
+        }
+      );
+      juHost.dataset.mounted = '1';
     }
+  }
+
+  function refreshDropdowns() {
+    Object.values(dropdowns).forEach(d => d && d.render());
+  }
+
+  // Click outside to close any open dropdown
+  document.addEventListener('click', e => {
+    if (e.target.closest('.dropdown')) return;
+    document.querySelectorAll('.dropdown.is-open').forEach(closeDropdown);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.dropdown.is-open').forEach(closeDropdown);
+    }
+  });
+
+  // ---------- Accordion ----------
+  function setupAccordions() {
+    document.querySelectorAll('.acc[data-acc-id]').forEach(acc => {
+      const head = acc.querySelector('.acc-head');
+      if (!head || head.dataset.wired) return;
+      head.addEventListener('click', () => {
+        if (acc.classList.contains('is-open')) closeAcc(acc);
+        else openAcc(acc);
+      });
+      head.dataset.wired = '1';
+    });
+    document.querySelectorAll('[data-acc-jump]').forEach(btn => {
+      if (btn.dataset.wired) return;
+      btn.addEventListener('click', () => {
+        const target = document.querySelector(`.acc[data-acc-id="${btn.dataset.accJump}"]`);
+        if (target) openAcc(target);
+      });
+      btn.dataset.wired = '1';
+    });
+  }
+  function openAcc(acc) {
+    document.querySelectorAll('.acc.is-open').forEach(other => {
+      if (other !== acc) closeAcc(other);
+    });
+    acc.classList.add('is-open');
+    const head = acc.querySelector('.acc-head');
+    if (head) head.setAttribute('aria-expanded', 'true');
+    const body = acc.querySelector('.acc-body');
+    if (!body) return;
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.addEventListener('transitionend', function end(e) {
+      if (e.propertyName !== 'max-height') return;
+      body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', end);
+    });
+    if (acc.dataset.accId === 'playbooks') {
+      // Re-render deck so card stack lays out at full height inside the now-open body
+      requestAnimationFrame(() => {
+        renderDeck();
+      });
+    }
+    // Gentle scroll into view if needed
+    setTimeout(() => {
+      const top = acc.getBoundingClientRect().top;
+      if (top < 70 || top > window.innerHeight - 240) {
+        acc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 120);
+  }
+  function closeAcc(acc) {
+    acc.classList.remove('is-open');
+    const head = acc.querySelector('.acc-head');
+    if (head) head.setAttribute('aria-expanded', 'false');
+    const body = acc.querySelector('.acc-body');
+    if (!body) return;
+    body.style.maxHeight = body.scrollHeight + 'px';
+    void body.offsetHeight;
+    body.style.maxHeight = '0px';
   }
 
   // ---------- Deck filters (department pills) ----------
@@ -349,6 +482,8 @@
     const list = visiblePlaybooks();
     const prevBtn = document.getElementById('deck-prev');
     const nextBtn = document.getElementById('deck-next');
+    const skipBtn = document.getElementById('deck-skip');
+    const includeBtn = document.getElementById('deck-include');
     const prog = document.getElementById('deck-progress');
 
     if (list.length === 0) {
@@ -356,6 +491,8 @@
       if (prog) prog.innerHTML = '';
       if (prevBtn) prevBtn.disabled = true;
       if (nextBtn) nextBtn.disabled = true;
+      if (skipBtn) skipBtn.disabled = true;
+      if (includeBtn) includeBtn.disabled = true;
       return;
     }
 
@@ -364,30 +501,20 @@
     const i = BuilderState.deckIndex;
     const visible = [list[i], list[i + 1], list[i + 2]].filter(Boolean);
 
-    // Render back-to-front so the active card is last in DOM (top of stack)
-    wrap.innerHTML = visible.slice().reverse().map((p, revIdx) => {
-      const idx = visible.length - 1 - revIdx;
-      return deckCardHTML(p, idx);
-    }).join('');
+    wrap.innerHTML = visible.map((p, idx) => deckCardHTML(p, idx)).join('');
+
+    // Entrance animation
+    requestAnimationFrame(() => {
+      wrap.querySelectorAll('.deck-card').forEach(card => {
+        card.classList.add('is-entering');
+      });
+      setTimeout(() => {
+        wrap.querySelectorAll('.deck-card.is-entering').forEach(c => c.classList.remove('is-entering'));
+      }, 520);
+    });
 
     const activeEl = wrap.querySelector('.deck-card-active');
     if (activeEl) wireDragOnCard(activeEl, list[i]);
-
-    wrap.querySelectorAll('[data-deck-action]').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        const action = btn.dataset.deckAction;
-        const id = btn.dataset.id;
-        if (action === 'include') {
-          BuilderState.selected.add(id);
-          ensureAutonomyForSelected();
-          advanceDeck(1, 'right');
-        } else if (action === 'skip') {
-          BuilderState.selected.delete(id);
-          advanceDeck(1, 'left');
-        }
-      });
-    });
 
     wrap.querySelectorAll('[data-deck-customize]').forEach(btn => {
       btn.addEventListener('click', e => {
@@ -399,6 +526,14 @@
     if (prog) prog.innerHTML = `<strong>${i + 1}</strong> / ${list.length}`;
     if (prevBtn) prevBtn.disabled = i === 0;
     if (nextBtn) nextBtn.disabled = i >= list.length - 1;
+    if (skipBtn) skipBtn.disabled = false;
+    if (includeBtn) {
+      const isIncluded = BuilderState.selected.has(list[i].id);
+      includeBtn.disabled = false;
+      includeBtn.classList.toggle('deck-act-included', isIncluded);
+      const labelEl = includeBtn.querySelector('.deck-act-label');
+      if (labelEl) labelEl.textContent = isIncluded ? 'Included' : 'Include';
+    }
   }
 
   function deckCardHTML(p, stackIdx) {
@@ -436,18 +571,17 @@
           ${sizeMatch ? `
             <span class="deck-card-meta-item">
               <span class="deck-card-meta-icon">★</span>
-              <span>Common for ${escape(capitalize(BuilderState.size))}</span>
+              <span>${included ? 'Included' : 'Common'} for ${escape(capitalize(BuilderState.size))}</span>
             </span>
           ` : ''}
         </div>
-        ${isActive ? `
-          <div class="deck-card-actions">
-            <button type="button" class="deck-action deck-action-skip" data-deck-action="skip" data-id="${p.id}">${included ? '✕ Drop' : 'Skip'}</button>
-            <button type="button" class="deck-action ${included ? 'deck-action-included' : 'deck-action-include'}" data-deck-action="include" data-id="${p.id}">${included ? '✓ Included' : 'Include →'}</button>
-          </div>
-        ` : ''}
       </article>
     `;
+  }
+
+  function currentTopPlaybook() {
+    const list = visiblePlaybooks();
+    return list[BuilderState.deckIndex] || null;
   }
 
   function advanceDeck(delta, dir) {
@@ -459,19 +593,14 @@
     if (animate) {
       active.classList.add(dir === 'right' ? 'deck-card-gone-right' : 'deck-card-gone-left');
     }
-
     const commit = () => {
       BuilderState.deckIndex = next;
       renderDeck();
       renderSummary();
       renderDeckFilters();
     };
-
-    if (animate) {
-      setTimeout(commit, 240);
-    } else {
-      commit();
-    }
+    if (animate) setTimeout(commit, 280);
+    else commit();
   }
 
   // ---------- Drag / swipe handling ----------
@@ -480,7 +609,7 @@
     const THRESH = 110;
 
     const setTransform = () => {
-      const rot = dx / 24;
+      const rot = dx / 26;
       card.style.transform = `translateX(${dx}px) rotate(${rot}deg)`;
       if (dx > 40) {
         if (intent !== 'include') { intent = 'include'; card.dataset.intent = 'include'; }
@@ -502,13 +631,11 @@
         try { card.setPointerCapture(e.pointerId); } catch (_) {}
       }
     };
-
     const onMove = (e) => {
       if (!dragging) return;
       const pt = e.touches ? e.touches[0] : e;
       dx = pt.clientX - startX;
       dy = pt.clientY - startY;
-      // If user is mostly scrolling vertically, bail
       if (Math.abs(dy) > Math.abs(dx) * 1.3 && Math.abs(dy) > 18) {
         cancel();
         return;
@@ -516,7 +643,6 @@
       setTransform();
       if (e.cancelable) e.preventDefault();
     };
-
     const cancel = () => {
       dragging = false;
       card.classList.remove('is-dragging');
@@ -524,7 +650,6 @@
       delete card.dataset.intent;
       dx = 0; dy = 0; intent = null;
     };
-
     const onUp = () => {
       if (!dragging) return;
       dragging = false;
@@ -549,20 +674,37 @@
     card.addEventListener('pointercancel', cancel);
   }
 
-  // ---------- Deck controls (arrows + keyboard + skip-to-end) ----------
+  // ---------- Deck external controls ----------
   function wireDeckControls() {
-    document.getElementById('deck-prev')?.addEventListener('click', () => advanceDeck(-1, null));
-    document.getElementById('deck-next')?.addEventListener('click', () => advanceDeck(1, null));
-    document.getElementById('deck-skip-end')?.addEventListener('click', () => {
-      const card = document.getElementById('summary-card');
-      if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const prev = document.getElementById('deck-prev');
+    const next = document.getElementById('deck-next');
+    const skip = document.getElementById('deck-skip');
+    const incl = document.getElementById('deck-include');
+
+    prev?.addEventListener('click', () => advanceDeck(-1, null));
+    next?.addEventListener('click', () => advanceDeck(1, null));
+
+    skip?.addEventListener('click', () => {
+      const p = currentTopPlaybook();
+      if (!p) return;
+      BuilderState.selected.delete(p.id);
+      advanceDeck(1, 'left');
+    });
+    incl?.addEventListener('click', () => {
+      const p = currentTopPlaybook();
+      if (!p) return;
+      BuilderState.selected.add(p.id);
+      ensureAutonomyForSelected();
+      advanceDeck(1, 'right');
     });
 
     document.addEventListener('keydown', (e) => {
       const tag = (e.target && e.target.tagName || '').toLowerCase();
       if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
       if (e.target && e.target.isContentEditable) return;
-      // Only intercept when the deck is roughly in view
+      // Only when playbooks accordion open & in view
+      const acc = document.querySelector('.acc[data-acc-id="playbooks"]');
+      if (!acc || !acc.classList.contains('is-open')) return;
       const deck = document.getElementById('deck');
       if (!deck) return;
       const r = deck.getBoundingClientRect();
@@ -573,7 +715,7 @@
     });
   }
 
-  // ---------- Summary card ----------
+  // ---------- Summary card + meta updates ----------
   function renderSummary() {
     setNum('sum-playbooks', BuilderState.selected.size);
     const agents = computeAgents();
@@ -584,7 +726,7 @@
     const list = document.getElementById('sum-agents-list');
     if (list) {
       if (agents.length === 0) {
-        list.innerHTML = '<span class="summary-card-agents-empty">No agents yet — swipe right on the deck to include playbooks.</span>';
+        list.innerHTML = '<span class="summary-card-agents-empty">No agents yet — open the Playbooks step to swipe.</span>';
       } else {
         list.innerHTML = agents.map(a => {
           const dept = DEPTS.find(d => d.id === a);
@@ -592,6 +734,43 @@
         }).join('');
       }
     }
+    updateMetas();
+  }
+
+  function updateMetas() {
+    const ind = INDUSTRIES.find(i => i.id === BuilderState.industry);
+    const sz = SIZES.find(s => s.id === BuilderState.size);
+    const ju = JURISDICTIONS.find(j => j.id === BuilderState.jurisdiction);
+
+    setText('summary-card-title',
+      `${ind ? ind.name : ''} · ${sz ? sz.name : ''} · ${ju ? ju.name : ''}`);
+
+    setText('acc-shape-meta',
+      `${ind ? ind.name : ''} · ${sz ? sz.name : ''} · ${ju ? ju.name : ''}`);
+
+    setText('acc-playbooks-meta',
+      `${BuilderState.selected.size} included · ${computeAgents().length} agents · ${totalHours()} hrs / mo saved`);
+
+    // autonomy meta
+    const agents = computeAgents();
+    if (agents.length === 0) {
+      setText('acc-autonomy-meta', 'Pick playbooks first to assign per-agent modes');
+    } else {
+      const modeCount = { Drafting: 0, Approval: 0, Silent: 0 };
+      agents.forEach(a => {
+        const m = BuilderState.autonomy[a] || recommendedMode(a);
+        modeCount[m] = (modeCount[m] || 0) + 1;
+      });
+      const parts = [];
+      if (modeCount.Drafting) parts.push(`${modeCount.Drafting} drafting`);
+      if (modeCount.Approval) parts.push(`${modeCount.Approval} approval`);
+      if (modeCount.Silent) parts.push(`${modeCount.Silent} silent`);
+      setText('acc-autonomy-meta', `${agents.length} agents · ${parts.join(' · ')}`);
+    }
+
+    const g = BuilderState.guardrails;
+    setText('acc-floors-meta',
+      `$${g.wire.toLocaleString()} wire · ${g.comms} recipients · ${g.rate}/hr · $${g.spend}/day`);
   }
 
   // ---------- Autonomy step ----------
@@ -600,7 +779,7 @@
     if (!wrap) return;
     const agents = computeAgents();
     if (agents.length === 0) {
-      wrap.innerHTML = '<div class="autonomy-empty">Pick playbooks above to activate agents — then choose how much oversight each one gets.</div>';
+      wrap.innerHTML = '<div class="autonomy-empty">Pick playbooks first — then choose how much oversight each agent gets.</div>';
       return;
     }
     wrap.innerHTML = agents.map(a => {
@@ -628,6 +807,7 @@
       btn.addEventListener('click', () => {
         BuilderState.autonomy[btn.dataset.agent] = btn.dataset.mode;
         renderAutonomy();
+        updateMetas();
       });
     });
   }
@@ -635,12 +815,10 @@
   function recommendedMode(dept) {
     if (dept === 'Finance' || dept === 'Legal') return 'Approval';
     if (dept === 'Dev') return 'Approval';
-    if (dept === 'Marketing' || dept === 'Sales' || dept === 'Operations' || dept === 'HR') return 'Approval';
     return 'Approval';
   }
-
   function recommendedReason(dept) {
-    if (dept === 'Finance') return 'Financial actions get human sign-off until the Trust Score earns Silent eligibility.';
+    if (dept === 'Finance') return 'Financial actions get human sign-off until Trust Score earns Silent eligibility.';
     if (dept === 'Legal') return 'Regulated-record work always benefits from human review.';
     if (dept === 'Dev') return 'Production deploys with breaking changes always require approval anyway.';
     return 'Conservative default. Drop to Silent once you have a few weeks of evidence.';
@@ -652,21 +830,17 @@
     if (!pb) return;
     const existing = BuilderState.customizations[playbookId] || {};
     const note = prompt(
-      `Customize "${pb.name}"\n\nDefault trigger: ${pb.trigger}\nDefault risk: ${pb.risk}\n\nDescribe what you want changed (one line). This becomes the override note the Atlantis Manager will use. Leave blank to skip.`,
+      `Customize "${pb.name}"\n\nDefault trigger: ${pb.trigger}\nDefault risk: ${pb.risk}\n\nDescribe what you want changed (one line).`,
       existing.note || ''
     );
     if (note === null) return;
-    if (note.trim() === '') {
-      delete BuilderState.customizations[playbookId];
-    } else {
-      BuilderState.customizations[playbookId] = { note: note.trim(), at: new Date().toISOString() };
-    }
+    if (note.trim() === '') delete BuilderState.customizations[playbookId];
+    else BuilderState.customizations[playbookId] = { note: note.trim(), at: new Date().toISOString() };
   }
 
   // ---------- Defaults ----------
   function applyDefaults() {
-    const defaults = defaultsFor(BuilderState.industry, BuilderState.size);
-    BuilderState.selected = new Set(defaults);
+    BuilderState.selected = new Set(defaultsFor(BuilderState.industry, BuilderState.size));
     ensureAutonomyForSelected();
   }
 
@@ -680,15 +854,14 @@
       el.addEventListener('change', () => {
         const v = parseInt(el.value, 10);
         if (!isNaN(v) && v >= 0) BuilderState.guardrails[key] = v;
+        updateMetas();
       });
     });
   }
 
-  // ---------- Activate handoff ----------
+  // ---------- Activate ----------
   function wireActivate() {
-    const btn = document.getElementById('activate-btn');
-    if (!btn) return;
-    btn.addEventListener('click', () => {
+    document.getElementById('activate-btn')?.addEventListener('click', () => {
       const snapshot = buildSnapshot();
       if (window.AtlantisManager && typeof window.AtlantisManager.openWithSnapshot === 'function') {
         window.AtlantisManager.openWithSnapshot(snapshot);
@@ -697,7 +870,6 @@
       }
     });
   }
-
   function buildSnapshot() {
     const picks = Array.from(BuilderState.selected).map(id => {
       const pb = PLAYBOOKS.find(p => p.id === id);
@@ -730,14 +902,12 @@
         window.AtlantisManager.send(`Looking at my picks: ${snap.playbookCount} playbooks across ${snap.agents.length} agents for a ${snap.sizeName} ${snap.industryName} company. Any obvious gaps or risks?`);
       }
     });
-
     document.getElementById('open-manager-hero')?.addEventListener('click', () => {
       if (window.AtlantisManager) {
         window.AtlantisManager.open();
         window.AtlantisManager.send('Help me build my company on Atlantis. I want to walk through it conversationally.');
       }
     });
-
     document.getElementById('open-manager-nav')?.addEventListener('click', () => {
       if (window.AtlantisManager) window.AtlantisManager.open();
     });
@@ -745,7 +915,8 @@
 
   // ---------- Render all ----------
   function renderAll() {
-    renderPickers();
+    mountAllDropdowns();
+    refreshDropdowns();
     renderDeckFilters();
     renderDeck();
     renderSummary();
@@ -756,6 +927,10 @@
   function setNum(id, v) {
     const el = document.getElementById(id);
     if (el) el.textContent = v.toLocaleString();
+  }
+  function setText(id, v) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = v;
   }
   function escape(s) {
     return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
@@ -798,11 +973,16 @@
       renderSummary();
       renderAutonomy();
     },
+    openSection(id) {
+      const acc = document.querySelector(`.acc[data-acc-id="${id}"]`);
+      if (acc) openAcc(acc);
+    },
   };
 
   // ---------- Boot ----------
   document.addEventListener('DOMContentLoaded', () => {
     applyDefaults();
+    setupAccordions();
     renderAll();
     wireDeckControls();
     wireGuardrails();
