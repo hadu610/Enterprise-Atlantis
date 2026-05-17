@@ -319,7 +319,9 @@ This separation is what lets the Control Center scale: it is stateless, horizont
 
 ## 8. Permissions and RBAC
 
-Three default role bundles ship with the Control Center; customers can extend with custom roles via the platform IAM.
+The Control Center is a consumer of the platform's unified identity model, specified in full in [Identity and Access Control](Identity-and-Access-Control). That page defines: the Actor abstraction (Person, Agent, Service share the same shape), the Agent entity (every agent has a name, title, department, and named human manager), the Role object schema, the canonical permission registry, the asymmetry that agents cannot approve, and the lifecycle of agent provisioning, rotation, and deprovisioning.
+
+The Control Center ships with the three default human role bundles inherited from that page:
 
 | Role | Default scope | What they see | What they can do |
 |---|---|---|---|
@@ -327,12 +329,15 @@ Three default role bundles ship with the Control Center; customers can extend wi
 | **Department Manager** | One department | Department View, Activity Log filtered to dept, Approval Queue (dept), Trust Score (dept agents) | Approve/reject, cancel, roll back within retention, supersede |
 | **Customer Admin** | All departments | Fleet View, full Activity Log, all Approval Queues, all Trust Scores, all emergency controls | All of the above + pause/quarantine agents + emergency revert window |
 
-**Permission rules:**
+Custom roles for tenant-specific organisational fit live in the platform IAM database; see [Identity and Access Control § 8](Identity-and-Access-Control#8-custom-roles-tenant-specific-in-the-iam-database) for the creation and assignment flows.
+
+**Key permission rules enforced in the Control Center UI:**
 
 - A manager **cannot approve a ticket they originated as a human** ([Approval Workflow Framework § 9](Approval-Workflow-Framework#9-approval-impersonation)). Enforced at the API gateway, surfaced in the UI as a greyed-out button with a tooltip.
-- A manager **cannot roll back a ticket whose `corrects` chain includes a ticket outside their department** without `cross_dept_rollback` permission, even if they originated the latest correction.
-- Read-only access to the Activity Log is broadly available (every employee can read tickets they are related to via the entity graph), but compliance-export-grade signed bundles require explicit `compliance_export` permission.
+- A manager **cannot roll back a ticket whose `corrects` chain includes a ticket outside their department** without `ticket.rollback.tenant` permission, even if they originated the latest correction.
+- Read-only access to the Activity Log is broadly available (every employee can read tickets they are related to via the entity graph), but compliance-export-grade signed bundles require `compliance.export.signed` permission.
 - The Trust Score panel is visible to department managers for their own department's agents, and to customer admins for all agents. It is **not** visible to non-managers (a Trust Score below a tenant-configurable threshold could be sensitive).
+- **Agents cannot be approvers.** This is hard-coded across the platform per [Identity and Access Control § 6](Identity-and-Access-Control#6-the-asymmetry-that-stays). The Control Center never routes an approval to a Role with `applies_to: agent`.
 
 ---
 

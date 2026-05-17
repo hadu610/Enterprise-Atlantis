@@ -66,6 +66,7 @@ Why we are building this, what we are building, and how it differs from every co
 
 #### Platform Rules
 
+- [Identity and Access Control](Identity-and-Access-Control) — the spine: Actor model, Agent entity, RBAC
 - [Phased Autonomy Reference](Phased-Autonomy-Reference)
 - [Action Risk Classification](Action-Risk-Classification)
 - [Approval Workflow Framework](Approval-Workflow-Framework)

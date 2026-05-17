@@ -1,6 +1,6 @@
 # Unified Entity Model
 
-> **Type:** Reference · **Owner:** Engineering · **Status:** Approved · **Applies to:** All agents · **Jurisdiction:** Global · **Last reviewed:** 2026-05-15
+> **Type:** Reference · **Owner:** Engineering · **Status:** Approved · **Applies to:** All agents · **Jurisdiction:** Global · **Last reviewed:** 2026-05-17
 
 ## Summary
 
@@ -58,6 +58,53 @@ Extends `Person` with employment-specific fields. Read-write by HR Agent; read-o
 | `compensation_visible_to` | enum | | `hr_only` (default) \| `manager_chain` \| `self_and_hr` |
 
 Note: compensation fields live in a separate restricted entity, accessible only by agents holding the `employee.compensation` scope.
+
+## Agent
+
+Represents an AI agent identity. Mirrors `Employee` in shape — agents are first-class actors with names, titles, departments, and named human managers, exactly as employees have. Full semantics, lifecycle, and the asymmetry that agents cannot approve are specified in [Identity and Access Control](Identity-and-Access-Control).
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `id` | string | ✓ | `agent:<uuid>` |
+| `tenant_id` | string | ✓ | Agents are tenant-scoped; cross-tenant identity is forbidden |
+| `display_name` | string | ✓ | Customer-visible, e.g. `"HR Agent"`, `"Hiring Co-Pilot"` |
+| `agent_family` | enum | ✓ | `hr_agent` \| `finance_agent` \| `legal_agent` \| `sales_agent` \| `marketing_agent` \| `operations_agent` \| `dev_agent` |
+| `agent_version` | string | ✓ | Semantic version of the deployed build, e.g. `hr-agent-v3.1` |
+| `role_title` | string | ✓ | Org-chart title, e.g. `"HR Specialist (Agent)"` |
+| `role_level` | string | | Customer-defined band |
+| `department` | string | ✓ | Canonical department or customer-defined |
+| `manager_person_id` | string | ✓ | **Required.** FK to Person. Every agent has a named human owner |
+| `status` | enum | ✓ | `active` \| `paused` \| `quarantined` \| `deprecated` |
+| `scopes_document_id` | string | ✓ | FK to the scope-assignment doc ([Action Risk Classification § Scope assignment](Action-Risk-Classification#scope-assignment)) |
+| `role_bundle_id` | string | ✓ | FK to a Role record |
+| `model_routing_profile` | string | | AI model and prompt version ([AI Model and Prompt Standards](AI-Model-and-Prompt-Standards)) |
+| `started_at` | datetime | ✓ | Activation timestamp |
+| `deprecated_at` | datetime | | Set when status transitions to `deprecated` |
+| `external_refs` | map<source, id> | | e.g. `{ "iam": "iam-record-uuid" }` |
+
+Read-write by the platform IAM service only. Other agents and humans interact with `Agent` records through the IAM API, never directly.
+
+## Role
+
+Represents a named bundle of permissions plus a scope constraint. An actor (Person or Agent) does not hold raw permissions; permissions are inherited by holding one or more Roles. Canonical roles ship in the wiki ([Identity and Access Control § 7](Identity-and-Access-Control#7-default-role-bundles-canonical)); custom roles live in the IAM database.
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `id` | string | ✓ | `role:<uuid>` (custom) or `role:default:<name>` (canonical) |
+| `tenant_id` | string | (custom only) | Null for canonical roles; required for custom |
+| `name` | string | ✓ | Human-readable, e.g. `"Sales Engineering Lead"` |
+| `description` | string | | |
+| `applies_to` | enum | ✓ | `human` \| `agent` \| `both` |
+| `scope` | enum | ✓ | `tenant` \| `department` \| `entity` |
+| `scope_value` | string | | Department name (when `scope=department`) or entity ID (when `scope=entity`); null for `tenant` |
+| `permissions` | list<string> | ✓ | Permission keys from the canonical registry ([Identity and Access Control § 5](Identity-and-Access-Control#5-the-canonical-permission-registry)) |
+| `inherits_from` | list<string> | | FKs to parent Role IDs; cycles forbidden, depth ≤ 5 |
+| `is_canonical` | boolean | ✓ | True for default roles shipped in the wiki; false for tenant-defined |
+| `created_by` | string | ✓ | Actor ID of the creator (canonical roles use the platform's system identity) |
+| `created_at` | datetime | ✓ | |
+| `updated_at` | datetime | ✓ | |
+
+The IAM service is the only write path. Direct DB writes are forbidden.
 
 ## Organisation
 
@@ -176,6 +223,7 @@ Audit events are append-only and retained per the [Rollback Procedures](Rollback
 
 ## Cross-references
 
+- [Identity and Access Control](Identity-and-Access-Control) — the full semantics of Actor / Agent / Role and permission enforcement
 - [Glossary](Glossary)
 - [Action Risk Classification](Action-Risk-Classification)
 - [Rollback Procedures](Rollback-Procedures)

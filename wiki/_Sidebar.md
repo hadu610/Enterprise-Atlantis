@@ -46,6 +46,7 @@
 
 #### Platform rules
 
+- **[Identity & Access Control](Identity-and-Access-Control)**
 - [Phased Autonomy Reference](Phased-Autonomy-Reference)
 - [Action Risk Classification](Action-Risk-Classification)
 - [Approval Workflow Framework](Approval-Workflow-Framework)

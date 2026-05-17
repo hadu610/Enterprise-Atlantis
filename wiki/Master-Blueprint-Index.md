@@ -104,6 +104,7 @@ The Control Center is a **read model**. It owns no business state of its own; it
 
 | Page | Status |
 |---|---|
+| [Identity and Access Control](Identity-and-Access-Control) — the spine; Actor model, Agent entity, Role schema, permission registry, the asymmetry that agents cannot approve | ✅ |
 | [Phased Autonomy Reference](Phased-Autonomy-Reference) | ✅ |
 | [Action Risk Classification](Action-Risk-Classification) | ✅ |
 | [Approval Workflow Framework](Approval-Workflow-Framework) | ✅ |
