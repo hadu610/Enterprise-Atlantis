@@ -195,6 +195,9 @@ export default {
     );
 
     // ---------- 11. Forward to Anthropic ----------
+    // The widget asks for stream:true for token-by-token rendering. We pass
+    // the upstream body through (response.body) so streaming works without
+    // buffering the full reply in the worker.
     try {
       const upstream = await fetch(ANTHROPIC_API_URL, {
         method: 'POST',
@@ -202,23 +205,26 @@ export default {
           'Content-Type': 'application/json',
           'x-api-key': env.ANTHROPIC_API_KEY,
           'anthropic-version': ANTHROPIC_API_VERSION,
-          'anthropic-beta': 'prompt-caching-2024-07-31',
         },
         body: JSON.stringify(body),
       });
-      const upstreamText = await upstream.text();
 
-      // Log only status + bytes, never bodies (PII / abuse vector).
+      // Log status only — never the body (PII / abuse vector).
       console.log('upstream', {
         status: upstream.status,
-        bytes: upstreamText.length,
         model: body.model,
         messages: body.messages.length,
+        stream: !!body.stream,
       });
 
-      return new Response(upstreamText, {
+      const upstreamCT = upstream.headers.get('Content-Type') || 'application/json';
+      return new Response(upstream.body, {
         status: upstream.status,
-        headers: { 'Content-Type': 'application/json', ...cors },
+        headers: {
+          'Content-Type': upstreamCT,
+          'Cache-Control': 'no-cache, no-store',
+          ...cors,
+        },
       });
     } catch (err) {
       console.error('upstream_error', String(err && err.message || err));

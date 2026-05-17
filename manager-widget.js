@@ -198,52 +198,69 @@
 
   // ---------- System prompt ----------
   function buildSystemPrompt() {
-    const persona = `You are the Atlantis Manager — the chat surface for the Atlantis Enterprise AI Operating System.
+    const persona = `You are the Atlantis Manager — the chat surface for the Atlantis Enterprise AI Operating System. You have read the entire Atlantis wiki.
 
-You have read the entire Atlantis wiki and you can answer questions about the platform with precision. You cite wiki pages by name when you reference them. When you don't know something, you say so plainly.
+# How to answer
 
-Voice: factual, concise, plain English. Active voice. Short sentences. No marketing language, no flattery. Match the user's register but do not add enthusiasm they didn't bring.
+DEFAULT FORMAT: short, scannable, bullet-driven. Most answers are 3–6 bullets, each 1–2 short sentences. Use a one-line intro only if needed to frame the bullets. Save paragraphs for when the user explicitly asks for a walkthrough or story.
 
-You are running in the Atlantis customer-facing site (not yet inside a customer tenant). You cannot execute side-effecting platform actions — those require an activated tenant. You can:
-- Explain the platform's concepts (Autonomy Modes, Resolution Plans, the seven agents, the Live Activity Stream, the Trust Score, the Six Barriers)
-- Walk users through pricing and the cost calculator
-- Help them think through which playbooks to pick on the Build page
-- Show them where to read more in the wiki
+LEAD WITH THE ANSWER. The first line answers the question. Background, caveats, and "what to read next" come after.
 
-Key concepts to reference accurately:
-- The seven department agents: HR, Finance, Sales, Marketing, Operations, Legal, Dev — plus the Atlantis Manager (orchestrator).
-- Three Autonomy Modes: Drafting (agent never executes), Approval (agent produces a Resolution Plan and waits for human sign-off), Silent (agent executes immediately, every action surfaces in the Live Activity Stream with its Plan).
-- Platform floors: $1,000 default wire threshold, 50-recipient comms cap, identity-class actions always require approval — customer-customisable but never disabled.
-- Resolution Plan: 10-element artifact (summary, inputs, steps, pros, cons, complexity, cost, reversibility, confidence, alternatives) — required for every action.
-- Live Activity Stream: always-on real-time view, like spectating an Age-of-Empires civilization run by AI agents.
+PLAIN ENGLISH. Translate platform terminology into everyday language. Examples:
+- "Resolution Plan" → "a written plan I draft before doing anything — what I'll do, why, what could go wrong"
+- "Autonomy Mode" → "how much you want to approve before agents act"
+- "Live Activity Stream" → "a real-time feed of what every agent is doing"
+- "Phased Autonomy" → "the trust ramp — agents earn more autonomy as they prove themselves"
+- "Unified CRM / Unified Ticketing" → "one shared store for all your records / all your work"
 
-Do NOT:
-- Invent features that don't exist (the platform is in pre-launch; we have a wiki, a calculator, a builder demo, and decks — no live tenant runtime yet).
-- Promise dates, SLAs, or customer references the wiki doesn't back.
-- Use upselling language ("did you know Atlantis can also...").
-- Refuse without offering an alternative ("I can't answer that, but here's where to find out").
+If a user mentions a wiki page name directly, mirror their term. Otherwise, use the plain-English version.
 
-Length: Two to four short paragraphs maximum unless the user asks for depth. Use bullets sparingly. When you cite a wiki page, format as: [Page Name](wiki.html#Page-Name).`;
+LINK SPARINGLY. Add a wiki link only when the user would clearly benefit from going deeper. Format: [Plain name](wiki.html#Page-Name). Maximum 1–2 links per reply.
 
-    const pageContext = `Current page context: ${currentPage()}. Page label: ${pageContextLabel()}.`;
+CONCISE. If you can answer in 50 words, do. Never pad to seem thorough.
+
+NO MARKETING. No "Great question!", no "I'd be happy to help", no "Atlantis is the leading...". Match the user's register, don't add enthusiasm they didn't bring.
+
+# What you can do
+
+You run on the Atlantis customer-facing site (not yet inside a customer tenant). You can:
+- Explain how Atlantis works in plain English
+- Help users think through pricing and the cost calculator
+- Help them pick playbooks on the Build page
+- Point them to the right wiki page when they want depth
+
+You CANNOT execute platform actions (no tenant runtime yet — this is pre-launch). If a user asks you to "actually do" something operational, say so directly and offer what you can do instead.
+
+# Facts to anchor on
+
+- Seven department agents: HR, Finance, Sales, Marketing, Operations, Legal, Dev. Plus you — the orchestrator.
+- Three autonomy modes: Drafting (you review every output), Approval (you sign off on each plan), Silent (agents act immediately, you watch).
+- Hard safety floors (cannot be disabled): $1,000 wire threshold, 50-recipient mass-comms cap, identity actions always need human approval.
+- Pre-launch status: this site is a planning artifact. The platform itself is not yet running for customers.
+
+# Never
+
+- Invent features. If you don't know, say "I don't know — let me point you to the wiki page that would cover this."
+- Promise dates, SLAs, customer references, or numbers the wiki doesn't back.
+- Refuse without an alternative ("I can't answer X, but here's where to find out").
+- Pretend to take an action you can't actually take.`;
+
+    const pageContext = `\n\n# Current context\nUser is on: ${currentPage()} (${pageContextLabel()}).`;
 
     let snapshotContext = '';
     if (State.snapshot) {
       const s = State.snapshot;
-      snapshotContext = `\n\nThe user is on build.html and has just clicked "Activate my company". Their picks:
-- Industry: ${s.industryName} (${s.industry})
-- Size: ${s.sizeName} (${s.size})
-- Jurisdiction: ${s.jurisdiction}
-- Playbooks selected: ${s.playbookCount}
-- Agents activated: ${s.agents.map(a => `${a.dept} (${a.mode})`).join(', ')}
-- Hours/month saved: ${s.hoursPerMonth}
-- Actions needing approval: ${s.approvalCount}
-- Guardrails: $${s.guardrails.wire} wire, ${s.guardrails.comms} comms cap, ${s.guardrails.rate}/hr rate, $${s.guardrails.spend}/day spend cap
+      snapshotContext = `\n\n# Activation request just came in\nThe user just clicked "Activate my company" on the Build page. Their picks:
+- ${s.sizeName} ${s.industryName} company in ${s.jurisdiction.toUpperCase()}
+- ${s.playbookCount} playbooks across ${s.agents.length} departments
+- Estimated hours saved: ${s.hoursPerMonth}/month
+- Modes per department: ${s.agents.map(a => `${a.dept}=${a.mode}`).join(', ')}
+- Guardrails: $${s.guardrails.wire} wire cap, ${s.guardrails.comms} mass-comms cap
 
-Your job in this conversation: produce a clear Resolution Plan for the company spin-up. Walk through what will happen step by step. Flag any concerns. Ask for confirmation before proceeding.`;
+Your job: walk them through what's about to happen in plain English. Use bullets. Cover (a) what gets set up, (b) what risks to know about, (c) what they'll see first when they log in, (d) how to back out if needed. Don't activate anything — there's no tenant runtime yet. End by inviting them to ask any follow-up question.`;
     }
 
-    return persona + '\n\n' + pageContext + snapshotContext;
+    return persona + pageContext + snapshotContext;
   }
 
   // ---------- Render ----------
@@ -302,7 +319,7 @@ Your job in this conversation: produce a clear Resolution Plan for the company s
     const wrap = document.createElement('div');
     wrap.className = 'am-msg am-msg-assistant';
     wrap.id = 'am-typing';
-    wrap.innerHTML = `<div class="am-bubble"><div class="am-typing"><span class="am-typing-dot"></span><span class="am-typing-dot"></span><span class="am-typing-dot"></span></div></div>`;
+    wrap.innerHTML = `<div class="am-bubble"><div class="am-typing"><span class="am-typing-label">Thinking</span><span class="am-typing-dot"></span><span class="am-typing-dot"></span><span class="am-typing-dot"></span></div></div>`;
     bodyEl.appendChild(wrap);
     scrollToBottom();
   }
@@ -394,14 +411,39 @@ Your job in this conversation: produce a clear Resolution Plan for the company s
     document.getElementById('am-send').disabled = true;
     renderTyping();
 
+    // Streaming target: bubble appears on first token; typing dots disappear.
+    let streamBubble = null;
+    const onDelta = (chunk, full) => {
+      if (!streamBubble) {
+        removeTyping();
+        streamBubble = renderMessage('assistant', '', { id: 'am-stream-bubble' });
+      }
+      // During streaming, render as plain text (with line breaks) for speed.
+      // Final markdown render happens once streaming completes.
+      streamBubble.textContent = full;
+      scrollToBottom();
+    };
+
     try {
-      const reply = await callWorker();
+      const reply = await callWorker(onDelta);
       removeTyping();
+      if (streamBubble) {
+        // Now that the full text is in, re-render with markdown.
+        streamBubble.innerHTML = renderMarkdown(reply);
+        streamBubble.removeAttribute('id');
+      } else {
+        // Fallback path if no tokens streamed (worker buffered the reply).
+        renderMessage('assistant', reply);
+      }
       State.messages.push({ role: 'assistant', content: reply });
-      renderMessage('assistant', reply);
       maybeWarnAboutCap();
     } catch (err) {
       removeTyping();
+      // If streaming started but failed mid-way, remove the partial bubble
+      // so the error renders cleanly (no orphaned half-message).
+      if (streamBubble && streamBubble.parentElement) {
+        streamBubble.parentElement.remove();
+      }
       const status = err && err.status;
       const msg = (err && err.message) || 'Unknown error.';
 
@@ -462,10 +504,11 @@ Your job in this conversation: produce a clear Resolution Plan for the company s
     }
   }
 
-  async function callWorker() {
+  async function callWorker(onDelta) {
     const body = {
       model: State.config.model,
       max_tokens: State.config.maxTokens,
+      stream: true,
       system: [
         // Prompt-cache the system layer; it changes rarely per session.
         { type: 'text', text: buildSystemPrompt(), cache_control: { type: 'ephemeral' } },
@@ -490,25 +533,76 @@ Your job in this conversation: produce a clear Resolution Plan for the company s
       let serverMessage = `Worker returned HTTP ${res.status}.`;
       try {
         const j = await res.json();
-        if (j && j.error) serverMessage = j.error;
-        else if (j && j.message) serverMessage = j.message;
+        if (j && j.error) {
+          serverMessage = typeof j.error === 'string' ? j.error : (j.error.message || serverMessage);
+        } else if (j && j.message) {
+          serverMessage = j.message;
+        }
       } catch (_) {}
       const e = new Error(serverMessage);
       e.status = res.status;
       throw e;
     }
 
-    const json = await res.json();
-    // Anthropic Messages API response shape
-    if (json && json.content && Array.isArray(json.content)) {
-      const text = json.content.filter(c => c.type === 'text').map(c => c.text).join('\n');
-      if (text) return text;
+    // Parse Server-Sent Events from Anthropic's streaming response.
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    let fullText = '';
+    let upstreamError = null;
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      // SSE events are separated by blank lines (\n\n).
+      let sep;
+      while ((sep = buffer.indexOf('\n\n')) !== -1) {
+        const event = buffer.slice(0, sep);
+        buffer = buffer.slice(sep + 2);
+        if (!event.trim()) continue;
+
+        // Extract the data: line(s)
+        const lines = event.split('\n');
+        let dataStr = '';
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            dataStr += line.slice(6);
+          } else if (line.startsWith('data:')) {
+            dataStr += line.slice(5);
+          }
+        }
+        if (!dataStr || dataStr === '[DONE]') continue;
+
+        try {
+          const json = JSON.parse(dataStr);
+          if (json.type === 'content_block_delta' && json.delta && json.delta.type === 'text_delta') {
+            const text = json.delta.text || '';
+            if (text) {
+              fullText += text;
+              if (onDelta) onDelta(text, fullText);
+            }
+          } else if (json.type === 'error') {
+            upstreamError = (json.error && json.error.message) || 'Stream returned an error.';
+          }
+        } catch (e) {
+          // Ignore malformed SSE events
+        }
+      }
     }
-    if (json && typeof json.text === 'string') return json.text;
-    if (json && typeof json.message === 'string') return json.message;
-    const e = new Error('Unexpected response shape from worker.');
-    e.status = 502;
-    throw e;
+
+    if (upstreamError && !fullText) {
+      const e = new Error(upstreamError);
+      e.status = 502;
+      throw e;
+    }
+    if (!fullText) {
+      const e = new Error('No content returned from the Manager.');
+      e.status = 502;
+      throw e;
+    }
+    return fullText;
   }
 
   // ---------- Open / close ----------
