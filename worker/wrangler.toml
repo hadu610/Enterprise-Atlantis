@@ -3,13 +3,33 @@ main = "atlantis-manager-worker.js"
 compatibility_date = "2025-12-01"
 workers_dev = true
 
-# To deploy:
-#   1) cd worker
-#   2) npx wrangler login            (one-time)
-#   3) npx wrangler secret put ANTHROPIC_API_KEY   (paste your key when prompted)
-#   4) npx wrangler deploy
+# ──────────────────────────────────────────────────────────────────
+#  Rate limiting (free tier, no extra cost)
+#  3 requests per 10 seconds per IP. Worst-case attacker rate ≈ 18/min.
+#  Combined with the Anthropic monthly cap below, this bounds spend.
+# ──────────────────────────────────────────────────────────────────
+[[ratelimits]]
+binding = "RATE_LIMITER"
+namespace_id = "1001"
+simple = { limit = 3, period = 10 }
+
+# ──────────────────────────────────────────────────────────────────
+#  Deployment
 #
-# After deploy, the worker URL appears in the output (e.g.
-# https://atlantis-manager.YOUR-SUBDOMAIN.workers.dev). Paste that URL into
-# the per-page <meta name="atlantis-manager-worker" content="..."> tag, or
-# set window.ATLANTIS_MANAGER_CONFIG.workerUrl in a small inline script.
+#  1) cd worker
+#  2) npx wrangler login                            (one-time)
+#  3) npx wrangler secret put ANTHROPIC_API_KEY     (paste sk-ant-...)
+#  4) npx wrangler deploy
+#
+#  To pause the Manager instantly (returns 503 to every request):
+#     npx wrangler secret put MANAGER_DISABLED      (paste "true")
+#     npx wrangler deploy
+#
+#  To resume:
+#     npx wrangler secret put MANAGER_DISABLED      (paste anything else,
+#                                                    or delete the secret)
+#     npx wrangler deploy
+#
+#  See WORKER-SETUP.md for the full guide including the MANDATORY
+#  Anthropic-side monthly spending cap (your real safety net).
+# ──────────────────────────────────────────────────────────────────

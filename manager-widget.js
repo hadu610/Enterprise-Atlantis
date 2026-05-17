@@ -21,6 +21,10 @@
       workerUrl: workerUrl,
       model: cfg.model || 'claude-sonnet-4-6',
       maxTokens: cfg.maxTokens || 1024,
+      // Must match worker LIMITS in atlantis-manager-worker.js
+      maxMessages: cfg.maxMessages || 20,
+      maxPerMessageChars: cfg.maxPerMessageChars || 2000,
+      warnAtMessages: cfg.warnAtMessages || 15,
     };
   }
 
@@ -67,11 +71,11 @@
         <div class="am-body" id="am-body" aria-live="polite"></div>
         <div class="am-composer">
           <div class="am-composer-input-row">
-            <textarea id="am-input" rows="1" placeholder="${composerPlaceholder()}"></textarea>
+            <textarea id="am-input" rows="1" maxlength="${readConfig().maxPerMessageChars}" placeholder="${composerPlaceholder()}"></textarea>
             <button class="am-send" id="am-send" type="button" aria-label="Send">↑</button>
           </div>
           <div class="am-composer-meta">
-            <span>Sonnet 4.6 · prompt-cached · context-aware</span>
+            <span>Sonnet 4.6 · prompt-cached · <span id="am-msg-counter">0 / ${readConfig().maxMessages}</span></span>
             <a class="am-composer-link" href="wiki.html#Atlantis-Manager-Playbook" target="_blank" rel="noopener">Spec →</a>
           </div>
         </div>
@@ -279,8 +283,19 @@ Your job in this conversation: produce a clear Resolution Plan for the company s
     wrap.appendChild(bubble);
     bodyEl.appendChild(wrap);
     if (opts && opts.id) bubble.id = opts.id;
+    updateMsgCounter();
     scrollToBottom();
     return bubble;
+  }
+
+  function updateMsgCounter() {
+    const el = document.getElementById('am-msg-counter');
+    if (!el) return;
+    const used = State.messages.length;
+    const max = State.config.maxMessages;
+    el.textContent = `${used} / ${max}`;
+    if (used >= State.config.warnAtMessages) el.style.color = '#a04339';
+    else el.style.color = '';
   }
 
   function renderTyping() {
@@ -345,6 +360,25 @@ Your job in this conversation: produce a clear Resolution Plan for the company s
   async function send() {
     const text = textareaEl.value.trim();
     if (!text || State.sending) return;
+
+    // --- Client-side caps mirroring the worker LIMITS ---
+    if (text.length > State.config.maxPerMessageChars) {
+      renderError(
+        `Message too long. Max ${State.config.maxPerMessageChars} characters; you have ${text.length}.`,
+        'Trim the message and try again.'
+      );
+      return;
+    }
+    // Count user messages we're about to send (current + new) — must match worker's count.
+    const nextCount = State.messages.length + 1; // +1 for the user message we're about to push
+    if (nextCount > State.config.maxMessages) {
+      renderError(
+        `This conversation has reached the message cap (${State.config.maxMessages}).`,
+        'Click <strong>⟲</strong> at the top to start a new conversation.'
+      );
+      return;
+    }
+
     textareaEl.value = '';
     autoResize();
 
@@ -365,19 +399,66 @@ Your job in this conversation: produce a clear Resolution Plan for the company s
       removeTyping();
       State.messages.push({ role: 'assistant', content: reply });
       renderMessage('assistant', reply);
+      maybeWarnAboutCap();
     } catch (err) {
       removeTyping();
+      const status = err && err.status;
       const msg = (err && err.message) || 'Unknown error.';
-      let hint = 'Check the Cloudflare Worker logs and confirm <code>ANTHROPIC_API_KEY</code> is set.';
-      if (/4\d\d/.test(msg)) {
-        hint = 'The worker rejected the request. Confirm the Anthropic API key is valid and the model name is correct.';
-      } else if (/5\d\d/.test(msg) || /failed to fetch/i.test(msg)) {
-        hint = 'The worker is unreachable. Check the worker is deployed and the URL is correct.';
+
+      // Honour worker-side error semantics with friendly messages.
+      if (status === 429) {
+        renderError(
+          'Slow down — the Manager handles a few questions, not a flood.',
+          'Wait a few seconds and try again.'
+        );
+      } else if (status === 503) {
+        renderError(
+          'The Atlantis Manager is paused by the operator.',
+          'The rest of the site works without me. Please come back later.'
+        );
+      } else if (status === 413 || /too long|too large/i.test(msg)) {
+        renderError(msg, 'Trim your message or start a new conversation (⟲).');
+      } else if (status === 400) {
+        renderError(msg, '');
+      } else if (status === 403) {
+        renderError(
+          'This origin is not allowed to use the Manager.',
+          'If you are the operator: add the origin to <code>ALLOWED_ORIGINS</code> in <code>atlantis-manager-worker.js</code> and redeploy.'
+        );
+      } else if ((status >= 500 && status <= 599) || /failed to fetch/i.test(msg)) {
+        renderError(
+          'The Manager is unreachable right now.',
+          'Check back in a minute. If this persists, the operator should run <code>npx wrangler tail</code> to inspect logs.'
+        );
+      } else {
+        renderError(msg, '');
       }
-      renderError(msg, hint);
     } finally {
       State.sending = false;
       document.getElementById('am-send').disabled = false;
+    }
+  }
+
+  function maybeWarnAboutCap() {
+    const remaining = State.config.maxMessages - State.messages.length;
+    if (remaining <= 0) {
+      const note = document.createElement('div');
+      note.className = 'am-system-note';
+      note.innerHTML = `You've reached the conversation cap. Click <strong>⟲</strong> at the top to start fresh — your picks on the page are unaffected.`;
+      bodyEl.appendChild(note);
+      scrollToBottom();
+      const sendBtn = document.getElementById('am-send');
+      if (sendBtn) sendBtn.disabled = true;
+    } else if (State.messages.length >= State.config.warnAtMessages) {
+      // Show a one-time warning when approaching the cap.
+      if (!State._warned) {
+        State._warned = true;
+        const note = document.createElement('div');
+        note.className = 'am-system-note';
+        note.innerHTML = `${remaining} message${remaining === 1 ? '' : 's'} left in this conversation, then you'll need to start a new one (⟲).`;
+        bodyEl.appendChild(note);
+        scrollToBottom();
+      }
     }
   }
 
@@ -392,20 +473,29 @@ Your job in this conversation: produce a clear Resolution Plan for the company s
       messages: State.messages.map(m => ({ role: m.role, content: m.content })),
     };
 
-    const res = await fetch(State.config.workerUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
+    let res;
+    try {
+      res = await fetch(State.config.workerUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+    } catch (netErr) {
+      const e = new Error('Network error reaching the Manager.');
+      e.status = 0;
+      throw e;
+    }
 
     if (!res.ok) {
-      let detail = `Worker returned HTTP ${res.status}.`;
+      let serverMessage = `Worker returned HTTP ${res.status}.`;
       try {
-        const json = await res.json();
-        if (json && json.error) detail += ` ${json.error}`;
-        if (json && json.message) detail += ` ${json.message}`;
+        const j = await res.json();
+        if (j && j.error) serverMessage = j.error;
+        else if (j && j.message) serverMessage = j.message;
       } catch (_) {}
-      throw new Error(detail);
+      const e = new Error(serverMessage);
+      e.status = res.status;
+      throw e;
     }
 
     const json = await res.json();
@@ -416,7 +506,9 @@ Your job in this conversation: produce a clear Resolution Plan for the company s
     }
     if (json && typeof json.text === 'string') return json.text;
     if (json && typeof json.message === 'string') return json.message;
-    throw new Error('Unexpected response shape from worker.');
+    const e = new Error('Unexpected response shape from worker.');
+    e.status = 502;
+    throw e;
   }
 
   // ---------- Open / close ----------
@@ -434,7 +526,11 @@ Your job in this conversation: produce a clear Resolution Plan for the company s
   function clearConversation() {
     State.messages = [];
     State.snapshot = null;
+    State._warned = false;
+    const sendBtn = document.getElementById('am-send');
+    if (sendBtn) sendBtn.disabled = false;
     renderGreeting();
+    updateMsgCounter();
   }
 
   // ---------- Public API ----------
