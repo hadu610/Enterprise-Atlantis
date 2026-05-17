@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="manager-widget.css" />
 </head>
 <body>
 
@@ -20,15 +21,13 @@
       <span class="brand-name">Atlantis</span>
     </a>
     <nav class="nav-links" id="nav-links" aria-label="Primary">
-      <a href="#product">Product</a>
-      <a href="#how-it-works">How it works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#get-started" class="nav-link-feature">Get started</a>
-      <a href="workflows.html">Workflows</a>
+      <a href="index.html" class="nav-link-active">Home</a>
+      <a href="workflows.html">How it works</a>
+      <a href="build.html">Build your company</a>
       <a href="wiki.html">Wiki</a>
     </nav>
     <div class="nav-right">
-      <a href="#cta" class="btn btn-primary nav-cta">Talk to us</a>
+      <button class="btn btn-primary nav-cta" id="open-manager-nav" type="button">Ask Atlantis Manager</button>
       <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
@@ -61,8 +60,8 @@
       to enterprise.
     </p>
     <div class="hero-cta">
-      <a href="#get-started" class="btn btn-primary btn-lg">See it in five minutes</a>
-      <a href="#cta" class="btn btn-ghost btn-lg">Talk to us →</a>
+      <button class="btn btn-primary btn-lg" id="open-manager-hero" type="button">Ask the Atlantis Manager →</button>
+      <a href="build.html" class="btn btn-ghost btn-lg">Build your company</a>
     </div>
 
     <div class="hero-badges">
@@ -385,21 +384,130 @@
   </div>
 </section>
 
-<!-- ============ STACK COST CALCULATOR ============ -->
-<section class="section" id="calculator">
+<!-- ============ THREE TEASERS — THE JOURNEY ============ -->
+<section class="section section-alt" id="explore">
   <div class="container">
     <div class="section-head">
-      <div class="section-eyebrow">Stack calculator</div>
-      <h2 class="section-title">What does your stack cost today?</h2>
+      <div class="section-eyebrow">Explore Atlantis · the four-stop journey</div>
+      <h2 class="section-title">Three places to go next.</h2>
       <p class="section-sub">
-        Pick your company size and the tools you currently run. We estimate
-        your annual SaaS spend using <strong>published list prices</strong> — then show what the
-        same coverage looks like governed by Atlantis. Drag the slider to see the bill.
+        Most visitors take the same path: see how it works in practice, calculate what it costs, then design their company. Each card opens a deeper page.
       </p>
     </div>
 
-    <!-- Industry research baseline -->
-    <div class="calc-research">
+    <div class="teasers">
+      <a class="teaser teaser-1" href="workflows.html">
+        <div class="teaser-head">
+          <span class="teaser-step">Stop 2</span>
+          <span class="teaser-icon" aria-hidden="true">▣</span>
+        </div>
+        <h3>How Atlantis works in practice.</h3>
+        <p>Every workflow the seven agents run, across the customer journey (lead → renewal) and the employee journey (interview → offboarding). Interactive. See the agent + the human + the gate in sync.</p>
+        <div class="teaser-stats">
+          <span><strong>7</strong> stages · customer</span>
+          <span><strong>5</strong> stages · employee</span>
+          <span><strong>40+</strong> workflows mapped</span>
+        </div>
+        <span class="teaser-cta">See how it works →</span>
+      </a>
+
+      <a class="teaser teaser-2" href="build.html#cost">
+        <div class="teaser-head">
+          <span class="teaser-step">Stop 3a</span>
+          <span class="teaser-icon" aria-hidden="true">◉</span>
+        </div>
+        <h3>What does your stack cost today?</h3>
+        <p>Pick your company size and the tools you run. We estimate your annual SaaS + payroll spend using <strong>published list prices</strong> and <strong>BLS / ICONIQ / SHRM benchmarks</strong>, then show what the same coverage looks like governed by Atlantis.</p>
+        <div class="teaser-stats">
+          <span>SaaS · <strong>15–470</strong> apps</span>
+          <span>Payroll · <strong>BLS / ICONIQ</strong></span>
+          <span>Productivity · <strong>15% default</strong></span>
+        </div>
+        <span class="teaser-cta">Calculate your savings →</span>
+      </a>
+
+      <a class="teaser teaser-3 teaser-feature" href="build.html">
+        <div class="teaser-head">
+          <span class="teaser-step">Stop 3b</span>
+          <span class="teaser-icon" aria-hidden="true">◇</span>
+        </div>
+        <h3>Build your company.</h3>
+        <p>Pick your industry and size — we pre-check the standard playbooks. Customize the details, set your autonomy mode per agent, and activate. Or let the <strong>Atlantis Manager</strong> walk you through it conversationally.</p>
+        <div class="teaser-stats">
+          <span><strong>10</strong> industries</span>
+          <span><strong>~80</strong> playbooks</span>
+          <span><strong>3</strong> sizes</span>
+        </div>
+        <span class="teaser-cta">Design your operating model →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ATLANTIS MANAGER + LIVE ACTIVITY STREAM ============ -->
+<section class="section" id="manager-stream">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">The new way to use enterprise software</div>
+      <h2 class="section-title">One UI everyone already knows: the chat window.</h2>
+      <p class="section-sub">
+        Most enterprise SaaS forces every user to master a UI. Atlantis flips it. The default way to use the platform is to chat with an AI that has already mastered it — the <strong>Atlantis Manager</strong>. The Control Center UI is always available, but never required. Read the <a href="wiki.html#Atlantis-Manager-Playbook">Manager spec →</a>
+      </p>
+    </div>
+
+    <div class="ms-grid">
+      <div class="ms-card ms-card-manager">
+        <div class="ms-eyebrow">Primary surface · chat</div>
+        <h3>Atlantis Manager.</h3>
+        <p>An orchestrator that sits above the seven department agents. Every employee — from day 1 — chats with the same Manager. Onboarding, daily work, investigation, configuration. The Manager produces a <a href="wiki.html#Resolution-Plan-Specification">Resolution Plan</a> before every action so you always see <em>why</em>.</p>
+        <ul class="ms-points">
+          <li>Floats on every page (look bottom-right)</li>
+          <li>Knows the page you're on; routes you to the right surface</li>
+          <li>Never executes without a Plan + your approval</li>
+          <li>Sonnet 4.6 · prompt-cached · context-aware</li>
+        </ul>
+        <button class="btn btn-primary" id="open-manager-section" type="button">Ask the Atlantis Manager →</button>
+      </div>
+
+      <div class="ms-card ms-card-stream">
+        <div class="ms-eyebrow">Spectator surface · live</div>
+        <h3>Live Activity Stream.</h3>
+        <p>Most platforms show you what already happened (reports) or what needs doing (queues). Almost none show you the <strong>live execution itself</strong>. The Live Activity Stream is always on in every <a href="wiki.html#Autonomy-Modes">Autonomy Mode</a> — you can sit back and watch your company run, like watching your civilization run in a real-time strategy game.</p>
+        <div class="ms-stream-mock">
+          <div class="ms-stream-row"><span class="ms-time">14:32:08</span><span class="ms-agent">Finance Agt</span><span class="ms-icon">✓</span><span class="ms-summary">Reconcile Stripe payout $1,247</span></div>
+          <div class="ms-stream-row"><span class="ms-time">14:32:01</span><span class="ms-agent">HR Agent</span><span class="ms-icon">→</span><span class="ms-summary">Drafted offer letter for hire-184</span></div>
+          <div class="ms-stream-row"><span class="ms-time">14:31:54</span><span class="ms-agent">Marketing</span><span class="ms-icon">⚠</span><span class="ms-summary">Blog-92 awaiting editor review</span></div>
+          <div class="ms-stream-row"><span class="ms-time">14:31:47</span><span class="ms-agent">Dev Agent</span><span class="ms-icon">✓</span><span class="ms-summary">Merged PR #4421 to main</span></div>
+          <div class="ms-stream-row ms-stream-pulse"><span class="ms-time">14:31:39</span><span class="ms-agent">Finance Agt</span><span class="ms-icon">⤺</span><span class="ms-summary">Rolled back ar-2900 (customer)</span></div>
+        </div>
+        <a class="link-button" href="wiki.html#Live-Activity-Stream">Read the spec →</a>
+      </div>
+    </div>
+
+    <div class="ms-touchstones">
+      <div class="touchstone">
+        <div class="touchstone-num">12</div>
+        <div class="touchstone-body">
+          <strong>One UI everyone already knows: the chat window.</strong>
+          The Atlantis Manager is the platform's primary surface. The UI is always available but never required. The majority of customer actions originate from chat.
+        </div>
+      </div>
+      <div class="touchstone">
+        <div class="touchstone-num">13</div>
+        <div class="touchstone-body">
+          <strong>Spectator-grade observability.</strong>
+          The Live Activity Stream is always on in every Autonomy Mode. Every action emits a live event the moment it commits, carrying its full Resolution Plan — so you always see <em>why</em>.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CALCULATOR (REMOVED — lives on build.html#cost) ============ -->
+<div hidden aria-hidden="true">
+  <!-- Stub kept so calculator.js (still loaded by other pages) does not break.
+       The full interactive calculator now lives in build.html, collapsed by default. -->
+  <div class="calc-research" hidden>
       <div class="calc-research-head">
         <span class="calc-research-eyebrow">Research baseline</span>
         <span class="calc-research-title">How many SaaS apps do companies actually run?</span>
@@ -629,7 +737,7 @@
       </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- ============ RESOURCES STRIP ============ -->
 <section class="section" id="resources">
@@ -739,8 +847,27 @@
   </div>
 </footer>
 
+<!-- ============ FLOATING ATLANTIS MANAGER ============ -->
+<div id="atlantis-manager-root"></div>
+
 <script src="nav.js" defer></script>
 <script src="script.js" defer></script>
 <script src="calculator.js" defer></script>
+<script src="manager-widget.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    function wire(id, msg) {
+      var b = document.getElementById(id);
+      if (!b || !window.AtlantisManager) return;
+      b.addEventListener('click', function () {
+        if (msg) window.AtlantisManager.send(msg);
+        else window.AtlantisManager.open();
+      });
+    }
+    wire('open-manager-nav', null);
+    wire('open-manager-hero', 'Tell me about Atlantis. What does it actually do?');
+    wire('open-manager-section', 'How do I use the chat surface day-to-day?');
+  });
+</script>
 </body>
 </html>

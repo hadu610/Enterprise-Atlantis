@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Build your company — Atlantis</title>
+<meta name="description" content="Pick the operational playbooks your business runs, customize the defaults, set your autonomy mode, and activate your Atlantis company in minutes." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="build.css" />
+<link rel="stylesheet" href="manager-widget.css" />
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">Atlantis</span>
+    </a>
+    <nav class="nav-links" id="nav-links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="workflows.html">How it works</a>
+      <a href="build.html" class="nav-link-active">Build your company</a>
+      <a href="wiki.html">Wiki</a>
+    </nav>
+    <div class="nav-right">
+      <button class="btn btn-primary nav-cta" id="open-manager-nav" type="button">Ask Atlantis Manager</button>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="build-hero">
+  <div class="container">
+    <div class="eyebrow">
+      <span class="dot"></span>
+      Build your company
+    </div>
+    <h1 class="build-hero-title">
+      Design your operating model — <span class="grad-text">in five minutes.</span>
+    </h1>
+    <p class="build-hero-sub">
+      Pick the operational playbooks your business runs. We pre-check the standard set for your industry and size — you adjust, customize, set your autonomy mode, and activate.
+      Or ask the <strong>Atlantis Manager</strong> to walk you through it conversationally.
+    </p>
+    <div class="build-hero-actions">
+      <button class="btn btn-primary btn-lg" id="open-manager-hero" type="button">Walk me through it →</button>
+      <a href="#builder" class="btn btn-ghost btn-lg">Or browse the catalog ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STEP A — COST (collapsed by default) ============ -->
+<section class="section section-alt" id="cost">
+  <div class="container">
+    <details class="cost-collapse" id="cost-collapse">
+      <summary class="cost-summary">
+        <div class="cost-summary-left">
+          <span class="cost-summary-eyebrow">Step A · optional</span>
+          <span class="cost-summary-title">What does your stack cost today?</span>
+          <span class="cost-summary-sub">Open to compare your current SaaS + payroll spend with Atlantis — most companies see a meaningful gap.</span>
+        </div>
+        <div class="cost-summary-right">
+          <span class="cost-summary-chevron" aria-hidden="true">▾</span>
+        </div>
+      </summary>
+
+      <div class="cost-collapse-body">
+        <p class="section-sub">
+          Pick your company size and the tools you currently run. We estimate
+          your annual SaaS spend using <strong>published list prices</strong> — then show what the
+          same coverage looks like governed by Atlantis.
+        </p>
+
+        <div class="calc-research">
+          <div class="calc-research-head">
+            <span class="calc-research-eyebrow">Research baseline</span>
+            <span class="calc-research-title">How many SaaS apps do companies actually run?</span>
+          </div>
+          <div class="calc-research-stats">
+            <div class="calc-research-stat">
+              <div class="calc-research-stat-label">Startups · 1–49 employees</div>
+              <div class="calc-research-stat-value">15–50 <span>SaaS apps</span></div>
+              <div class="calc-research-stat-src">Okta SMB · Vendr 2025</div>
+            </div>
+            <div class="calc-research-stat">
+              <div class="calc-research-stat-label">Mid-market · 50–500 employees</div>
+              <div class="calc-research-stat-value">75–250 <span>SaaS apps</span></div>
+              <div class="calc-research-stat-src">Vendr 2025 · Productiv 2024</div>
+            </div>
+            <div class="calc-research-stat">
+              <div class="calc-research-stat-label">Enterprise · 500+ employees</div>
+              <div class="calc-research-stat-value">130–470+ <span>SaaS apps</span></div>
+              <div class="calc-research-stat-src">Productiv 2024 · Zylo 2025</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc" id="calc">
+          <div class="calc-step">
+            <div class="calc-step-head">
+              <span class="calc-step-num">1</span>
+              <span class="calc-step-title">How many people work at your company?</span>
+            </div>
+
+            <div class="calc-presets">
+              <button type="button" class="calc-preset" data-tier="sb" data-employees="25">
+                <span class="calc-preset-label">Startup</span>
+                <span class="calc-preset-meta">25 people</span>
+              </button>
+              <button type="button" class="calc-preset" data-tier="md" data-employees="200">
+                <span class="calc-preset-label">Medium</span>
+                <span class="calc-preset-meta">200 people</span>
+              </button>
+              <button type="button" class="calc-preset" data-tier="en" data-employees="2000">
+                <span class="calc-preset-label">Enterprise</span>
+                <span class="calc-preset-meta">2,000 people</span>
+              </button>
+            </div>
+
+            <div class="calc-slider-row">
+              <input type="range" id="calc-emp-slider" min="5" max="2000" step="5" value="200" />
+              <div class="calc-slider-out">
+                <input type="number" id="calc-emp-input" min="5" max="2000" step="1" value="200" />
+                <span class="calc-slider-suffix">people</span>
+              </div>
+            </div>
+            <output id="calc-emp-value" class="visually-hidden">200 people</output>
+          </div>
+
+          <div class="calc-step">
+            <div class="calc-step-head">
+              <span class="calc-step-num">2</span>
+              <span class="calc-step-title">Which tools do you currently run?</span>
+            </div>
+            <div class="calc-tools" id="calc-tools">
+              <!-- Tool grid renders here via calculator.js -->
+            </div>
+          </div>
+
+          <div class="calc-output" id="calc-output">
+            <div class="calc-output-card calc-card-current">
+              <div class="calc-output-label">SaaS spend today</div>
+              <div class="calc-output-amount" id="calc-current-amount">—</div>
+              <div class="calc-output-sub">Estimated annual subscription bill</div>
+            </div>
+
+            <div class="calc-output-card calc-card-atlantis">
+              <div class="calc-output-label">Atlantis platform</div>
+              <div class="calc-output-amount" id="calc-atlantis-amount">—</div>
+              <div class="calc-output-sub"><span id="calc-atlantis-tier">Growth</span> tier · one platform fee</div>
+            </div>
+
+            <div class="calc-output-card calc-card-savings">
+              <div class="calc-output-label">SaaS-only annual delta</div>
+              <div class="calc-output-amount" id="calc-savings-amount">—</div>
+              <div class="calc-output-sub">By category ↓</div>
+              <div class="calc-breakdown" id="calc-breakdown"></div>
+            </div>
+          </div>
+
+          <div class="calc-step">
+            <div class="calc-step-head">
+              <span class="calc-step-num">3</span>
+              <span class="calc-step-title">Your team — the bigger line item</span>
+              <button type="button" class="calc-team-reset-btn" id="calc-team-reset" title="Reset to benchmark defaults">Reset to benchmarks</button>
+            </div>
+            <p class="calc-step-help">
+              Headcounts default to <strong>B2B SaaS industry benchmarks</strong> per company size
+              (HR-to-employee ratio: 1:50–100 · SHRM; sales 25–35% of mid-market · ICONIQ; engineering 25–35% · ICONIQ).
+              Edit any row to match your reality.
+            </p>
+            <div class="calc-team-head">
+              <span>Department</span>
+              <span>Headcount</span>
+              <span>Fully-loaded salary</span>
+              <span>Annual cost</span>
+            </div>
+            <div class="calc-team" id="calc-team"></div>
+          </div>
+
+          <div class="calc-step calc-prod-step">
+            <div class="calc-step-head">
+              <span class="calc-step-num">4</span>
+              <span class="calc-step-title">Productivity gain you expect with Atlantis</span>
+            </div>
+            <p class="calc-step-help">
+              Atlantis doesn't replace your team — it lets the same team do more, or grow without proportional hiring.
+              We default to a conservative <strong>15%</strong>, bounded by McKinsey (60–70% augmentable) and GitHub Copilot research (55% faster).
+            </p>
+            <div class="calc-prod-row">
+              <input type="range" id="calc-prod-slider" min="0" max="40" step="1" value="15" />
+              <div class="calc-prod-value">
+                <span id="calc-prod-value">15%</span>
+                <span class="calc-prod-suffix">leaner team / extra leverage</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc-rr-head">
+            <span class="calc-rr-eyebrow">Total annual run rate</span>
+            <span class="calc-rr-title">SaaS + team payroll · the complete picture</span>
+            <span class="calc-rr-meta" id="calc-rr-headcount">—</span>
+          </div>
+          <div class="calc-output calc-output-rr">
+            <div class="calc-output-card calc-card-current">
+              <div class="calc-output-label">Today's total</div>
+              <div class="calc-output-amount" id="calc-rr-today">—</div>
+              <div class="calc-rr-stack">
+                <div class="calc-rr-line"><span>SaaS</span><strong id="calc-rr-today-saas">—</strong></div>
+                <div class="calc-rr-line"><span>Team payroll</span><strong id="calc-rr-today-pay">—</strong></div>
+              </div>
+            </div>
+
+            <div class="calc-output-card calc-card-atlantis">
+              <div class="calc-output-label">With Atlantis</div>
+              <div class="calc-output-amount" id="calc-rr-atlantis">—</div>
+              <div class="calc-rr-stack">
+                <div class="calc-rr-line"><span>Atlantis platform</span><strong id="calc-rr-at-atlantis">—</strong></div>
+                <div class="calc-rr-line"><span>Team payroll · <em id="calc-rr-leaner">15% leaner</em></span><strong id="calc-rr-at-pay">—</strong></div>
+              </div>
+            </div>
+
+            <div class="calc-output-card calc-card-savings">
+              <div class="calc-output-label">Total annual value</div>
+              <div class="calc-output-amount" id="calc-rr-value">—</div>
+              <div class="calc-output-sub">
+                SaaS consolidation + a team that runs <strong id="calc-prod-value">15%</strong> leaner because agents handle routine work
+              </div>
+            </div>
+          </div>
+
+          <div class="cost-handoff">
+            <a href="#builder" class="btn btn-primary">Now design your operating model →</a>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ STEP B — BUILD YOUR COMPANY ============ -->
+<section class="section" id="builder">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Step B · build your operating model</div>
+      <h2 class="section-title">Pick the playbooks your business runs.</h2>
+      <p class="section-sub">
+        Choose your industry and size — we pre-check the standard set. The catalog shows every operation Atlantis ships out of the box, organized by department. Check what you need; uncheck what you don't; customize the details before you activate.
+      </p>
+    </div>
+
+    <!-- Industry chip row -->
+    <div class="builder-filters">
+      <div class="filter-block">
+        <div class="filter-label">Industry</div>
+        <div class="chips chip-industries" id="chip-industries"></div>
+      </div>
+      <div class="filter-block">
+        <div class="filter-label">Company size</div>
+        <div class="chips chip-sizes" id="chip-sizes"></div>
+      </div>
+      <div class="filter-block">
+        <div class="filter-label">Headquartered in</div>
+        <div class="select-wrap">
+          <select id="filter-jurisdiction">
+            <option value="us" selected>United States</option>
+            <option value="ca">Canada</option>
+            <option value="uk">United Kingdom</option>
+            <option value="eu">European Union</option>
+            <option value="au">Australia</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Catalog grid + sticky summary -->
+    <div class="builder-grid">
+      <div class="catalog" id="catalog"></div>
+
+      <aside class="summary-panel" id="summary-panel">
+        <div class="summary-head">
+          <span class="summary-eyebrow">Your selection</span>
+          <span class="summary-title">Summary</span>
+        </div>
+        <div class="summary-stats">
+          <div class="summary-stat">
+            <span class="summary-stat-num" id="sum-playbooks">0</span>
+            <span class="summary-stat-label">playbooks</span>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-stat-num" id="sum-agents">0</span>
+            <span class="summary-stat-label">agents</span>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-stat-num" id="sum-hours">0</span>
+            <span class="summary-stat-label">hrs / mo saved</span>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-stat-num" id="sum-approvals">0</span>
+            <span class="summary-stat-label">need approval</span>
+          </div>
+        </div>
+        <div class="summary-agents" id="sum-agents-list"></div>
+        <div class="summary-cta">
+          <a href="#autonomy" class="btn btn-primary btn-block">Set autonomy & activate →</a>
+        </div>
+        <div class="summary-help">
+          <button class="link-button" id="ask-manager-summary" type="button">Ask the Atlantis Manager to recommend</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STEP C — AUTONOMY MODE & GUARDRAILS ============ -->
+<section class="section section-alt" id="autonomy">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Step C · autonomy</div>
+      <h2 class="section-title">How much do you want to gate?</h2>
+      <p class="section-sub">
+        Pick the autonomy mode per agent. Drafting means the agent never executes — you review every output. Approval means the agent produces a Resolution Plan and waits for your sign-off. Silent means the agent executes immediately and surfaces every action in the Live Activity Stream with a 30-second undo. <a href="wiki.html#Autonomy-Modes">Read the spec →</a>
+      </p>
+    </div>
+
+    <div class="autonomy-grid" id="autonomy-grid"></div>
+
+    <div class="guardrails">
+      <div class="section-head">
+        <div class="section-eyebrow">Platform-floor guardrails</div>
+        <h3 class="section-title-sm">Hard limits that survive every mode.</h3>
+        <p class="section-sub">
+          These thresholds always require human approval, regardless of the autonomy mode you pick. You can tighten any number; you cannot disable the floor itself.
+        </p>
+      </div>
+      <div class="guardrails-grid">
+        <label class="guardrail">
+          <span class="guardrail-label">Wire / outbound payment threshold</span>
+          <span class="guardrail-input">$<input type="number" id="gr-wire" min="0" value="1000" step="100"></span>
+          <span class="guardrail-help">Default $1,000. Payments above this always require approval.</span>
+        </label>
+        <label class="guardrail">
+          <span class="guardrail-label">Mass external comms cap</span>
+          <span class="guardrail-input"><input type="number" id="gr-comms" min="1" value="50" step="5"> recipients</span>
+          <span class="guardrail-help">Default 50. Sends to more recipients always require approval.</span>
+        </label>
+        <label class="guardrail">
+          <span class="guardrail-label">Rate limit per agent</span>
+          <span class="guardrail-input"><input type="number" id="gr-rate" min="1" value="50" step="5"> actions / hour</span>
+          <span class="guardrail-help">Beyond this rate, the agent pauses for human review.</span>
+        </label>
+        <label class="guardrail">
+          <span class="guardrail-label">Daily spend cap</span>
+          <span class="guardrail-input">$<input type="number" id="gr-spend" min="0" value="500" step="50"> / day</span>
+          <span class="guardrail-help">Maximum irreversible commitments per agent per day.</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="activate-block">
+      <button class="btn btn-primary btn-xl" id="activate-btn" type="button">Activate my company →</button>
+      <p class="activate-help">
+        On activation, the Atlantis Manager will open with your picks pre-loaded. You'll see the full Resolution Plan for the company spin-up before any state is created.
+      </p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>Atlantis · The Enterprise AI Operating System</span>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="workflows.html">How it works</a>
+      <a href="build.html">Build your company</a>
+      <a href="wiki.html">Wiki</a>
+      <a href="customer-deck.html">Customer Deck</a>
+      <a href="investor-deck.html">Investor Deck</a>
+    </div>
+    <div class="footer-meta">
+      Confidential — For internal planning use only · 2026
+    </div>
+  </div>
+</footer>
+
+<!-- ============ FLOATING ATLANTIS MANAGER ============ -->
+<div id="atlantis-manager-root"></div>
+
+<script src="nav.js" defer></script>
+<script src="calculator.js" defer></script>
+<script src="build.js" defer></script>
+<script src="manager-widget.js" defer></script>
+</body>
+</html>

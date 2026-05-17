@@ -1,0 +1,15 @@
+name = "atlantis-manager"
+main = "atlantis-manager-worker.js"
+compatibility_date = "2025-12-01"
+workers_dev = true
+
+# To deploy:
+#   1) cd worker
+#   2) npx wrangler login            (one-time)
+#   3) npx wrangler secret put ANTHROPIC_API_KEY   (paste your key when prompted)
+#   4) npx wrangler deploy
+#
+# After deploy, the worker URL appears in the output (e.g.
+# https://atlantis-manager.YOUR-SUBDOMAIN.workers.dev). Paste that URL into
+# the per-page <meta name="atlantis-manager-worker" content="..."> tag, or
+# set window.ATLANTIS_MANAGER_CONFIG.workerUrl in a small inline script.
