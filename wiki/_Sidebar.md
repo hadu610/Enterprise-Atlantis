@@ -4,6 +4,7 @@
 - **[Master Blueprint Index](Master-Blueprint-Index)**
 - **[Business Workflows](Business-Workflows)**
 - **[Customer Journeys](Customer-Journeys)**
+- **[Company Operation Builder Catalog](Company-Operation-Builder-Catalog)**
 
 ---
 
@@ -14,7 +15,11 @@
 
 #### Platform surfaces
 
-- **[Control Center](Control-Center)**
+- **[Atlantis Manager](Atlantis-Manager-Playbook)** — chat (primary)
+- **[Control Center](Control-Center)** — UI (always-available)
+- **[Live Activity Stream](Live-Activity-Stream)** — real-time spectator view
+- [Dual Surface Architecture](Dual-Surface-Architecture)
+- [Conversational UX Principles](Conversational-UX-Principles)
 
 ---
 
@@ -48,11 +53,14 @@
 
 - **[Identity & Access Control](Identity-and-Access-Control)**
 - [Phased Autonomy Reference](Phased-Autonomy-Reference)
+- [Autonomy Modes](Autonomy-Modes)
 - [Action Risk Classification](Action-Risk-Classification)
 - [Approval Workflow Framework](Approval-Workflow-Framework)
+- [Resolution Plan Specification](Resolution-Plan-Specification)
 - [Validation Gate Specifications](Validation-Gate-Specifications)
 - [Confidence & Escalation Rules](Confidence-and-Escalation-Rules)
 - [Rollback Procedures](Rollback-Procedures)
+- [Playbook Customization Model](Playbook-Customization-Model)
 
 ---
 
@@ -65,6 +73,7 @@
 
 #### Agent playbooks
 
+- **[Atlantis Manager](Atlantis-Manager-Playbook)** — orchestrator (chat)
 - [HR Agent](HR-Agent-Playbook)
 - [Finance Agent](Finance-Agent-Playbook)
 - [Marketing Agent](Marketing-Agent-Playbook)
@@ -72,6 +81,8 @@
 - [Legal Agent](Legal-Agent-Playbook)
 - [Operations Agent](Operations-Agent-Playbook)
 - [Dev Agent](Dev-Agent-Playbook)
+- [Company Operational Basics](Company-Operational-Basics)
+- [Operational Playbook Index](Operational-Playbook-Index)
 
 ---
 

@@ -1,6 +1,6 @@
 # Master Blueprint Index
 
-> **Type:** Reference · **Owner:** Founders · **Status:** Approved · **Applies to:** Humans only · **Jurisdiction:** Global · **Last reviewed:** 2026-05-16
+> **Type:** Reference · **Owner:** Founders · **Status:** Approved · **Applies to:** Humans only · **Jurisdiction:** Global · **Last reviewed:** 2026-05-17
 
 ## Summary
 
@@ -49,11 +49,14 @@ The strategic plan (B1–B6 barriers, the six solutions) is the **why**. The pag
 |---|---|
 | [Business Workflows](Business-Workflows) | ✅ |
 | [Customer Journeys](Customer-Journeys) | ✅ |
+| [Company Operation Builder Catalog](Company-Operation-Builder-Catalog) — the industry × size × playbook matrix the Builder page renders | ✅ |
 | [Investor Deck](Investor-Deck) — 12-slide source | ✅ |
 
 **Business Workflows** is the canonical enumeration of every workflow across the customer journey (7 stages, lead → renewal) and the employee journey (5 stages, interview → offboarding). Rendered interactively at [/workflows.html](https://hadu610.github.io/Enterprise-Atlantis/workflows.html).
 
 **Customer Journeys** is the three-path narrative — Startup (1–49), Medium (50–249), Enterprise (250+) — showing what day 1, month 1, and year 1 look like for each segment.
+
+**Company Operation Builder Catalog** is the catalog-first onboarding model — the customer picks an industry and a size, the Builder pre-checks ~12–24 playbooks from the matrix, the customer adjusts and activates. Rendered at [/build.html](https://hadu610.github.io/Enterprise-Atlantis/build.html).
 
 **Live presentation decks** (HTML, ready to present):
 
@@ -61,6 +64,15 @@ The strategic plan (B1–B6 barriers, the six solutions) is the **why**. The pag
 |---|---|---|
 | [Investor Deck →](https://hadu610.github.io/Enterprise-Atlantis/investor-deck.html) | Seed investors | 12 |
 | [Customer Briefing Deck →](https://hadu610.github.io/Enterprise-Atlantis/customer-deck.html) | Customer prospects | 10 |
+
+**The customer journey across the website** has four stops, each leading to the next:
+
+1. [/index.html](https://hadu610.github.io/Enterprise-Atlantis/) — Home (general ideas + teasers for the other three stops)
+2. [/workflows.html](https://hadu610.github.io/Enterprise-Atlantis/workflows.html) — How it works in practice
+3. [/build.html](https://hadu610.github.io/Enterprise-Atlantis/build.html) — Build your company (calculator collapsed at top + Company Operation Builder below)
+4. Wiki — full depth
+
+The [Atlantis Manager](Atlantis-Manager-Playbook) chat surface floats on every page; it is the platform's primary interface per [Touchstone 12](#k--strategy-touchstones).
 
 ---
 
@@ -77,15 +89,23 @@ The strategic claim: every existing enterprise runs fragmented CRMs (Salesforce 
 
 ---
 
-## A.3 · Platform Surfaces — where humans supervise the fleet
+## A.3 · Platform Surfaces — where humans supervise (and now, *talk to*) the fleet
 
-The substrates above store the truth; the surface below is how humans see and act on it. Where the CRM and Ticketing System are the platform's *memory* and *work-in-flight*, the Control Center is the platform's *cockpit*.
+The substrates above store the truth; the surfaces below are how humans see, act on, and converse with the platform. Two surfaces compose the customer-facing experience — **the chat (primary)** and **the UI (always-available)**:
 
 | Page | Status |
 |---|---|
-| [Control Center](Control-Center) — unified manager surface combining Ticketing, Activity Log, Approval Queue, Fleet View, and Trust Score | ✅ |
+| [Atlantis Manager Playbook](Atlantis-Manager-Playbook) — the chat surface; the platform's primary interface; floats on every page; runs onboarding, task execution, investigation, configuration | ✅ |
+| [Control Center](Control-Center) — the UI surface; unified manager view combining Ticketing, Activity Log, Approval Queue, Fleet View, and Trust Score | ✅ |
+| [Live Activity Stream](Live-Activity-Stream) — the always-on real-time spectator view of every agent action across every department | ✅ |
+| [Dual Surface Architecture](Dual-Surface-Architecture) — the parity contract: every capability reachable from both chat and UI; never diverging | ✅ |
+| [Conversational UX Principles](Conversational-UX-Principles) — how chat-first interactions behave | ✅ |
 
-The Control Center is a **read model**. It owns no business state of its own; it composes the existing substrates into the application a department manager or customer admin actually uses. Critically, it is the surface that makes rollback work without per-department code: because every action is a ticket, and every ticket carries its inverse, "undo" is the same UX whether HR, Finance, Legal, or Marketing took the wrong action. See [Control Center § 4](Control-Center#4-rollback-as-a-ticket-operation) for the architectural answer to the per-department rollback problem.
+**The Atlantis Manager** is the platform's primary surface. Customers, employees, and admins can do their entire job by chatting with the Manager; the Control Center UI is always available but never required. See [Touchstone 12](#k--strategy-touchstones).
+
+**The Control Center** is a **read model**. It owns no business state of its own; it composes the existing substrates into the application a department manager or customer admin actually uses. Critically, it is the surface that makes rollback work without per-department code: because every action is a ticket, and every ticket carries its inverse, "undo" is the same UX whether HR, Finance, Legal, or Marketing took the wrong action. See [Control Center § 4](Control-Center#4-rollback-as-a-ticket-operation) for the architectural answer to the per-department rollback problem.
+
+**The Live Activity Stream** is what makes Silent autonomy mode safe in practice — every action by every agent is visible the moment it commits, with its full [Resolution Plan](Resolution-Plan-Specification), so the human can spectate the company running like a live strategy game. See [Touchstone 13](#k--strategy-touchstones).
 
 ---
 
@@ -105,12 +125,15 @@ The Control Center is a **read model**. It owns no business state of its own; it
 | Page | Status |
 |---|---|
 | [Identity and Access Control](Identity-and-Access-Control) — the spine; Actor model, Agent entity, Role schema, permission registry, the asymmetry that agents cannot approve | ✅ |
-| [Phased Autonomy Reference](Phased-Autonomy-Reference) | ✅ |
+| [Phased Autonomy Reference](Phased-Autonomy-Reference) — system-tracked Trust Phase (Drafting / Startup / Approval / Enterprise); evidence-based recommendation | ✅ |
+| [Autonomy Modes](Autonomy-Modes) — customer-controlled gating dial (Drafting / Approval / Silent); platform floors that survive every mode | ✅ |
 | [Action Risk Classification](Action-Risk-Classification) | ✅ |
 | [Approval Workflow Framework](Approval-Workflow-Framework) | ✅ |
+| [Resolution Plan Specification](Resolution-Plan-Specification) — the 10-element artifact every action produces; rendered before approval, retroactively in Silent | ✅ |
 | [Validation Gate Specifications](Validation-Gate-Specifications) | ✅ |
 | [Confidence and Escalation Rules](Confidence-and-Escalation-Rules) | ✅ |
 | [Rollback Procedures](Rollback-Procedures) | ✅ |
+| [Playbook Customization Model](Playbook-Customization-Model) — per-tenant overrides on top of platform defaults; merge semantics; upgrade conflict handling | ✅ |
 
 ---
 
@@ -125,8 +148,11 @@ The Control Center is a **read model**. It owns no business state of its own; it
 
 ## E · Agent Playbooks
 
+The seven department agents, plus the orchestrator. Each department's `§ Operational Playbooks` section is the canonical home for the playbooks it owns; the [Operational Playbook Index](Operational-Playbook-Index) is the flat directory across all eight.
+
 | Page | Status |
 |---|---|
+| [Atlantis Manager Playbook](Atlantis-Manager-Playbook) — orchestrator above the seven; runs the chat surface | ✅ |
 | [HR Agent Playbook](HR-Agent-Playbook) | 🟡 Draft (HR Domain Council to approve) |
 | [Finance Agent Playbook](Finance-Agent-Playbook) | 🟡 Draft |
 | [Marketing Agent Playbook](Marketing-Agent-Playbook) | 🟡 Draft |
@@ -134,6 +160,8 @@ The Control Center is a **read model**. It owns no business state of its own; it
 | [Legal Agent Playbook](Legal-Agent-Playbook) | 🟡 Draft |
 | [Operations Agent Playbook](Operations-Agent-Playbook) | 🟡 Draft |
 | [Dev Agent Playbook](Dev-Agent-Playbook) | 🟡 Draft |
+| [Company Operational Basics](Company-Operational-Basics) — residual cross-cutting operations | ✅ |
+| [Operational Playbook Index](Operational-Playbook-Index) — unified flat directory of every playbook id across all department pages | ✅ |
 
 ---
 
@@ -242,6 +270,8 @@ These are the unchanging strategic anchors of the platform. When evaluating any 
 9. **Domain Expert Councils are not optional.** Domain depth is one of the three legs of agent reliability.
 10. **The Wiki updates itself, bounded.** Agent-authored drafts route to human Owners; no agent ever promotes its own page.
 11. **Cost is a feature, not a footnote.** Every technology added has a documented 10×/100×/1000× cost trajectory.
+12. **One UI everyone already knows: the chat window.** The [Atlantis Manager](Atlantis-Manager-Playbook) is the platform's primary surface. Department managers, employees, and customer admins can do their entire job through chat with an AI that has already mastered the platform. The [Control Center](Control-Center) UI is always available, but never required. The target is the majority of customer-side actions originating from chat. The [Dual Surface Architecture](Dual-Surface-Architecture) enforces capability, state, and audit parity between chat and UI.
+13. **Spectator-grade observability.** The [Live Activity Stream](Live-Activity-Stream) is always on in every [Autonomy Mode](Autonomy-Modes). Humans can sit back and watch their company run end-to-end, the way a real-time strategy game lets a player watch their civilization run. Every agent action emits a live event the moment it commits, and every action carries its [Resolution Plan](Resolution-Plan-Specification) — so the spectator can always see *why*. This is what makes Silent mode acceptable risk.
 
 If a decision contradicts a touchstone, the decision needs explicit explanation and an updated touchstone — not silent drift.
 
